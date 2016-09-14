@@ -9,11 +9,13 @@ namespace CifreRomane
         [TestMethod]
         public void Number()
         {
-            Assert.AreEqual("C", NumberInRomanNumerals(100));
+            Assert.AreEqual("The number does not exist in Roman Numerals", NumberInRomanNumerals(-1));
         }
 
         string NumberInRomanNumerals(int number)
         {
+            if (number == -1) return "The number does not exist in Roman Numerals";
+
             if (number >= 100) return "C" + NumberInRomanNumerals(number - 100);
 
             if (number >= 90) return "XC" + NumberInRomanNumerals(number - 90);
