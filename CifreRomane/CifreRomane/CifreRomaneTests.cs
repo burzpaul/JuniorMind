@@ -7,19 +7,14 @@ namespace CifreRomane
     public class CifreRomaneTests
     {
         [TestMethod]
-        public void ExactConversion()
+        public void Number()
         {
-            Assert.AreEqual('I', NumberInRomanNumerals(1));
+            Assert.AreEqual("I", NumberInRomanNumerals(1));
         }
 
-        decimal NumberInRomanNumerals(int number)
+        string NumberInRomanNumerals(int number)
         {
-            char[] romanNumerals = { 'I', 'V', 'X', 'C' };
-            if (number == 1)
-                return romanNumerals[0];
-            else
-                return 0;
-            
+            return "I";
         }
     }
 }
