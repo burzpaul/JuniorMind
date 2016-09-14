@@ -9,12 +9,12 @@ namespace CifreRomane
         [TestMethod]
         public void Number()
         {
-            Assert.AreEqual("I", NumberInRomanNumerals(1));
+            Assert.AreEqual("III", NumberInRomanNumerals(3));
         }
 
         string NumberInRomanNumerals(int number)
         {
-            if (number == 1) return "I";
+            if (number >= 1) return "I" +NumberInRomanNumerals(number -1);
 
             else
                 return null;
