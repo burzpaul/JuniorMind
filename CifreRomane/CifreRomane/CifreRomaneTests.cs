@@ -19,29 +19,19 @@ namespace CifreRomane
         [TestMethod]
         public void TripleDigitConversion()
         {
-            Assert.AreEqual("C", NumberInRomanNumerals(100));
+            Assert.AreEqual("DCCLXII", NumberInRomanNumerals(762));
+        }
+        [TestMethod]
+        public void QuadDigitNewMethod()
+        {
+            Assert.AreEqual("MMMCMXCIX", NumberInRomanNumerals(3999));
         }
         string NumberInRomanNumerals(int number)
         {
-            if(IsNumberSingleDigit(number))
-            {
-                if (number >= 9) return "IX" + NumberInRomanNumerals(number - 9);
-                if (number >= 5) return "V" + NumberInRomanNumerals(number - 5);
-                if (number >= 4) return "IV" + NumberInRomanNumerals(number - 4);
-                if (number >= 1) return "I" + NumberInRomanNumerals(number - 1);
-            }
-            if(IsNumberDoubleDigit(number))
-            {
-                if (number >= 90) return "XC" + NumberInRomanNumerals(number - 90);
-                if (number >= 50) return "L" + NumberInRomanNumerals(number - 50);  
-                if (number >= 40) return "XL" + NumberInRomanNumerals(number - 40);
-                if (number >= 10) return "X" + NumberInRomanNumerals(number - 10);
-              
-            }
-            if(IsNumberTripleDigit(number))
-            {
-                if (number >= 100) return "C" + NumberInRomanNumerals(number - 100);
-            }
+            string[] symbols = { "I", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XL", "L", "LX", "LXX", "LXXX", "XC", "C", "CD", "D", "DC", "DCC", "DCCC", "CM", "M" };
+
+            return symbols[1];
+
             return null;
         }
 
