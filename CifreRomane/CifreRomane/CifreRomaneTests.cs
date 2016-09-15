@@ -29,12 +29,21 @@ namespace CifreRomane
         
         string NumberInRomanNumerals(int number)
         {
-            string[] symbol = { "I","II","III", "IV", "V", "VI", "VII", "VIII", "IX"};
+            string[] symbol = { "I","II","III", "IV", "V", "VI", "VII", "VIII", "IX","X"};
+            int a, b;
 
             if (IsNumberSingleDigit(number))
-            {
+
                     return symbol[number-1];
+
+            if (IsNumberDoubleDigit(number))
+            {
+                a = number % 10;
+                b = number % 100 / 10;
+                string sample = new String('X', b);
+                return sample + symbol[a-1];
             }
+
             return null;
         }
         private bool IsNumberTripleDigit(int number)
