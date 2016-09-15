@@ -29,29 +29,17 @@ namespace CifreRomane
         
         string NumberInRomanNumerals(int number)
         {
-            string[] symbol = { "I","II","III", "IV", "V", "VI", "VII", "VIII", "IX"};
+            string[] symbol  = { "I","II","III", "IV", "V", "VI", "VII", "VIII", "IX"};
             string[] symbol1 = {"","X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" };
             string[] symbol2 = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" };
-            string[] symbol3 = { "", "M", "MM", "MMM" };
-            int a, b, c, d;
-                a = number % 10;
-                b = number % 100 / 10;
-                c = number % 1000 / 100;
-                d = number % 10000 / 1000;
-            return symbol3[d] + symbol2[c] + symbol1[b] + symbol[a-1];
+            string[] symbol3 = {"", "M", "MM", "MMM" };
+            int fourthDigit, thirdDigit , secondDigit, firstDigit;
+                fourthDigit = number % 10;
+                thirdDigit = number % 100 / 10;
+                secondDigit = number % 1000 / 100;
+                firstDigit = number % 10000 / 1000;
+            return symbol3[firstDigit] + symbol2[secondDigit] + symbol1[thirdDigit] + symbol[fourthDigit-1];
         }
-        private bool IsNumberTripleDigit(int number)
-        {
-            return number >= 100 && number <1000;
-        }
-        private bool IsNumberDoubleDigit(int number)
-        {
-            return number >= 10 && number <100;
-        }
-
-        private bool IsNumberSingleDigit(int number)
-        {
-            return number < 10;
-        }
+        
     }
 }
