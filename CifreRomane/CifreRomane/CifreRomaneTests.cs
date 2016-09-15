@@ -9,7 +9,7 @@ namespace CifreRomane
         [TestMethod]
         public void SingleDigitConversion()
         {
-            Assert.AreEqual("I", NumberInRomanNumerals(1));
+            Assert.AreEqual("IV", NumberInRomanNumerals(4));
         }
         [TestMethod]
         public void DoubleDigitConversion()
@@ -29,22 +29,12 @@ namespace CifreRomane
         
         string NumberInRomanNumerals(int number)
         {
-            string[] symbol = { "I","II","III", "IV", "V", "VI", "VII", "VIII", "IX","X"};
+            string[] symbol = { "I","II","III", "IV", "V", "VI", "VII", "VIII", "IX"};
+            string[] symbol1 = {"","X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" };
             int a, b;
-
-            if (IsNumberSingleDigit(number))
-
-                    return symbol[number-1];
-
-            if (IsNumberDoubleDigit(number))
-            {
                 a = number % 10;
-                b = number % 100 / 10;
-                string sample = new String('X', b);
-                return sample + symbol[a-1];
-            }
-
-            return null;
+                b = number % 100/10;
+            return symbol1[b] + symbol[a-1];
         }
         private bool IsNumberTripleDigit(int number)
         {
