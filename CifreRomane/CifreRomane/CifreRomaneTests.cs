@@ -9,7 +9,7 @@ namespace CifreRomane
         [TestMethod]
         public void SingleDigitConversion()
         {
-            Assert.AreEqual("IV", NumberInRomanNumerals(4));
+            Assert.AreEqual("I", NumberInRomanNumerals(1));
         }
         [TestMethod]
         public void DoubleDigitConversion()
@@ -22,24 +22,25 @@ namespace CifreRomane
             Assert.AreEqual("DCCLXII", NumberInRomanNumerals(762));
         }
         [TestMethod]
-        public void QuadDigitNewMethod()
+        public void FourDigitConversion()
         {
             Assert.AreEqual("MMMCMXCIX", NumberInRomanNumerals(3999));
         }
+        
         string NumberInRomanNumerals(int number)
         {
-            string[] symbols = { "I", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XL", "L", "LX", "LXX", "LXXX", "XC", "C", "CD", "D", "DC", "DCC", "DCCC", "CM", "M" };
+            string[] symbol = { "I","II","III", "IV", "V", "VI", "VII", "VIII", "IX"};
 
-            return symbols[1];
-
+            if (IsNumberSingleDigit(number))
+            {
+                    return symbol[number-1];
+            }
             return null;
         }
-
         private bool IsNumberTripleDigit(int number)
         {
-            return number >= 100;
+            return number >= 100 && number <1000;
         }
-
         private bool IsNumberDoubleDigit(int number)
         {
             return number >= 10 && number <100;
