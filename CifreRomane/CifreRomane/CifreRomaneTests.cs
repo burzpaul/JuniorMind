@@ -31,10 +31,12 @@ namespace CifreRomane
         {
             string[] symbol = { "I","II","III", "IV", "V", "VI", "VII", "VIII", "IX"};
             string[] symbol1 = {"","X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" };
-            int a, b;
+            string[] symbol2 = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" };
+            int a, b, c;
                 a = number % 10;
-                b = number % 100/10;
-            return symbol1[b] + symbol[a-1];
+                b = number % 100 / 10;
+                c = number % 1000 / 100;
+            return symbol2[c] + symbol1[b] + symbol[a-1];
         }
         private bool IsNumberTripleDigit(int number)
         {
