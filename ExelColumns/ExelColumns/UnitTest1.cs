@@ -14,7 +14,14 @@ namespace ExelColumns
         string DetermineExelColumn(int n)
         {
             string[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-                return alphabet[n - 1];
+            int i, count=0;
+            for (i = 0; i <= 26; i++)
+            {
+                count++;
+                if (count == n)
+                    return alphabet[n - 1];
+            }
+            return null;
         }
     }
 }
