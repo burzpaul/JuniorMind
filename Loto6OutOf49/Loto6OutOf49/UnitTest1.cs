@@ -11,12 +11,24 @@ namespace Loto6OutOf49
         [TestMethod]
         public void CategoryI()
         {
-            Assert.AreEqual( 13983816, Chances (6, 49));
+            Assert.AreEqual(10, Chances (3,5 ));
         }
-        decimal Chances(decimal guessedNumbers, decimal guessingNumbers)
+        decimal Chances(int guessedNumbers,int guessingNumbers)
         {
-            return 13983816;
+
+            return CalculateCombinations(guessingNumbers, guessedNumbers);
+            
+             
         }
-        
+        static decimal CalculateCombinations(decimal n, decimal k)
+        {
+            if (k == 0)
+                return 1;
+            else
+            if (k > n)
+                return 0;
+            else
+                return (CalculateCombinations(n - 1, k) + CalculateCombinations(n - 1, k - 1));
+        }
     }
 }
