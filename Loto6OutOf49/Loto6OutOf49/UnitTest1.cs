@@ -16,19 +16,19 @@ namespace Loto6OutOf49
         [TestMethod]
         public void CategoryII()
         {
-            Assert.AreEqual(54200, Chances(5, 49));
+            Assert.AreEqual(54200,84, Chances(5, 49));
         }
         [TestMethod]
         public void CategoryIII()
         {
-            Assert.AreEqual(1032, Chances(4, 49));
+            Assert.AreEqual(1032,39, Chances(4, 49));
         }
         [TestMethod]
         public void Bonus()
         {
             Assert.AreEqual(658008, Chances(5, 40));
         }
-        int Chances(int guessedNumbers,int guessingNumbers)
+        int Chances(float guessedNumbers,float guessingNumbers)
         {
             
             if (guessingNumbers == 49)
@@ -38,7 +38,7 @@ namespace Loto6OutOf49
                 return CalculateCombinations(guessingNumbers, 5) / ((CalculateCombinations(5, guessedNumbers) * CalculateCombinations(35, 5 - guessedNumbers)));
 
         }
-        static int CalculateCombinations(int n, int k)
+        static int CalculateCombinations(double n, double k)
         {
             if (k == 0)
                 return 1;
