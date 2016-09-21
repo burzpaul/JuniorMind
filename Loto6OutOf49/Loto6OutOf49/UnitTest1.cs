@@ -11,24 +11,30 @@ namespace Loto6OutOf49
         [TestMethod]
         public void CategoryI()
         {
-            Assert.AreEqual(13983816, Chances (6,49 ));
+            Assert.AreEqual(13983816, Chances (6,49 ),1);
         }
         [TestMethod]
         public void CategoryII()
         {
-            Assert.AreEqual(54200,84, Chances(5, 49));
+            double expected= 54200.8372093023;
+            double actual = Chances(5, 49);
+            double delta = 0.9;
+            Assert.AreEqual(expected, actual,delta);
         }
         [TestMethod]
         public void CategoryIII()
         {
-            Assert.AreEqual(1032,39, Chances(4, 49));
+            double expected = 1032.39689922481;
+            double actual = Chances(4, 49);
+            double delta = 0.44;
+            Assert.AreEqual(expected,actual,delta);
         }
         [TestMethod]
         public void Bonus()
         {
             Assert.AreEqual(658008, Chances(5, 40));
         }
-        int Chances(float guessedNumbers,float guessingNumbers)
+        double Chances(double guessedNumbers,double guessingNumbers)
         {
             
             if (guessingNumbers == 49)
