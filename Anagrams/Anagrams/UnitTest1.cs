@@ -9,11 +9,15 @@ namespace Anagrams
         [TestMethod]
         public void GiveWords()
         {
-            Assert.AreEqual(3, AnagramCalculator("ac"));
+            char[] name = { 'l', 'a', 'c' };
+            Assert.AreEqual(6, AnagramCalculator(name));
         }
-        string AnagramCalculator(string word)
+        int AnagramCalculator(char[] word)
         {
-            return null;
+            int i, n = 1; 
+             for (i = 1; i <= word.Length; i++) 
+                    n = n * i; 
+            return n;
         }
     }
 }
