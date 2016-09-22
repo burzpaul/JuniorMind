@@ -11,13 +11,13 @@ namespace Loto6OutOf49
         [TestMethod]
         public void CategoryI()
         {
-            Assert.AreEqual(13983816, Chances (6,49 ),1);
+            Assert.AreEqual(13983816, Chances (6,6,49 ),1);
         }
         [TestMethod]
         public void CategoryII()
         {
             double expected= 54200.8372093023;
-            double actual = Chances(5, 49);
+            double actual = Chances(5,6,49);
             double delta = 0.9;
             Assert.AreEqual(expected, actual,delta);
         }
@@ -25,24 +25,21 @@ namespace Loto6OutOf49
         public void CategoryIII()
         {
             double expected = 1032.39689922481;
-            double actual = Chances(4, 49);
+            double actual = Chances(4,6,49);
             double delta = 0.44;
             Assert.AreEqual(expected,actual,delta);
         }
         [TestMethod]
         public void Bonus()
         {
-            Assert.AreEqual(658008, Chances(5, 40));
+            Assert.AreEqual(658008, Chances(5,5,40));
         }
-        double Chances(double guessedNumbers,double guessingNumbers)
+        double Chances(double guessedNumbers, double possibleGuesses, double guessingNumbers)
         {
             
-            if (guessingNumbers == 49)
-
-                return CalculateCombinations(guessingNumbers, 6) / ((CalculateCombinations(6,guessedNumbers) * CalculateCombinations(43, 6 - guessedNumbers))) ;
-            else
-                return CalculateCombinations(guessingNumbers, 5) / ((CalculateCombinations(5, guessedNumbers) * CalculateCombinations(35, 5 - guessedNumbers)));
-
+                return CalculateCombinations(guessingNumbers, possibleGuesses) / ((CalculateCombinations(possibleGuesses,guessedNumbers) * CalculateCombinations(guessingNumbers-possibleGuesses, possibleGuesses - guessedNumbers))) ;
+      
+ 
         }
         static int CalculateCombinations(double n, double k)
         {
