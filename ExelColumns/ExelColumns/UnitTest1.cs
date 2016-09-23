@@ -9,7 +9,7 @@ namespace ExelColumns
         [TestMethod]
         public void SingleLetterColumn()
         {
-            Assert.AreEqual("E", DetermineExelColumn(5));
+            Assert.AreEqual("D", DetermineExelColumn(4));
         }
         [TestMethod]
         public void DoubleLetterColum()
@@ -19,21 +19,19 @@ namespace ExelColumns
         [TestMethod]
         public void TripleLetterColumns()
         {
-            Assert.AreEqual("LKB", DetermineExelColumn(8712));
+            Assert.AreEqual("AAA", DetermineExelColumn(703));
         }
-        string DetermineExelColumn(int n)
+        string DetermineExelColumn(int number)
         {
-            string[] alphabet = {"","A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-            int i,j,k,count=0;
-            for(k=0; k <= 26; k++)
-                for (j = 0; j <= 26; j++)
-                    for (i = 1; i <= 26; i++)
-                    {
-                        count++;
-                        if (count == n)
-                            return alphabet[k]+alphabet[j]+alphabet[i];
-                    }
-            return null;
+            number--;
+            String col = Convert.ToString((char)('A' + (number % 26)));
+            while (number >= 26)
+            {
+                number = (number / 26) - 1;
+                col = Convert.ToString((char)('A' + (number % 26))) + col;
+            }
+            return col;
         }
+        
     }
 }
