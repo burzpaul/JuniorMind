@@ -10,20 +10,14 @@ namespace Anagrams
         [TestMethod]
         public void GiveWords()
         {
-            char[] word = { 'a', 'a','a', 'a', 'b' };
-            Assert.AreEqual(4, AnagramCalculator(word));
+            string str = "aaabb";
+            Assert.AreEqual(9, AnagramCalculator(str));
         }
-        int AnagramCalculator(char[] word)
+        int AnagramCalculator(string word)
         {
-            int m=0,n=1;
+            int n = 1;
             for (char letter = 'a'; letter <= 'z'; letter++)
-            {
-                n *= CalculateFactorial(m);
-                m = 0;
-                for (int i = 0; i <= word.Length - 1; i++)
-                    if (letter == word[i])
-                        m++;
-            }
+                n *=CalculateFactorial(LetterCounter(letter, word, 0));
                 return (CalculateFactorial(word.Length)-1)/n;
         }
         static int CalculateFactorial(int number)
@@ -34,6 +28,13 @@ namespace Anagrams
             for (int i = 1; i <= number; i++)
                 factorial *= i;
             return factorial;
+        }
+        public int LetterCounter(char theLetter, string givenWord, int m)
+        {
+                for (int i = 0; i <= givenWord.Length - 1; i++)
+                    if (theLetter == givenWord[i])
+                        m++;
+            return m;
         }
     }  
 }
