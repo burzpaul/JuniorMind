@@ -10,8 +10,8 @@ namespace Anagrams
         [TestMethod]
         public void GiveWords()
         {
-            char[] word = { 'a', 'a', 'b', 'b' };
-            Assert.AreEqual(5, AnagramCalculator(word));
+            char[] word = { 'a', 'a','a', 'a', 'b' };
+            Assert.AreEqual(4, AnagramCalculator(word));
         }
         int AnagramCalculator(char[] word)
         {
