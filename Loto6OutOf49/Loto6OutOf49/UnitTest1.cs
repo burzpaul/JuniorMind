@@ -45,10 +45,8 @@ namespace Loto6OutOf49
         {
             if (k == 0)
                 return 1;
-            else
             if (k > n)
-                return 0;
-            else
+                return 0; 
                 return (CalculateCombinations(n - 1, k) + CalculateCombinations(n - 1, k - 1));
         }
     }
