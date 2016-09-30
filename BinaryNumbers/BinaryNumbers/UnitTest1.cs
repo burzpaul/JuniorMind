@@ -9,19 +9,18 @@ namespace BinaryNumbers
         [TestMethod]
         public void GiveDecimalNumber()
         {
-            Assert.AreEqual("110001", BinaryNumbers(49));
+            byte[] b = new byte[] { 1, 1, 0, 0, 0, 1 };
+            CollectionAssert.AreEqual(b, BinaryNumbers(49));
         }
-        public string BinaryNumbers(int number)
+        public byte[] BinaryNumbers(int number)
         {
             int index = GetTheIndex(number);
+
             byte[] bytes = new byte[index];
+
             BinaryConversion(bytes, index-1, number);
-            string response = string.Empty;
-
-            foreach (byte b in bytes)
-                response += (int)b;
-
-                    return response;
+            
+                    return bytes;
            
         }
         public int GetTheIndex(int theNumber)
