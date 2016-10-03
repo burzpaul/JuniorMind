@@ -10,12 +10,17 @@ namespace BinaryNumbers
         [TestMethod]
         public void GiveDecimalNumber()
         {
-            byte[] a = new byte[] { 1, 1, 0, 0, 0, 1 };
+            byte[] a = new byte[] { 0, 0, 1, 1, 0, 0, 0, 1 };
             CollectionAssert.AreEqual(a, TransformToBinary(49));
+        }
+        [TestMethod]
+        public void NotOperator()
+        {
+            CollectionAssert.AreEqual(TransformToBinary(206), ImplementNotOperator(TransformToBinary(49)));
         }
         public byte[] TransformToBinary(int number)
         {
-            byte[] array = new byte[] {  };
+            byte[] array = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
             int index = 0;
             while(number>0)
             {
@@ -25,6 +30,10 @@ namespace BinaryNumbers
             }
             Array.Reverse(array);
             return array;
+        }
+        public byte[] ImplementNotOperator(byte[] firstArray)
+        {
+            return null;
         }
     }
 }
