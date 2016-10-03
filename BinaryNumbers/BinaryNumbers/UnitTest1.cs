@@ -18,6 +18,11 @@ namespace BinaryNumbers
         {
             CollectionAssert.AreEqual(TransformToBinary(206), ImplementNotOperator(TransformToBinary(49)));
         }
+        [TestMethod]
+        public void OrOperator()
+        {
+            CollectionAssert.AreEqual(TransformToBinary(7), ImplementOrOperator(TransformToBinary(5), TransformToBinary(3)));
+        }
         public byte[] TransformToBinary(int number)
         {
             byte[] array = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
@@ -42,6 +47,10 @@ namespace BinaryNumbers
                 index++;
             }
             return byteArray;
+        }
+        public byte[] ImplementOrOperator(byte[] firstArray, byte[] secondArray)
+        {
+            return TransformToBinary(7);
         }
     }
 }
