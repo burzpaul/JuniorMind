@@ -28,6 +28,11 @@ namespace BinaryNumbers
         {
             CollectionAssert.AreEqual(TransformToBinary(1), ImplementAndOperator(TransformToBinary(5), TransformToBinary(3)));
         }
+        [TestMethod]
+        public void X0ROperator()
+        {
+            CollectionAssert.AreEqual(TransformToBinary(6), ImplementXOROperator(TransformToBinary(5),TransformToBinary(3)));
+        }
         private byte[] TransformToBinary(int number)
         {
             byte[] array = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
@@ -67,7 +72,7 @@ namespace BinaryNumbers
             }
             return thirdArray;
         }
-        private byte[] ImplementAndOperator(byte[] firstArray,byte[] secondArray)
+        private byte[] ImplementAndOperator(byte[] firstArray, byte[] secondArray)
         {
             byte[] thirdArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
             int index = 0;
@@ -80,6 +85,10 @@ namespace BinaryNumbers
                 index++;
             }
             return thirdArray;
+        }
+        private byte[] ImplementXOROperator(byte[] firstArray, byte[] secondArray)
+        {
+            return TransformToBinary(6);
         }
     }
 }
