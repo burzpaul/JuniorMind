@@ -69,8 +69,17 @@ namespace BinaryNumbers
         }
         private byte[] ImplementAndOperator(byte[] firstArray,byte[] secondArray)
         {
-            
-            return TransformToBinary(1);
+            byte[] thirdArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
+            int index = 0;
+            foreach (byte a in thirdArray)
+            {
+                if (firstArray[index] == 1 && secondArray[index] == 1)
+                    thirdArray[index] = 1;
+                else
+                    thirdArray[index] = 0;
+                index++;
+            }
+            return thirdArray;
         }
     }
 }
