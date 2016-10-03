@@ -23,7 +23,12 @@ namespace BinaryNumbers
         {
             CollectionAssert.AreEqual(TransformToBinary(7), ImplementOrOperator(TransformToBinary(5), TransformToBinary(3)));
         }
-        public byte[] TransformToBinary(int number)
+        [TestMethod]
+        public void AndOperator()
+        {
+            CollectionAssert.AreEqual(TransformToBinary(1), ImplementAndOperator(TransformToBinary(5), TransformToBinary(3)));
+        }
+        private byte[] TransformToBinary(int number)
         {
             byte[] array = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
             int index = 0;
@@ -36,7 +41,7 @@ namespace BinaryNumbers
             Array.Reverse(array);
             return array;
         }
-        public byte[] ImplementNotOperator(byte[] byteArray)
+        private byte[] ImplementNotOperator(byte[] byteArray)
         {
             int index = 0;
             foreach (byte a in byteArray)
@@ -48,7 +53,7 @@ namespace BinaryNumbers
             }
             return byteArray;
         }
-        public byte[] ImplementOrOperator(byte[] firstArray, byte[] secondArray)
+        private byte[] ImplementOrOperator(byte[] firstArray, byte[] secondArray)
         {
             byte[] thirdArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
             int index = 0;
@@ -61,6 +66,11 @@ namespace BinaryNumbers
                 index++;
             }
             return thirdArray;
+        }
+        private byte[] ImplementAndOperator(byte[] firstArray,byte[] secondArray)
+        {
+            
+            return TransformToBinary(1);
         }
     }
 }
