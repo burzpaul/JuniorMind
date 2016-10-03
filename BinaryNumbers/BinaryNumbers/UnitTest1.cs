@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BinaryNumbers
@@ -9,39 +10,21 @@ namespace BinaryNumbers
         [TestMethod]
         public void GiveDecimalNumber()
         {
-            byte[] b = new byte[] { 1, 1, 0, 0, 0, 1 };
-            CollectionAssert.AreEqual(b, BinaryNumbers(49));
+            byte[] a = new byte[] { 1, 1, 0, 0, 0, 1 };
+            CollectionAssert.AreEqual(a, TransformToBinary(49));
         }
-        public byte[] BinaryNumbers(int number)
+        public byte[] TransformToBinary(int number)
         {
-            int index = GetTheIndex(number);
-
-            byte[] bytes = new byte[index];
-
-            BinaryConversion(bytes, index-1, number);
-            
-                    return bytes;
-           
-        }
-        public int GetTheIndex(int theNumber)
-        {
-            int m = 0;
-            while(theNumber>0)
+            byte[] array = new byte[] {  };
+            int index = 0;
+            while(number>0)
             {
-                theNumber = theNumber / 2;
-                m++;
+                array[index] = (byte)(number % 2);
+                number = number / 2;
+                index++;
             }
-            return m;
+            Array.Reverse(array);
+            return array;
         }
-       void BinaryConversion(byte[] array,int theIndex,int theNumber)
-        {
-            while(theIndex>=0)
-            {
-                array[theIndex] = (byte)(theNumber % 2);
-                theNumber = theNumber / 2;
-                theIndex--;
-            }
-        }       
-
     }
 }
