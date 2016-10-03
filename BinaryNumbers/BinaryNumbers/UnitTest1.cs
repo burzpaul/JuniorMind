@@ -50,7 +50,17 @@ namespace BinaryNumbers
         }
         public byte[] ImplementOrOperator(byte[] firstArray, byte[] secondArray)
         {
-            return TransformToBinary(7);
+            byte[] thirdArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
+            int index = 0;
+            foreach(byte a in thirdArray)
+            {
+                if (firstArray[index] == 0 && secondArray[index] == 0)
+                    thirdArray[index] = 0;
+                else
+                    thirdArray[index] = 1;
+                index++;
+            }
+            return thirdArray;
         }
     }
 }
