@@ -31,9 +31,17 @@ namespace BinaryNumbers
             Array.Reverse(array);
             return array;
         }
-        public byte[] ImplementNotOperator(byte[] firstArray)
+        public byte[] ImplementNotOperator(byte[] byteArray)
         {
-            return null;
+            int index = 0;
+            foreach (byte a in byteArray)
+            { if (a == 1)
+                    byteArray[index] = 0;
+                else
+                    byteArray[index] = 1;
+                index++;
+            }
+            return byteArray;
         }
     }
 }
