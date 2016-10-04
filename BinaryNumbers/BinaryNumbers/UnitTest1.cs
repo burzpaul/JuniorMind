@@ -125,7 +125,15 @@ namespace BinaryNumbers
         }
         private byte[] ImplementRightHandShift(byte[] array, int numberOfPositions)
         {
-            return TransformToBinary(12);
+            
+            byte[] newArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
+            int index = 0;
+            while (index+numberOfPositions < array.Length)
+            {
+                newArray[index+numberOfPositions] = array[index];
+                index++;
+            }
+            return newArray;
         }
     }
 }
