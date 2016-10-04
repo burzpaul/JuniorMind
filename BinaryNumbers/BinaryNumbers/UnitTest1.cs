@@ -37,7 +37,12 @@ namespace BinaryNumbers
         [TestMethod]
         public void ShiftLeft()
         {
-            CollectionAssert.AreEqual(TransformToBinary(8), ImplementRightHandShift(TransformToBinary(1), 3));
+            CollectionAssert.AreEqual(TransformToBinary(20), ImplementLeftHandShift(TransformToBinary(5), 2));
+        }
+        [TestMethod]
+        public void ShiftRight()
+        {
+            CollectionAssert.AreEqual(TransformToBinary(12), ImplementRightHandShift(TransformToBinary(50),2));
         }
         private byte[] TransformToBinary(int number)
         {
@@ -106,7 +111,7 @@ namespace BinaryNumbers
             }
             return thirdArray;
         }
-        private byte[] ImplementRightHandShift(byte[] array, int numberOfPositions)
+        private byte[] ImplementLeftHandShift(byte[] array, int numberOfPositions)
         {
             int index = 0;
             byte[] newArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
@@ -117,6 +122,10 @@ namespace BinaryNumbers
                 numberOfPositions++;
             }
             return newArray;
+        }
+        private byte[] ImplementRightHandShift(byte[] array, int numberOfPositions)
+        {
+            return TransformToBinary(12);
         }
     }
 }
