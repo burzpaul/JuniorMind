@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -32,6 +33,11 @@ namespace BinaryNumbers
         public void X0ROperator()
         {
             CollectionAssert.AreEqual(TransformToBinary(6), ImplementXOROperator(TransformToBinary(5),TransformToBinary(3)));
+        }
+        [TestMethod]
+        public void ShiftLeft()
+        {
+            CollectionAssert.AreEqual(TransformToBinary(8), ImplementRightHandShift(TransformToBinary(1), 3));
         }
         private byte[] TransformToBinary(int number)
         {
@@ -99,6 +105,18 @@ namespace BinaryNumbers
                 index++;
             }
             return thirdArray;
+        }
+        private byte[] ImplementRightHandShift(byte[] array, int numberOfPositions)
+        {
+            int index = 0;
+            byte[] newArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
+            while (numberOfPositions<array.Length)
+            {
+                newArray[index] = array[numberOfPositions];
+                index++;
+                numberOfPositions++;
+            }
+            return newArray;
         }
     }
 }
