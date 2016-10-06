@@ -47,7 +47,7 @@ namespace BinaryNumbers
         [TestMethod]
         public void LessThan()
         {
-            Assert.AreEqual(true, ImplementLessThanOperator(TransformToBinary(30), TransformToBinary(50)));
+            Assert.AreEqual(true, ImplementLessThanOperator(TransformToBinary(48), TransformToBinary(50)));
         }
         private byte[] TransformToBinary(int number)
         {
@@ -143,13 +143,12 @@ namespace BinaryNumbers
         private bool ImplementLessThanOperator(byte[] firstArray, byte[] secondArray)
         {
             int index = 0;
-            while(index>=0)
+            while(index<secondArray.Length)
             {
                 if (firstArray[index] == 1 && secondArray[index] == 1 || firstArray[index] == 0 && secondArray[index] == 0)
                     index++;
-                else if (secondArray[index] == 1)
-                    break;
-                return true;
+                else if (secondArray[index] == 1)                  
+                        return true;
             }
             return false; 
         }
