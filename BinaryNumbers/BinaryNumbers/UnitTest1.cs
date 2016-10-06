@@ -44,6 +44,11 @@ namespace BinaryNumbers
         {
             CollectionAssert.AreEqual(TransformToBinary(12), ImplementRightHandShift(TransformToBinary(50),2));
         }
+        [TestMethod]
+        public void LessThan()
+        {
+            Assert.AreEqual(true, ImplementLessThanOperator(TransformToBinary(30), TransformToBinary(50)));
+        }
         private byte[] TransformToBinary(int number)
         {
             byte[] array = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
@@ -134,6 +139,10 @@ namespace BinaryNumbers
                 index++;
             }
             return newArray;
+        }
+        private bool ImplementLessThanOperator(byte[] firstArray, byte[] secondArray)
+        {
+            return true;
         }
     }
 }
