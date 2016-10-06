@@ -142,7 +142,16 @@ namespace BinaryNumbers
         }
         private bool ImplementLessThanOperator(byte[] firstArray, byte[] secondArray)
         {
-            return true;
+            int index = 0;
+            while(index>=0)
+            {
+                if (firstArray[index] == 1 && secondArray[index] == 1 || firstArray[index] == 0 && secondArray[index] == 0)
+                    index++;
+                else if (secondArray[index] == 1)
+                    break;
+                return true;
+            }
+            return false; 
         }
     }
 }
