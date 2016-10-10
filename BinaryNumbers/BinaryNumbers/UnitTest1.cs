@@ -40,6 +40,11 @@ namespace BinaryNumbers
 
             CollectionAssert.AreEqual(TransformToBinary(20), ImplementLeftHandShift(TransformToBinary(5), 2));
         }
+        [TestMethod]
+        public void RightShift()
+        {
+            CollectionAssert.AreEqual(TransformToBinary(12), ImplementRightHandShift(TransformToBinary(50), 2));
+        }
         private byte[] TransformToBinary(int number)
         {
             int index = 0;
@@ -127,5 +132,10 @@ namespace BinaryNumbers
             }
             return resultArray;
         }
+        private byte[] ImplementRightHandShift(byte[] array, int numberOfPositions)
+        {
+
+        }
+
     }
 }
