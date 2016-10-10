@@ -11,7 +11,7 @@ namespace BinaryNumbers
         [TestMethod]
         public void GiveDecimalNumber()
         {
-            byte[] a = new byte[] { 0, 0, 1, 1, 0, 0, 0, 1 };
+            byte[] a = new byte[] { 1, 1, 0, 0, 0, 1 };
             CollectionAssert.AreEqual(a, TransformToBinary(49));
         }
         [TestMethod]
@@ -22,38 +22,24 @@ namespace BinaryNumbers
         [TestMethod]
         public void OrOperator()
         {
-            CollectionAssert.AreEqual(TransformToBinary(7), ImplementOrOperator(TransformToBinary(5), TransformToBinary(3)));
+            CollectionAssert.AreEqual(TransformToBinary(7), ImplementOperator(TransformToBinary(5), TransformToBinary(3),"OR"));
         }
         [TestMethod]
         public void AndOperator()
         {
-            CollectionAssert.AreEqual(TransformToBinary(1), ImplementAndOperator(TransformToBinary(5), TransformToBinary(3)));
+            CollectionAssert.AreEqual(TransformToBinary(1), ImplementOperator(TransformToBinary(5), TransformToBinary(3),"AND"));
         }
-        [TestMethod]
-        public void X0ROperator()
-        {
-            CollectionAssert.AreEqual(TransformToBinary(6), ImplementXOROperator(TransformToBinary(5),TransformToBinary(3)));
-        }
-        [TestMethod]
         public void ShiftLeft()
         {
-            CollectionAssert.AreEqual(TransformToBinary(20), ImplementLeftHandShift(TransformToBinary(5), 2));
-        }
-        [TestMethod]
-        public void ShiftRight()
-        {
-            CollectionAssert.AreEqual(TransformToBinary(12), ImplementRightHandShift(TransformToBinary(50),2));
-        }
-        [TestMethod]
-        public void LessThan()
-        {
-            Assert.AreEqual(true, ImplementLessThanOperator(TransformToBinary(48), TransformToBinary(50)));
+            byte[] a = new byte[] { 0, 1, 0, 1, 0, 0, 0, 0 };
+            CollectionAssert.AreEqual(a, ImplementLeftHandShift(TransformToBinary(5), 4));
         }
         private byte[] TransformToBinary(int number)
         {
-            byte[] array = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
             int index = 0;
-            while(number>0)
+            byte[] array = new byte[GetTheIndex(number)];
+
+            while (number > 0)
             {
                 array[index] = (byte)(number % 2);
                 number = number / 2;
@@ -62,95 +48,78 @@ namespace BinaryNumbers
             Array.Reverse(array);
             return array;
         }
-        private byte[] ImplementNotOperator(byte[] byteArray)
+        private int GetTheIndex(int theNumber)
         {
-            int index = 0;
-            foreach (byte a in byteArray)
-            { if (a == 1)
-                    byteArray[index] = 0;
-                else
-                    byteArray[index] = 1;
-                index++;
-            }
-            return byteArray;
-        }
-        private byte[] ImplementOrOperator(byte[] firstArray, byte[] secondArray)
-        {
-            byte[] thirdArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
-            int index = 0;
-            foreach(byte a in thirdArray)
+            int m = 0;
+            while (theNumber > 0)
             {
-                if (firstArray[index] == 0 && secondArray[index] == 0)
-                    thirdArray[index] = 0;
-                else
-                    thirdArray[index] = 1;
-                index++;
+                theNumber = theNumber / 2;
+                m++;
             }
-            return thirdArray;
+            if (m >= 4)
+                return m;
+            else
+                return 4;
         }
-        private byte[] ImplementAndOperator(byte[] firstArray, byte[] secondArray)
+        private byte[] ImplementNotOperator(byte[] array)
         {
-            byte[] thirdArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
-            int index = 0;
-            foreach (byte a in thirdArray)
+            int index = 0, var = 0;
+
+            if (array.Length >= 8)
             {
-                if (firstArray[index] == 1 && secondArray[index] == 1)
-                    thirdArray[index] = 1;
-                else
-                    thirdArray[index] = 0;
-                index++;
+                index = array.Length;
             }
-            return thirdArray;
+            else
+            {
+                index = 8;
+            }
+            byte[] newArray = new byte[index];
+
+            Array.Reverse(array);
+
+            Array.Copy(array, newArray, array.Length);
+
+            foreach (byte a in newArray)
+            {
+                if (a == 1)
+                    newArray[var] = 0;
+                else
+                    newArray[var] = 1;
+                var++;
+            }
+            Array.Reverse(newArray);
+            return newArray;
         }
-        private byte[] ImplementXOROperator(byte[] firstArray, byte[] secondArray)
+        byte[] ImplementOperator(byte[] firstArray, byte[] secondArray, string Case)
         {
-            byte[] thirdArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
-            int index = 0;
-            foreach (byte a in thirdArray)
+            byte[] resultArray = new byte[firstArray.Length];
+            for (int i = 0; i < resultArray.Length; i++)
             {
-                if (firstArray[index] == 0 && secondArray[index] == 1 || firstArray[index] == 1 && secondArray[index] == 0)
-                    thirdArray[index] = 1;
-                else
-                    thirdArray[index] = 0;
-                index++;
+                switch (Case)
+                {
+
+                    case "OR":
+                        resultArray[i] = (byte)((firstArray[i] == 0 && secondArray[i] == 0) ? 0 : 1);
+                        break;
+
+                    case "AND":
+                        resultArray[i] = (byte)((firstArray[i] == 1 && secondArray[i] == 1) ? 1 : 0);
+                        break;
+                }
             }
-            return thirdArray;
+            return resultArray;
         }
         private byte[] ImplementLeftHandShift(byte[] array, int numberOfPositions)
         {
             int index = 0;
             byte[] newArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
-            while (numberOfPositions<array.Length)
+            while (numberOfPositions < array.Length)
             {
                 newArray[index] = array[numberOfPositions];
                 index++;
                 numberOfPositions++;
             }
             return newArray;
-        }
-        private byte[] ImplementRightHandShift(byte[] array, int numberOfPositions)
-        {
-            
-            byte[] newArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
-            int index = 0;
-            while (index+numberOfPositions < array.Length)
-            {
-                newArray[index+numberOfPositions] = array[index];
-                index++;
-            }
-            return newArray;
-        }
-        private bool ImplementLessThanOperator(byte[] firstArray, byte[] secondArray)
-        {
-            int index = 0;
-            while(index<secondArray.Length)
-            {
-                if (firstArray[index] == 1 && secondArray[index] == 1 || firstArray[index] == 0 && secondArray[index] == 0)
-                    index++;
-                else if (secondArray[index] == 1)                  
-                        return true;
-            }
-            return false; 
         }
     }
 }
