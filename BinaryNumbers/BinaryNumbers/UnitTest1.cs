@@ -38,7 +38,7 @@ namespace BinaryNumbers
         public void LeftShift()
         {
 
-            CollectionAssert.AreEqual(TransformToBinary(8), ImplementLeftHandShift(TransformToBinary(1), 3));
+            CollectionAssert.AreEqual(TransformToBinary(20), ImplementLeftHandShift(TransformToBinary(5), 2));
         }
         private byte[] TransformToBinary(int number)
         {
