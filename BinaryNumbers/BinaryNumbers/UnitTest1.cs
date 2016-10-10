@@ -38,7 +38,7 @@ namespace BinaryNumbers
         public void LeftShift()
         {
 
-            CollectionAssert.AreEqual(TransformToBinary(20), ImplementLeftHandShift(TransformToBinary(5), 2));
+            CollectionAssert.AreEqual(TransformToBinary(8), ImplementLeftHandShift(TransformToBinary(1), 3));
         }
         private byte[] TransformToBinary(int number)
         {
@@ -79,7 +79,7 @@ namespace BinaryNumbers
 
             foreach (byte a in newArray)
             {
-                    newArray[var] = (byte)((a==1)? 0 : 1);
+                newArray[var] = (byte)((a==1)? 0 : 1);
                 var++;
             }
             Array.Reverse(newArray);
@@ -109,10 +109,23 @@ namespace BinaryNumbers
         }
         private byte[] ImplementLeftHandShift(byte[] array, int numberOfPositions)
         {
+            int var = 0;
             int index = ((array.Length >= 8) ? array.Length : 8);
-            byte[] resultArray = new byte[index];
-            return null;
-            
+            byte[] newArray = new byte[index];
+
+            Array.Copy(array, newArray, array.Length);
+
+            int found = Array.IndexOf(newArray, (byte)1);
+
+            byte[] resultArray = new byte[newArray.Length-numberOfPositions-1];
+
+            while(var < resultArray.Length)
+            {
+                resultArray[var] = newArray[found];
+                found++;
+                var++;
+            }
+            return resultArray;
         }
     }
 }
