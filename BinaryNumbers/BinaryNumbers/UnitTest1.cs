@@ -29,6 +29,11 @@ namespace BinaryNumbers
         {
             CollectionAssert.AreEqual(TransformToBinary(1), ImplementOperator(TransformToBinary(5), TransformToBinary(3),"AND"));
         }
+        [TestMethod]
+        public void XOROperator()
+        {
+            CollectionAssert.AreEqual(TransformToBinary(6), ImplementOperator(TransformToBinary(5), TransformToBinary(3), "XOR"));
+        }
         public void ShiftLeft()
         {
             byte[] a = new byte[] { 0, 1, 0, 1, 0, 0, 0, 0 };
@@ -104,6 +109,9 @@ namespace BinaryNumbers
 
                     case "AND":
                         resultArray[i] = (byte)((firstArray[i] == 1 && secondArray[i] == 1) ? 1 : 0);
+                        break;
+                    case "XOR":
+                        resultArray[i] = (byte)((firstArray[i] == 0 && secondArray[i] == 1 || firstArray[i] == 1 && secondArray[i] == 0) ? 1 : 0);
                         break;
                 }
             }
