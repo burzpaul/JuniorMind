@@ -69,15 +69,7 @@ namespace BinaryNumbers
         private byte[] ImplementNotOperator(byte[] array)
         {
             int index = 0, var = 0;
-
-            if (array.Length >= 8)
-            {
-                index = array.Length;
-            }
-            else
-            {
-                index = 8;
-            }
+            index = ((array.Length >= 8) ? array.Length : 8);
             byte[] newArray = new byte[index];
 
             Array.Reverse(array);
@@ -95,7 +87,7 @@ namespace BinaryNumbers
             Array.Reverse(newArray);
             return newArray;
         }
-        byte[] ImplementOperator(byte[] firstArray, byte[] secondArray, string Case)
+        private byte[] ImplementOperator(byte[] firstArray, byte[] secondArray, string Case)
         {
             byte[] resultArray = new byte[firstArray.Length];
             for (int i = 0; i < resultArray.Length; i++)
