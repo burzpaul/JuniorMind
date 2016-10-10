@@ -34,10 +34,11 @@ namespace BinaryNumbers
         {
             CollectionAssert.AreEqual(TransformToBinary(6), ImplementOperator(TransformToBinary(5), TransformToBinary(3), "XOR"));
         }
-        public void ShiftLeft()
+        [TestMethod]
+        public void LeftShift()
         {
-            byte[] a = new byte[] { 0, 1, 0, 1, 0, 0, 0, 0 };
-            CollectionAssert.AreEqual(a, ImplementLeftHandShift(TransformToBinary(5), 4));
+
+            CollectionAssert.AreEqual(TransformToBinary(20), ImplementLeftHandShift(TransformToBinary(5), 4));
         }
         private byte[] TransformToBinary(int number)
         {
@@ -111,15 +112,7 @@ namespace BinaryNumbers
         }
         private byte[] ImplementLeftHandShift(byte[] array, int numberOfPositions)
         {
-            int index = 0;
-            byte[] newArray = new byte[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
-            while (numberOfPositions < array.Length)
-            {
-                newArray[index] = array[numberOfPositions];
-                index++;
-                numberOfPositions++;
-            }
-            return newArray;
+            
         }
     }
 }
