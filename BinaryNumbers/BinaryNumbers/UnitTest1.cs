@@ -64,13 +64,7 @@ namespace BinaryNumbers
                 byteArray[position] = (byte)((b == 0) ? 1 : 0);
                 position++;
             }
-
-            int firstOne = Array.IndexOf(byteArray, (byte)(1));
-            Array.Reverse(byteArray);
-            Array.Resize(ref byteArray, (byteArray.Length - firstOne));
-            Array.Reverse(byteArray);
-
-            return byteArray;
+            return Trim(byteArray);
         }
         public byte[] ImplementOperator(byte[] firstArray, byte[] secondArray, string Case)
         {
@@ -103,12 +97,15 @@ namespace BinaryNumbers
                         break;
                 }
 
-            int firstOne = Array.IndexOf(resultArray, (byte)(1));
-            Array.Reverse(resultArray);
-            Array.Resize(ref resultArray, (resultArray.Length - firstOne));
-            Array.Reverse(resultArray);
-
-            return resultArray;
+            return Trim(resultArray); ;
+        }
+        public byte[] Trim(byte[] byteArray)
+        {
+            int firstOne = Array.IndexOf(byteArray, (byte)(1));
+            Array.Reverse(byteArray);
+            Array.Resize(ref byteArray, (byteArray.Length - firstOne));
+            Array.Reverse(byteArray);
+            return byteArray;
         }
     }
 }
