@@ -64,7 +64,7 @@ namespace BinaryNumbers
                 byteArray[position] = (byte)((b == 0) ? 1 : 0);
                 position++;
             }
-            return Trim(byteArray);
+            return TrimArray(byteArray);
         }
         public byte[] ImplementOperator(byte[] firstArray, byte[] secondArray, string Case)
         {
@@ -97,9 +97,9 @@ namespace BinaryNumbers
                         break;
                 }
 
-            return Trim(resultArray); ;
+            return TrimArray(resultArray); ;
         }
-        public byte[] Trim(byte[] byteArray)
+        public byte[] TrimArray(byte[] byteArray)
         {
             int firstOne = Array.IndexOf(byteArray, (byte)(1));
             Array.Reverse(byteArray);
