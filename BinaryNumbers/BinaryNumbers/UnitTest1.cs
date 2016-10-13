@@ -39,6 +39,11 @@ namespace BinaryNumbers
         {
             CollectionAssert.AreEqual(TransformToBinary(12), RightShift(TransformToBinary(50), 2));
         }
+        [TestMethod]
+        public void LeftShift()
+        {
+            CollectionAssert.AreEqual(TransformToBinary(8), LeftShift(TransformToBinary(1), 3));
+        }
         public byte[] TransformToBinary(int number)
         {
             byte[] resultArray = new byte[0];
@@ -87,6 +92,15 @@ namespace BinaryNumbers
                 }
 
             return TrimArray(resultArray); ;
+        }
+        byte[] LeftShift(byte[] byteArray, int numberOfShitfs)
+        {
+            byte[] resultArray = new byte[byteArray.Length + numberOfShitfs];
+            for (int i = 0; i < byteArray.Length; i++)
+            {
+                resultArray[i] = byteArray[i];
+            }
+            return resultArray;
         }
         public byte[] RightShift(byte[] byteArray, int numberOfShitfs)
         {
