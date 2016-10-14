@@ -47,7 +47,7 @@ namespace BinaryNumbers
         [TestMethod]
         public void LessThan()
         {
-           Assert.AreEqual(true, LessThan(TransformToBinary(3),TransformToBinary(5)));
+           Assert.AreEqual(true, LessThan(TransformToBinary(5),TransformToBinary(3)));
         }
         public byte[] TransformToBinary(int number)
         {
@@ -118,13 +118,9 @@ namespace BinaryNumbers
         {
             Array.Reverse(firstArray);
             Array.Reverse(secondArray);
-            int i = 0;
-            while (i > ((firstArray.Length > secondArray.Length) ? firstArray.Length : secondArray.Length))
-            {
-                if (GetIndex(firstArray, i) > GetIndex(secondArray, i))
+            for (int i = 0; i < ((firstArray.Length > secondArray.Length) ? firstArray.Length : secondArray.Length); i++)
+              if (GetIndex(firstArray, i) > GetIndex(secondArray,i))
                     return false;
-                i++;
-            }
             return true;
             
         }
