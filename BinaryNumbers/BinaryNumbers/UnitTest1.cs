@@ -47,12 +47,22 @@ namespace BinaryNumbers
         [TestMethod]
         public void LessThan()
         {
-           Assert.AreEqual(false, LessThan(TransformToBinary(5),TransformToBinary(3)));
+           Assert.AreEqual(true, LessThan(TransformToBinary(3),TransformToBinary(3)));
         }
         [TestMethod]
         public void GreaterThen()
         {
-            Assert.AreEqual(true, GreaterThan(TransformToBinary(4), TransformToBinary(2)));
+            Assert.AreEqual(false, GreaterThan(TransformToBinary(4), TransformToBinary(4)));
+        }
+        [TestMethod]
+        public void Equal()
+        {
+            Assert.AreEqual(true, Equal(TransformToBinary(3), TransformToBinary(3)));
+        }
+        [TestMethod]
+        public void NotEqual()
+        {
+            Assert.AreEqual(true, NotEqual(TransformToBinary(4), TransformToBinary(3)));
         }
         public byte[] TransformToBinary(int number)
         {
@@ -129,6 +139,14 @@ namespace BinaryNumbers
         bool GreaterThan(byte[] firstArray, byte[] secondArray)
         {
             return !LessThan(firstArray, secondArray);
+        }
+        bool Equal(byte[] firstArray, byte[] secondArray)
+        {
+            return ((!GreaterThan(firstArray, secondArray)) && LessThan(firstArray, secondArray));
+        }
+        bool NotEqual(byte[] firstArray,byte[] secondArray)
+        {
+            return !Equal(firstArray, secondArray);
         }
         public byte[] TrimArray(byte[] byteArray)
         {
