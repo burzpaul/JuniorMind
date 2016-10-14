@@ -159,7 +159,17 @@ namespace BinaryNumbers
         }
         public byte[] Minus(byte[] firstArray, byte[] secondArray)
         {
-            return null;
+            byte[] resultArray = new byte[((firstArray.Length > secondArray.Length) ? firstArray.Length : secondArray.Length)];
+            int carry = 0;
+            Array.Reverse(resultArray);
+            for (int i = 0; i < resultArray.Length; i++)
+            {
+                var sum = GetIndex(firstArray, i) - GetIndex(secondArray, i) - carry;
+                resultArray[i] = (byte)(Math.Abs((sum % 2)));
+                carry = (sum < 0) ? 1 : 0;
+            }
+            Array.Reverse(resultArray);
+            return TrimArray(resultArray);
         }
         bool LessThan(byte[] firstArray, byte[] secondArray)
         {
