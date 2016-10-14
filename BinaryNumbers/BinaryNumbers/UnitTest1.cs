@@ -69,6 +69,11 @@ namespace BinaryNumbers
         {
             CollectionAssert.AreEqual(TransformToBinary(142), Add(TransformToBinary(127), TransformToBinary(15)));
         }
+        [TestMethod]
+        public void Minus()
+        {
+            CollectionAssert.AreEqual(TransformToBinary(29), Minus(TransformToBinary(142), TransformToBinary(113)));
+        }
         public byte[] TransformToBinary(int number)
         {
             byte[] resultArray = new byte[0];
@@ -151,6 +156,10 @@ namespace BinaryNumbers
             }
                     Array.Reverse(resultArray);
             return resultArray;
+        }
+        public byte[] Minus(byte[] firstArray, byte[] secondArray)
+        {
+            return null;
         }
         bool LessThan(byte[] firstArray, byte[] secondArray)
         {
