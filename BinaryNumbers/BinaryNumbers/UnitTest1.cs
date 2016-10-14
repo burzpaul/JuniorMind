@@ -44,6 +44,11 @@ namespace BinaryNumbers
         {
             CollectionAssert.AreEqual(TransformToBinary(8), LeftShift(TransformToBinary(1), 3));
         }
+        [TestMethod]
+        public void LessThan()
+        {
+           Assert.AreEqual(true, LessThan(TransformToBinary(3),TransformToBinary(5)));
+        }
         public byte[] TransformToBinary(int number)
         {
             byte[] resultArray = new byte[0];
@@ -75,6 +80,8 @@ namespace BinaryNumbers
         }
         public byte[] OperatorOperations(byte[] firstArray, byte[] secondArray, string selectedOperation)
         {
+            Array.Reverse(firstArray);
+            Array.Reverse(secondArray);
             byte[] resultArray = new byte[((firstArray.Length > secondArray.Length) ? firstArray.Length : secondArray.Length)];
             for (int i = 0; i < resultArray.Length; i++)
                 switch (selectedOperation)
@@ -93,7 +100,7 @@ namespace BinaryNumbers
 
             return TrimArray(resultArray); ;
         }
-        byte[] LeftShift(byte[] byteArray, int numberOfShitfs)
+        public byte[] LeftShift(byte[] byteArray, int numberOfShitfs)
         {
             byte[] resultArray = new byte[byteArray.Length + numberOfShitfs];
             for (int i = 0; i < byteArray.Length; i++)
@@ -107,6 +114,20 @@ namespace BinaryNumbers
             Array.Resize(ref byteArray, byteArray.Length - numberOfShitfs);
             return byteArray;
         }
+        bool LessThan(byte[] firstArray, byte[] secondArray)
+        {
+            Array.Reverse(firstArray);
+            Array.Reverse(secondArray);
+            int i = 0;
+            while (i > ((firstArray.Length > secondArray.Length) ? firstArray.Length : secondArray.Length))
+            {
+                if (GetIndex(firstArray, i) > GetIndex(secondArray, i))
+                    return false;
+                i++;
+            }
+            return true;
+            
+        }
         public byte[] TrimArray(byte[] byteArray)
         {
             int firstOne = Array.IndexOf(byteArray, (byte)(1));
@@ -117,7 +138,7 @@ namespace BinaryNumbers
          
             return byteArray;
         }
-        byte GetIndex(byte[] Arr, int k)
+        public byte GetIndex(byte[] Arr, int k)
         {
             if (k >= Arr.Length)
                 return 0;
