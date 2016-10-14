@@ -47,7 +47,12 @@ namespace BinaryNumbers
         [TestMethod]
         public void LessThan()
         {
-           Assert.AreEqual(true, LessThan(TransformToBinary(5),TransformToBinary(3)));
+           Assert.AreEqual(true, LessThan(TransformToBinary(3),TransformToBinary(5)));
+        }
+        [TestMethod]
+        public void GreaterThen()
+        {
+            Assert.AreEqual(false, GreaterThan(TransformToBinary(5), TransformToBinary(6)));
         }
         public byte[] TransformToBinary(int number)
         {
@@ -80,10 +85,8 @@ namespace BinaryNumbers
         }
         public byte[] OperatorOperations(byte[] firstArray, byte[] secondArray, string selectedOperation)
         {
-            Array.Reverse(firstArray);
-            Array.Reverse(secondArray);
             byte[] resultArray = new byte[((firstArray.Length > secondArray.Length) ? firstArray.Length : secondArray.Length)];
-            for (int i = 0; i < resultArray.Length; i++)
+            for (int i = resultArray.Length-1; i>=0 ; i--)
                 switch (selectedOperation)
                 {
 
@@ -116,13 +119,11 @@ namespace BinaryNumbers
         }
         bool LessThan(byte[] firstArray, byte[] secondArray)
         {
-            Array.Reverse(firstArray);
-            Array.Reverse(secondArray);
-            for (int i = 0; i < ((firstArray.Length > secondArray.Length) ? firstArray.Length : secondArray.Length); i++)
-              if (GetIndex(firstArray, i) > GetIndex(secondArray,i))
-                    return false;
-            return true;
-            
+            return false;
+        }
+        bool GreaterThan(byte[] firstArray, byte[] secondArray)
+        {
+            return false;
         }
         public byte[] TrimArray(byte[] byteArray)
         {
