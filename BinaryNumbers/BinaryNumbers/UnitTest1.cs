@@ -134,7 +134,23 @@ namespace BinaryNumbers
         }
         public byte[] Add(byte[] firstArray, byte[] secondArray)
         {
-            return null;
+            byte[] resultArray = new byte[((firstArray.Length > secondArray.Length) ? firstArray.Length : secondArray.Length)];
+            int carry = 0;
+            Array.Reverse(firstArray);
+            Array.Reverse(secondArray);
+            for (int i = 0; i < resultArray.Length; i++) 
+            {
+                var sum = GetIndex(firstArray, i) + GetIndex(secondArray, i) + carry;
+                resultArray[i] = (byte)(sum % 2);
+                carry = (sum > 1) ? 1 : 0;
+            }
+            if(carry == 1)
+            {
+                Array.Resize(ref resultArray, resultArray.Length + 1);
+                resultArray[resultArray.Length-1] = (byte)(carry);
+            }
+                    Array.Reverse(resultArray);
+            return resultArray;
         }
         bool LessThan(byte[] firstArray, byte[] secondArray)
         {
