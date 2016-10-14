@@ -64,6 +64,11 @@ namespace BinaryNumbers
         {
             Assert.AreEqual(true, NotEqual(TransformToBinary(4), TransformToBinary(3)));
         }
+        [TestMethod]
+        public void Add()
+        {
+            CollectionAssert.AreEqual(TransformToBinary(142), Add(TransformToBinary(127), TransformToBinary(15)));
+        }
         public byte[] TransformToBinary(int number)
         {
             byte[] resultArray = new byte[0];
@@ -126,6 +131,10 @@ namespace BinaryNumbers
         {
             Array.Resize(ref byteArray, byteArray.Length - numberOfShitfs);
             return byteArray;
+        }
+        public byte[] Add(byte[] firstArray, byte[] secondArray)
+        {
+            return null;
         }
         bool LessThan(byte[] firstArray, byte[] secondArray)
         {
