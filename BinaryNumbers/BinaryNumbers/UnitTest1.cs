@@ -17,7 +17,7 @@ namespace BinaryNumbers
         [TestMethod]
         public void NotOperator()
         {
-            CollectionAssert.AreEqual(TransformToBinary(206), NotOperator(TransformToBinary(49)));
+            CollectionAssert.AreEqual(TransformToBinary(14), NotOperator(TransformToBinary(49)));
         }
         [TestMethod]
         public void OrOperator()
@@ -92,12 +92,6 @@ namespace BinaryNumbers
         }
         public byte[] NotOperator(byte[] byteArray)
         {
-            if (byteArray.Length < 8)
-            {
-                Array.Reverse(byteArray);
-                Array.Resize(ref byteArray, byteArray.Length + (8 - byteArray.Length));
-                Array.Reverse(byteArray);
-            }
             for(int i=0; i < byteArray.Length; i++)
             {
                 byteArray[i] = (byte)((byteArray[i] == 0) ? 1 : 0);
@@ -106,19 +100,19 @@ namespace BinaryNumbers
         }
         public byte[] OperatorOperations(byte[] firstArray, byte[] secondArray, string selectedOperation)
         {
-            byte[] resultArray = new byte[((firstArray.Length > secondArray.Length) ? firstArray.Length : secondArray.Length)];
+            byte[] resultArray = new byte[Math.Max(firstArray.Length, secondArray.Length)];
             for (int i = resultArray.Length-1; i>=0 ; i--)
                 switch (selectedOperation)
                 {
 
                     case "OR":
-                        resultArray[resultArray.Length - 1 -i] = (byte)(((GetIndex(firstArray,i) == 0 && (GetIndex(secondArray, i) == 0) ? 0 : 1)));
+                        resultArray[resultArray.Length - 1 - i] = (byte)(Compare(GetIndex(firstArray, i),GetIndex(secondArray, i), 0) ? 0 : 1);
                         break;
                     case "AND":
-                        resultArray[resultArray.Length - 1 - i] = (byte)(((GetIndex(firstArray, i) == 1 && (GetIndex(secondArray, i) == 1) ? 1 : 0)));
+                        resultArray[resultArray.Length - 1 - i] = (byte)(Compare(GetIndex(firstArray, i),GetIndex(secondArray, i), 1) ? 1 : 0);
                         break;
                     case "XOR":
-                        resultArray[resultArray.Length - 1 - i] = (byte)((GetIndex(firstArray, i) == 0 && GetIndex(secondArray, i) == 1 || GetIndex(firstArray, i) == 1 && GetIndex(secondArray, i) == 0) ? 1 : 0);
+                        resultArray[resultArray.Length - 1 - i] = (byte)(!Compare(GetIndex(firstArray, i),GetIndex(secondArray, i), 0) && !Compare(GetIndex(firstArray, i), GetIndex(secondArray, i), 1) ? 1 : 0); 
                         break;
                 }
 
@@ -137,13 +131,11 @@ namespace BinaryNumbers
         }
         public byte[] Add(byte[] firstArray, byte[] secondArray)
         {
-            byte[] resultArray = new byte[((firstArray.Length > secondArray.Length) ? firstArray.Length : secondArray.Length)];
+            byte[] resultArray = new byte[Math.Max(firstArray.Length, secondArray.Length)];
             int carry = 0;
-            Array.Reverse(firstArray);
-            Array.Reverse(secondArray);
             for (int i = 0; i < resultArray.Length; i++) 
             {
-                var sum = GetIndex(firstArray, i) + GetIndex(secondArray, i) + carry;
+                var sum = GetIndex(firstArray, firstArray.Length - i -1) + GetIndex(secondArray,i) + carry;
                 resultArray[i] = (byte)(sum % 2);
                 carry = (sum > 1) ? 1 : 0;
             }
@@ -157,7 +149,7 @@ namespace BinaryNumbers
         }
         public byte[] Minus(byte[] firstArray, byte[] secondArray)
         {
-            byte[] resultArray = new byte[((firstArray.Length > secondArray.Length) ? firstArray.Length : secondArray.Length)];
+            byte[] resultArray = new byte[Math.Max(firstArray.Length, secondArray.Length)];
             int carry = 0;
             Array.Reverse(resultArray);
             for (int i = 0; i < resultArray.Length; i++)
@@ -171,7 +163,7 @@ namespace BinaryNumbers
         }
         bool LessThan(byte[] firstArray, byte[] secondArray)
         {
-            for (int i = ((firstArray.Length > secondArray.Length) ? firstArray.Length : secondArray.Length) - 1; i >= 0; i--) 
+            for (int i = (Math.Max(firstArray.Length, secondArray.Length) - 1); i >= 0; i--) 
             {
                 if (GetIndex(firstArray, i) != GetIndex(secondArray, i))
                     return GetIndex(firstArray, i) < GetIndex(secondArray, i);          
@@ -189,6 +181,12 @@ namespace BinaryNumbers
         bool NotEqual(byte[] firstArray,byte[] secondArray)
         {
             return !Equal(firstArray, secondArray);
+        }
+        bool Compare(byte firstBite,byte secondBite, byte bite)
+        {
+            if (firstBite == bite && secondBite == bite)
+                return true;
+            return false;
         }
         public byte[] TrimArray(byte[] byteArray)
         {
