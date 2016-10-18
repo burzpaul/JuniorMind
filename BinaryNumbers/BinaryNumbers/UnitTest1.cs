@@ -110,6 +110,19 @@ namespace BinaryNumbers
         {
             CollectionAssert.AreEqual(ConvertToAnyBase(6,6), Divide(ConvertToAnyBase(36,6), ConvertToAnyBase(6,6),6));
         }
+        [TestMethod]
+        public void Factorial()
+        {
+            CollectionAssert.AreEqual(ConvertToAnyBase(49,16), Divide(Factorial(ConvertToAnyBase(49,16),16), Factorial(ConvertToAnyBase(48,16),16),16));
+        }
+        public byte[] Factorial(byte[] Array,byte givenBase)
+        {
+            byte[] factorialArray = new byte[]{1};
+            var i = new byte[] { 1 };
+            for (i =new byte[] { 1 }; Equal(i, Array); i = Add(i, new byte[] { 1 }, givenBase)) 
+            { factorialArray = Multiply(factorialArray, i, givenBase); }
+            return factorialArray;
+        }
         public byte[] ConvertToAnyBase(int number, int theBase)
         {
             byte[] resultArray = new byte[0];
