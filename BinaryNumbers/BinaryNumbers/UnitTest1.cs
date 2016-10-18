@@ -93,10 +93,10 @@ namespace BinaryNumbers
         [TestMethod]
         public void Add()
         {
-            CollectionAssert.AreEqual(TransformToBinary(142), Add(TransformToBinary(127), TransformToBinary(15)));
+            CollectionAssert.AreEqual(ConvertToAnyBase(142,5), Add(ConvertToAnyBase(127,5), ConvertToAnyBase(15,5),5));
         }
         [TestMethod]
-        public void Minus()
+        /*public void Minus()
         {
             CollectionAssert.AreEqual(TransformToBinary(29), Minus(TransformToBinary(142), TransformToBinary(113)));
         }
@@ -109,7 +109,7 @@ namespace BinaryNumbers
         public void Divide()
         {
             CollectionAssert.AreEqual(TransformToBinary(16), Divide(TransformToBinary(32), TransformToBinary(2)));
-        }
+        }*/
         public byte[] ConvertToAnyBase(int number, int theBase)
         {
             byte[] resultArray = new byte[0];
@@ -177,15 +177,15 @@ namespace BinaryNumbers
             Array.Resize(ref byteArray, byteArray.Length - numberOfShitfs);
             return byteArray;
         }
-        public byte[] Add(byte[] firstArray, byte[] secondArray)
+        public byte[] Add(byte[] firstArray, byte[] secondArray,byte givenBase)
         {
             byte[] resultArray = new byte[Math.Max(firstArray.Length, secondArray.Length)];
             int carry = 0;
             for (int i = 0; i < resultArray.Length; i++) 
             {
                 var sum = CalculateSum(GetIndex(firstArray, i), GetIndex(secondArray, i), carry);
-                resultArray[resultArray.Length - i - 1] = (byte)(sum % 2);
-                carry = (sum > 1) ? 1 : 0;
+                resultArray[resultArray.Length - i - 1] = (byte)(sum % givenBase);
+                carry = (sum > (givenBase - 1)) ? 1 : 0;
             }
             if(carry == 1)
             {
@@ -196,7 +196,7 @@ namespace BinaryNumbers
             }
             return resultArray;
         }
-        public byte[] Minus(byte[] firstArray, byte[] secondArray)
+        /*public byte[] Minus(byte[] firstArray, byte[] secondArray)
         {
             byte[] resultArray = new byte[Math.Max(firstArray.Length, secondArray.Length)];
             int carry = 0;
@@ -221,7 +221,7 @@ namespace BinaryNumbers
             for (var i = secondArray  ; LessThan(i,firstArray); i = Add(i, secondArray))
                 resultArray = Add(resultArray, new byte[] { 1 });
             return resultArray;
-        }
+        }*/
         bool LessThan(byte[] firstArray, byte[] secondArray)
         {
             for (int i = (Math.Max(firstArray.Length, secondArray.Length) - 1); i >= 0; i--)
