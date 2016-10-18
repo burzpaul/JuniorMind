@@ -96,12 +96,12 @@ namespace BinaryNumbers
             CollectionAssert.AreEqual(ConvertToAnyBase(142,5), Add(ConvertToAnyBase(127,5), ConvertToAnyBase(15,5),5));
         }
         [TestMethod]
-        /*public void Minus()
+        public void Minus()
         {
-            CollectionAssert.AreEqual(TransformToBinary(29), Minus(TransformToBinary(142), TransformToBinary(113)));
+            CollectionAssert.AreEqual(ConvertToAnyBase(29,16), Minus(ConvertToAnyBase(142,16), ConvertToAnyBase(113,16),16));
         }
         [TestMethod]
-        public void Multiply()
+        /*public void Multiply()
         {
             CollectionAssert.AreEqual(TransformToBinary(49), Multiply(TransformToBinary(7), TransformToBinary(7)));
         }
@@ -196,19 +196,19 @@ namespace BinaryNumbers
             }
             return resultArray;
         }
-        /*public byte[] Minus(byte[] firstArray, byte[] secondArray)
+        public byte[] Minus(byte[] firstArray, byte[] secondArray,byte givenBase)
         {
             byte[] resultArray = new byte[Math.Max(firstArray.Length, secondArray.Length)];
             int carry = 0;
             for (int i = 0; i < resultArray.Length; i++)
             {
-                var sum = 2 + CalculateSum(GetIndex(firstArray, i), -GetIndex(secondArray, i), -carry);
-                resultArray[resultArray.Length - i - 1] = (byte)(sum % 2);
-                carry = (sum < 2) ? 1 : 0;
+                var sum = givenBase + CalculateSum(GetIndex(firstArray, i), -GetIndex(secondArray, i), -carry);
+                resultArray[resultArray.Length - i - 1] = (byte)(sum % givenBase);
+                carry = (sum < givenBase) ? 1 : 0;
             }
             return TrimArray(resultArray);
         }
-        public byte[] Multiply(byte[] firstArray, byte[] secondArray)
+        /*public byte[] Multiply(byte[] firstArray, byte[] secondArray)
         {
             byte[] resultArray = new byte[1];
             for (var i = new byte[] { 1 }; LessThan(i,secondArray); i = Add(i, new byte[] { 1 }))        
