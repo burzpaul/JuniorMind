@@ -133,7 +133,7 @@ namespace BinaryNumbers
             int carry = 0;
             for (int i = 0; i < resultArray.Length; i++) 
             {
-                var sum = GetIndex(firstArray,i) + GetIndex(secondArray,i) + carry;
+                var sum = CalculateSum(GetIndex(firstArray, i), GetIndex(secondArray, i), carry);
                 resultArray[resultArray.Length - i - 1] = (byte)(sum % 2);
                 carry = (sum > 1) ? 1 : 0;
             }
@@ -152,7 +152,7 @@ namespace BinaryNumbers
             int carry = 0;
             for (int i = 0; i < resultArray.Length; i++)
             {
-                var sum = 2 + GetIndex(firstArray, i) - GetIndex(secondArray, i) - carry;
+                var sum = 2 + CalculateSum(GetIndex(firstArray, i), -GetIndex(secondArray, i), -carry);
                 resultArray[resultArray.Length - i - 1] = (byte)(sum % 2);
                 carry = (sum < 2) ? 1 : 0;
             }
@@ -201,6 +201,10 @@ namespace BinaryNumbers
                 return 0;
             return Arr[Arr.Length - 1 - k];
     
+        }
+        public int CalculateSum(int firstBite, int secondBite, int k)
+        {
+            return firstBite + secondBite + k;
         }
     }
 }
