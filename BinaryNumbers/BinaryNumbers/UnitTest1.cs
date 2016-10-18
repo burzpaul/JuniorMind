@@ -194,19 +194,18 @@ namespace BinaryNumbers
         {
             byte[] resultArray = new byte[Math.Max(firstArray.Length, secondArray.Length)];
             int carry = 0;
-            for (int i = 0; i < resultArray.Length; i++) 
+            for (int i = 0; i < resultArray.Length; i++)
             {
                 var sum = CalculateSum(GetIndex(firstArray, i), GetIndex(secondArray, i), carry);
-                resultArray[resultArray.Length - i - 1] = (byte)(sum % givenBase);
+                resultArray[i] = (byte)(sum % givenBase);
                 carry = (sum > (givenBase - 1)) ? 1 : 0;
             }
-            if(carry == 1)
+            if (carry == 1)
             {
-                Array.Reverse(resultArray);
                 Array.Resize(ref resultArray, resultArray.Length + 1);
-                Array.Reverse(resultArray);
-                resultArray[0] = (byte)(carry);
+                resultArray[resultArray.Length - 1] = (byte)(carry);
             }
+            Array.Reverse(resultArray);
             return resultArray;
         }
         public byte[] Minus(byte[] firstArray, byte[] secondArray,byte givenBase)
@@ -272,16 +271,16 @@ namespace BinaryNumbers
          
             return byteArray;
         }
-        public byte GetIndex(byte[] Arr, int k)
+        public byte GetIndex(byte[] ByteArray, int index)
         {
-            if (k >= Arr.Length)
+            if (index >= ByteArray.Length)
                 return 0;
-            return Arr[Arr.Length - 1 - k];
+            return ByteArray[ByteArray.Length - 1 - index];
     
         }
-        public int CalculateSum(int firstBite, int secondBite, int k)
+        public int CalculateSum(int firstArrayBite, int secondArrayBite, int theCarry)
         {
-            return firstBite + secondBite + k;
+            return firstArrayBite + secondArrayBite + theCarry;
         }
        
     }
