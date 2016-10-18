@@ -9,6 +9,12 @@ namespace BinaryNumbers
     public class UnitTest1
     {
         [TestMethod]
+        public void ConvertToAnyBase()
+        {
+            byte[] array = new byte[] { 4,6,7,2 };
+            CollectionAssert.AreEqual(array, ConvertToAnyBase(2490, 8));
+        }
+        [TestMethod]
         public void BinaryConversion()
         {
             byte[] array = new byte[] { 1, 1, 0, 0, 0, 1 };
@@ -83,6 +89,21 @@ namespace BinaryNumbers
         public void Divide()
         {
             CollectionAssert.AreEqual(TransformToBinary(16), Divide(TransformToBinary(32), TransformToBinary(2)));
+        }
+        public byte[] ConvertToAnyBase(int number, int theBase)
+        {
+            byte[] resultArray = new byte[0];
+
+            while (number > 0)
+            {
+                Array.Resize(ref resultArray, resultArray.Length + 1);
+                resultArray[resultArray.Length - 1] = (byte)(number % theBase);
+                number = number / theBase;
+            }
+
+            Array.Reverse(resultArray);
+
+            return resultArray;
         }
         public byte[] TransformToBinary(int number)
         {
@@ -179,11 +200,11 @@ namespace BinaryNumbers
             byte[] resultArray = new byte[1];
             for (var i = secondArray  ; LessThan(i,firstArray); i = Add(i, secondArray))
                 resultArray = Add(resultArray, new byte[] { 1 });
-            return TrimArray(resultArray);
+            return resultArray;
         }
         bool LessThan(byte[] firstArray, byte[] secondArray)
         {
-            for (int i = (Math.Max(firstArray.Length, secondArray.Length) - 1); i >= 0; i--) 
+            for (int i = (Math.Max(firstArray.Length, secondArray.Length) - 1); i >= 0; i--)
             {
                 if (GetIndex(firstArray, i) != GetIndex(secondArray, i))
                     return GetIndex(firstArray, i) < GetIndex(secondArray, i);          
@@ -229,5 +250,6 @@ namespace BinaryNumbers
         {
             return firstBite + secondBite + k;
         }
+       
     }
 }
