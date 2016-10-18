@@ -72,7 +72,7 @@ namespace BinaryNumbers
         [TestMethod]
         public void Minus()
         {
-            CollectionAssert.AreEqual(TransformToBinary(2), Minus(TransformToBinary(5), TransformToBinary(3)));
+            CollectionAssert.AreEqual(TransformToBinary(29), Minus(TransformToBinary(142), TransformToBinary(113)));
         }
         [TestMethod]
         public byte[] TransformToBinary(int number)
@@ -104,7 +104,6 @@ namespace BinaryNumbers
             for (int i = resultArray.Length-1; i>=0 ; i--)
                 switch (selectedOperation)
                 {
-
                     case "OR":
                         resultArray[resultArray.Length - 1 - i] = (byte)(Compare(GetIndex(firstArray, i),GetIndex(secondArray, i), 0) ? 0 : 1);
                         break;
@@ -112,10 +111,9 @@ namespace BinaryNumbers
                         resultArray[resultArray.Length - 1 - i] = (byte)(Compare(GetIndex(firstArray, i),GetIndex(secondArray, i), 1) ? 1 : 0);
                         break;
                     case "XOR":
-                        resultArray[resultArray.Length - 1 - i] = (byte)(!Compare(GetIndex(firstArray, i),GetIndex(secondArray, i), 0) && !Compare(GetIndex(firstArray, i), GetIndex(secondArray, i), 1) ? 1 : 0); 
+                        resultArray[resultArray.Length - 1 - i] = (byte)(!Compare(GetIndex(firstArray, i), GetIndex(secondArray, i), 0) && !Compare(GetIndex(firstArray, i), GetIndex(secondArray, i), 1) ? 1 : 0);
                         break;
                 }
-
             return TrimArray(resultArray); ;
         }
         public byte[] LeftShift(byte[] byteArray, int numberOfShitfs)
@@ -135,30 +133,29 @@ namespace BinaryNumbers
             int carry = 0;
             for (int i = 0; i < resultArray.Length; i++) 
             {
-                var sum = GetIndex(firstArray, firstArray.Length - i -1) + GetIndex(secondArray,i) + carry;
-                resultArray[i] = (byte)(sum % 2);
+                var sum = GetIndex(firstArray,i) + GetIndex(secondArray,i) + carry;
+                resultArray[resultArray.Length - i - 1] = (byte)(sum % 2);
                 carry = (sum > 1) ? 1 : 0;
             }
             if(carry == 1)
             {
+                Array.Reverse(resultArray);
                 Array.Resize(ref resultArray, resultArray.Length + 1);
-                resultArray[resultArray.Length-1] = (byte)(carry);
+                Array.Reverse(resultArray);
+                resultArray[0] = (byte)(carry);
             }
-                    Array.Reverse(resultArray);
             return resultArray;
         }
         public byte[] Minus(byte[] firstArray, byte[] secondArray)
         {
             byte[] resultArray = new byte[Math.Max(firstArray.Length, secondArray.Length)];
             int carry = 0;
-            Array.Reverse(resultArray);
             for (int i = 0; i < resultArray.Length; i++)
             {
-                var sum = GetIndex(firstArray, i) - GetIndex(secondArray, i) - carry;
-                resultArray[i] = (byte)(Math.Abs((sum % 2)));
-                carry = (sum < 0) ? 1 : 0;
+                var sum = 2 + GetIndex(firstArray, i) - GetIndex(secondArray, i) - carry;
+                resultArray[resultArray.Length - i - 1] = (byte)(sum % 2);
+                carry = (sum < 2) ? 1 : 0;
             }
-            Array.Reverse(resultArray);
             return TrimArray(resultArray);
         }
         bool LessThan(byte[] firstArray, byte[] secondArray)
