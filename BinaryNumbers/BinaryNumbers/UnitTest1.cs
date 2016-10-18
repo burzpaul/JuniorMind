@@ -76,6 +76,11 @@ namespace BinaryNumbers
             Assert.AreEqual(true, Equal(TransformToBinary(3), TransformToBinary(3)));
         }
         [TestMethod]
+        public void EqualAnyBase()
+        {
+            Assert.AreEqual(true, Equal(ConvertToAnyBase(255, 255), ConvertToAnyBase(255, 255)));
+        }
+        [TestMethod]
         public void NotEqual()
         {
             Assert.AreEqual(true, NotEqual(TransformToBinary(4), TransformToBinary(3)));
