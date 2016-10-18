@@ -56,6 +56,11 @@ namespace BinaryNumbers
            Assert.AreEqual(true, LessThan(TransformToBinary(3),TransformToBinary(4)));
         }
         [TestMethod]
+        public void LessThanAnyBase()
+        {
+            Assert.AreEqual(true, LessThan(ConvertToAnyBase(2490, 8), ConvertToAnyBase(2491,8)));
+        }
+        [TestMethod]
         public void GreaterThen()
         {
             Assert.AreEqual(false, GreaterThan(TransformToBinary(3), TransformToBinary(4)));
