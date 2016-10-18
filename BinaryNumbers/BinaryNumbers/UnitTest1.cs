@@ -75,6 +75,10 @@ namespace BinaryNumbers
             CollectionAssert.AreEqual(TransformToBinary(29), Minus(TransformToBinary(142), TransformToBinary(113)));
         }
         [TestMethod]
+        public void Multiply()
+        {
+            CollectionAssert.AreEqual(TransformToBinary(49), Multiply(TransformToBinary(7), TransformToBinary(7)));
+        }
         public byte[] TransformToBinary(int number)
         {
             byte[] resultArray = new byte[0];
@@ -157,6 +161,13 @@ namespace BinaryNumbers
                 carry = (sum < 2) ? 1 : 0;
             }
             return TrimArray(resultArray);
+        }
+        public byte[] Multiply(byte[] firstArray, byte[] secondArray)
+        {
+            byte[] resultArray = new byte[1];
+            for (var i = new byte[] { 1 }; LessThan(i,secondArray); i = Add(i, new byte[] { 1 }))        
+                resultArray = Add(resultArray, firstArray);         
+            return resultArray;
         }
         bool LessThan(byte[] firstArray, byte[] secondArray)
         {
