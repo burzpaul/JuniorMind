@@ -215,9 +215,10 @@ namespace BinaryNumbers
             for (int i = 0; i < resultArray.Length; i++)
             {
                 var sum = givenBase + CalculateSum(GetIndex(firstArray, i), -GetIndex(secondArray, i), -carry);
-                resultArray[resultArray.Length - i - 1] = (byte)(sum % givenBase);
+                resultArray[i] = (byte)(sum % givenBase);
                 carry = (sum < givenBase) ? 1 : 0;
             }
+            Array.Reverse(resultArray);
             return TrimArray(resultArray);
         }
         public byte[] Multiply(byte[] firstArray, byte[] secondArray,byte givenBase)
