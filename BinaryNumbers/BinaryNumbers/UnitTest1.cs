@@ -106,10 +106,10 @@ namespace BinaryNumbers
             CollectionAssert.AreEqual(ConvertToAnyBase(49,16), Multiply(ConvertToAnyBase(7,16), ConvertToAnyBase(7,16),16));
         }
         [TestMethod]
-        /*public void Divide()
+        public void Divide()
         {
-            CollectionAssert.AreEqual(TransformToBinary(16), Divide(TransformToBinary(32), TransformToBinary(2)));
-        }*/
+            CollectionAssert.AreEqual(ConvertToAnyBase(6,6), Divide(ConvertToAnyBase(36,6), ConvertToAnyBase(6,6),6));
+        }
         public byte[] ConvertToAnyBase(int number, int theBase)
         {
             byte[] resultArray = new byte[0];
@@ -215,13 +215,13 @@ namespace BinaryNumbers
                 resultArray = Add(resultArray, firstArray,givenBase);         
             return resultArray;
         }
-        /*public byte[] Divide(byte[] firstArray, byte[] secondArray)
+        public byte[] Divide(byte[] firstArray, byte[] secondArray,byte givenBase)
         {
             byte[] resultArray = new byte[1];
-            for (var i = secondArray  ; LessThan(i,firstArray); i = Add(i, secondArray))
-                resultArray = Add(resultArray, new byte[] { 1 });
+            for (var i = secondArray  ; LessThan(i,firstArray); i = Add(i, secondArray,givenBase))
+                resultArray = Add(resultArray, new byte[] { 1 },givenBase);
             return resultArray;
-        }*/
+        }
         bool LessThan(byte[] firstArray, byte[] secondArray)
         {
             for (int i = (Math.Max(firstArray.Length, secondArray.Length) - 1); i >= 0; i--)
