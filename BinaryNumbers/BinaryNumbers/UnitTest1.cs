@@ -86,6 +86,11 @@ namespace BinaryNumbers
             Assert.AreEqual(true, NotEqual(TransformToBinary(4), TransformToBinary(3)));
         }
         [TestMethod]
+        public void NotEqualAnyBase()
+        {
+            Assert.AreEqual(true, NotEqual(ConvertToAnyBase(255, 128), ConvertToAnyBase(255, 255)));
+        }
+        [TestMethod]
         public void Add()
         {
             CollectionAssert.AreEqual(TransformToBinary(142), Add(TransformToBinary(127), TransformToBinary(15)));
