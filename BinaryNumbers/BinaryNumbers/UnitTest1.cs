@@ -101,12 +101,12 @@ namespace BinaryNumbers
             CollectionAssert.AreEqual(ConvertToAnyBase(29,16), Minus(ConvertToAnyBase(142,16), ConvertToAnyBase(113,16),16));
         }
         [TestMethod]
-        /*public void Multiply()
+        public void Multiply()
         {
-            CollectionAssert.AreEqual(TransformToBinary(49), Multiply(TransformToBinary(7), TransformToBinary(7)));
+            CollectionAssert.AreEqual(ConvertToAnyBase(49,16), Multiply(ConvertToAnyBase(7,16), ConvertToAnyBase(7,16),16));
         }
         [TestMethod]
-        public void Divide()
+        /*public void Divide()
         {
             CollectionAssert.AreEqual(TransformToBinary(16), Divide(TransformToBinary(32), TransformToBinary(2)));
         }*/
@@ -208,14 +208,14 @@ namespace BinaryNumbers
             }
             return TrimArray(resultArray);
         }
-        /*public byte[] Multiply(byte[] firstArray, byte[] secondArray)
+        public byte[] Multiply(byte[] firstArray, byte[] secondArray,byte givenBase)
         {
             byte[] resultArray = new byte[1];
-            for (var i = new byte[] { 1 }; LessThan(i,secondArray); i = Add(i, new byte[] { 1 }))        
-                resultArray = Add(resultArray, firstArray);         
+            for (var i = new byte[] { 1 }; LessThan(i,secondArray); i = Add(i, new byte[] { 1 },givenBase))        
+                resultArray = Add(resultArray, firstArray,givenBase);         
             return resultArray;
         }
-        public byte[] Divide(byte[] firstArray, byte[] secondArray)
+        /*public byte[] Divide(byte[] firstArray, byte[] secondArray)
         {
             byte[] resultArray = new byte[1];
             for (var i = secondArray  ; LessThan(i,firstArray); i = Add(i, secondArray))
