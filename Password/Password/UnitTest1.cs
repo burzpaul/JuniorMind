@@ -8,15 +8,23 @@ namespace Password
         [TestMethod]
         public void CheckLowerCaseLettersPassword()
         {
-            var password = GeneratePassword(new Password(8));
+            var password = GeneratePassword(new Password(8,8,0,0,0));
             Assert.AreEqual(true , OnlyLowerCaseLetters(password));
         }
         struct Password
         {
             public int passwordLength;
-            public Password(int passwordLength)
+            public int lowerCaseLetters;
+            public int upperCaseLetters;
+            public int digits;
+            public int symbols;
+            public Password(int passwordLength, int lowerCaseLetters, int upperCaseLetters, int digits, int symbols)
             {
-                this.passwordLength = passwordLength;   
+                this.passwordLength = passwordLength;
+                this.lowerCaseLetters = lowerCaseLetters;
+                this.upperCaseLetters = upperCaseLetters;
+                this.digits = digits;
+                this.symbols = symbols;
             }
         }
         Random rand = new Random();
