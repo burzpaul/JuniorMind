@@ -1,41 +1,44 @@
 ﻿using System;
-using System.Linq;
-using System.Collections;
-using System.Security.Cryptography;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Password
 {
-    public struct UserPassword {
-        public string thePassword;
-       
-    }
     [TestClass]
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void CheckLowerCaseLettersPassword()
         {
-            
+            var password = GeneratePassword(new Password(8, "abcdefghijklmnopqrstuvwxyz"));
+            Assert.AreEqual(true , OnlyLowerCaseLetter(password));
         }
-        public string Characters = "abcdefghijklmnopqrstuvwxyz";
-        public string generatedPassword;
-        private static RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider();
-        public string Password(int passwordLength)
+        struct Password
         {
-          
-            for (int i = 0; i < passwordLength; i++) 
-             generatedPassword = generatedPassword + Characters[RandomValue()];
-            
-            return null;
-        }
-        public byte  RandomValue()
-        {
-            byte[] randomNumber = new byte[1];
-            do
+            public int passwordLength;
+            public string lowerCaseLetters;
+            public Password(int passwordLength,string lowerCaseLetters)
             {
-                rngCsp.GetBytes(randomNumber);
-            } while (randomNumber[0] > Characters.Length - 1);
-            return randomNumber[0];
+                this.passwordLength = passwordLength;
+                this.lowerCaseLetters = lowerCaseLetters;
+               
+            }
+        }
+        Random rand = new Random();
+        string GeneratePassword(Password password)
+        {
+            string result = null;
+            for (int i = 0; i < password.passwordLength; i++)
+                result += password.lowerCaseLetters[rand.Next(0, 25)];
+
+            return result;
+        }
+        private bool OnlyLowerCaseLetter(string password)
+        {
+            for (int i = 0; i < password.Length -1 ; i++)
+            {
+                if (Char.IsUpper(password[i]))
+                    return false;
+            }
+            return true;
         }
     }
 }
