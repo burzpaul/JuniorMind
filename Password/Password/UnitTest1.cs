@@ -8,18 +8,15 @@ namespace Password
         [TestMethod]
         public void CheckLowerCaseLettersPassword()
         {
-            var password = GeneratePassword(new Password(8, "abcdefghijklmnopqrstuvwxyz"));
-            Assert.AreEqual(true , OnlyLowerCaseLetter(password));
+            var password = GeneratePassword(new Password(8));
+            Assert.AreEqual(true , OnlyLowerCaseLetters(password));
         }
         struct Password
         {
             public int passwordLength;
-            public string lowerCaseLetters;
-            public Password(int passwordLength,string lowerCaseLetters)
+            public Password(int passwordLength)
             {
-                this.passwordLength = passwordLength;
-                this.lowerCaseLetters = lowerCaseLetters;
-               
+                this.passwordLength = passwordLength;   
             }
         }
         Random rand = new Random();
@@ -27,17 +24,14 @@ namespace Password
         {
             string result = null;
             for (int i = 0; i < password.passwordLength; i++)
-                result += password.lowerCaseLetters[rand.Next(0, 25)];
-
+                result += (char)rand.Next('a', 'z');
             return result;
         }
-        private bool OnlyLowerCaseLetter(string password)
+        private bool OnlyLowerCaseLetters(string password)
         {
             for (int i = 0; i < password.Length -1 ; i++)
-            {
                 if (Char.IsUpper(password[i]))
-                    return false;
-            }
+                    return false;      
             return true;
         }
     }
