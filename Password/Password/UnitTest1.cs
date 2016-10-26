@@ -11,6 +11,12 @@ namespace Password
             var password = GeneratePassword(new Password(8,8,0,0,0));
             Assert.AreEqual(true , OnlyLowerCaseLetters(password));
         }
+        [TestMethod]
+        public void CheckUpperCaseLettersPassword()
+        {
+            var password = GeneratePassword(new Password(10, 0, 10, 0 , 0));
+            Assert.AreEqual(10, NumberOfUpperCaseLetters(password));
+        }
         struct Password
         {
             public int passwordLength;
@@ -31,9 +37,24 @@ namespace Password
         string GeneratePassword(Password password)
         {
             string result = null;
-            for (int i = 0; i < password.passwordLength; i++)
-                result += (char)rand.Next('a', 'z');
+            result += GetCharacters(password.lowerCaseLetters,'a','z');
+            result += GetCharacters(password.upperCaseLetters, 'A', 'Z');
             return result;
+        }
+        string GetCharacters(int numberOfCharacters, char start, char end)
+        {
+            string result = null;
+            for (int i = 0; i <= numberOfCharacters; i++)
+                result += (char)rand.Next(start,end);
+            return result;
+        }
+        int NumberOfUpperCaseLetters(string password)
+        {
+            int count = 0;
+            for (int i = 0; i < password.Length - 1; i++)
+                if (Char.IsUpper(password[i]))
+                    count++;
+            return count;
         }
         private bool OnlyLowerCaseLetters(string password)
         {
