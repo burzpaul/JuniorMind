@@ -17,6 +17,12 @@ namespace Password
             var password = GeneratePassword(new Password(10, 0, 10, 0 , 0));
             Assert.AreEqual(10, NumberOfUpperCaseLetters(password));
         }
+       [TestMethod]
+        public void CheckDigitsPassword()
+        {
+            var password = GeneratePassword(new Password(6, 0, 0, 6, 0));
+            Assert.AreEqual(6, NumberOfDigits(password));
+        }
         struct Password
         {
             public int passwordLength;
@@ -39,26 +45,35 @@ namespace Password
             string result = null;
             result += GetCharacters(password.lowerCaseLetters,'a','z');
             result += GetCharacters(password.upperCaseLetters, 'A', 'Z');
+            result += GetCharacters(password.digits, '0', '9');
             return result;
         }
         string GetCharacters(int numberOfCharacters, char start, char end)
         {
             string result = null;
-            for (int i = 0; i <= numberOfCharacters; i++)
+            for (int i = 0; i < numberOfCharacters; i++)
                 result += (char)rand.Next(start,end);
             return result;
         }
-        int NumberOfUpperCaseLetters(string password)
+        private int NumberOfUpperCaseLetters(string password)
         {
             int count = 0;
-            for (int i = 0; i < password.Length - 1; i++)
+            for (int i = 0; i < password.Length ; i++)
                 if (Char.IsUpper(password[i]))
+                    count++;
+            return count;
+        }
+        private int NumberOfDigits(string password)
+        {
+            int count = 0;
+            for (int i = 0; i < password.Length; i++)
+                if (Char.IsDigit(password[i]))
                     count++;
             return count;
         }
         private bool OnlyLowerCaseLetters(string password)
         {
-            for (int i = 0; i < password.Length -1 ; i++)
+            for (int i = 0; i < password.Length  ; i++)
                 if (Char.IsUpper(password[i]))
                     return false;      
             return true;
