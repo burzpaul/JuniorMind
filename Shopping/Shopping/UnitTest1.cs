@@ -36,6 +36,14 @@ namespace Shopping
             AddNewItem(shoppingItems, "Magnum P51 Mustang", 88.999);
             Assert.AreEqual(a, shoppingItems.Length);
         }
+        [TestMethod]
+        public void AveragePrice()
+        {
+            var shoppingItems = new ShoppingCart[] { new ShoppingCart("Tide", 17.32), new ShoppingCart("Soap", 3.45), new ShoppingCart("CaptainCrunch", 7.99), new ShoppingCart("BubbleGum", 1.25), new ShoppingCart("AfterShave", 3.75) };
+            double expected = 6.752;
+            double delta = 1;
+            Assert.AreEqual(expected, CalculateAveragePrice(shoppingItems), delta);
+        }
         struct ShoppingCart
         {
             public string productName;
@@ -95,6 +103,10 @@ namespace Shopping
             Array.Resize(ref shoppingItems, shoppingItems.Length + 1);
             shoppingItems[shoppingItems.Length - 1].productName = newItemName;
             shoppingItems[shoppingItems.Length - 1].productCost = newItemCost;
+        }
+        private double CalculateAveragePrice(ShoppingCart[] shoppingItems)
+        {
+            return CalculateTotalCost(shoppingItems)/shoppingItems.Length-1;
         }
     }
 }
