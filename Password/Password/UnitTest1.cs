@@ -57,7 +57,7 @@ namespace Password
         }
         string GetSymbols(int numberOfSymbols)
         {
-            string symbols = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+            string symbols = " !#$%&'()*+,-./:;<=>?@[]^_`{|}~";
             string result = null;
             for (int i = 0; i < numberOfSymbols; i++)
                 result += symbols[rand.Next(0,30)];
@@ -91,7 +91,7 @@ namespace Password
             int count = 0;
             string symbols = " !#$%&'()*+,-./:;<=>?@[]^_`{|}~";
             for (int i = 0; i < password.Length; i++)
-                if (symbols.IndexOf(password[i]) != 0)
+                if (symbols.IndexOf(password[i]) != -1)
                     count++;
             return count;
         }
