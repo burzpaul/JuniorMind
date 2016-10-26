@@ -23,6 +23,12 @@ namespace Password
             var password = GeneratePassword(new Password(6, 0, 0, 6, 0));
             Assert.AreEqual(6, NumberOfDigits(password));
         }
+        [TestMethod]
+        public void CheckSymbolsPassword()
+        {
+            var password = GeneratePassword(new Password(4, 0, 0, 0, 4));
+            Assert.AreEqual(4, NumberOfSymbols(password));
+        }
         struct Password
         {
             public int passwordLength;
@@ -46,6 +52,15 @@ namespace Password
             result += GetCharacters(password.lowerCaseLetters,'a','z');
             result += GetCharacters(password.upperCaseLetters, 'A', 'Z');
             result += GetCharacters(password.digits, '0', '9');
+            result += GetSymbols(password.symbols);
+            return result;
+        }
+        string GetSymbols(int numberOfSymbols)
+        {
+            string symbols = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+            string result = null;
+            for (int i = 0; i < numberOfSymbols; i++)
+                result += symbols[rand.Next(0,30)];
             return result;
         }
         string GetCharacters(int numberOfCharacters, char start, char end)
@@ -68,6 +83,15 @@ namespace Password
             int count = 0;
             for (int i = 0; i < password.Length; i++)
                 if (Char.IsDigit(password[i]))
+                    count++;
+            return count;
+        }
+        private int NumberOfSymbols(string password)
+        {
+            int count = 0;
+            string symbols = " !#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+            for (int i = 0; i < password.Length; i++)
+                if (symbols.IndexOf(password[i]) != 0)
                     count++;
             return count;
         }
