@@ -28,6 +28,14 @@ namespace Shopping
             EliminateMostExpensiveItem(shoppingItems);
             Assert.AreEqual(shoppingItems[1].productName, FindItem(shoppingItems, true));
         }
+        [TestMethod]
+        public void AddNewItem()
+        {
+            var shoppingItems = new ShoppingCart[] { new ShoppingCart("Tide", 17.32), new ShoppingCart("Soap", 3.45), new ShoppingCart("CaptainCrunch", 7.99), new ShoppingCart("BubbleGum", 1.25), new ShoppingCart("AfterShave", 3.75) };
+            int a = shoppingItems.Length;
+            AddNewItem(shoppingItems, "Magnum P51 Mustang", 88.999);
+            Assert.AreEqual(a, shoppingItems.Length);
+        }
         struct ShoppingCart
         {
             public string productName;
@@ -81,6 +89,12 @@ namespace Shopping
                         shoppingItems[j].productCost = shoppingItems[j + 1].productCost;
                     }
             Array.Resize(ref shoppingItems, shoppingItems.Length - 1);             
+        }
+        private void AddNewItem(ShoppingCart[] shoppingItems, string newItemName, double newItemCost)
+        {
+            Array.Resize(ref shoppingItems, shoppingItems.Length + 1);
+            shoppingItems[shoppingItems.Length - 1].productName = newItemName;
+            shoppingItems[shoppingItems.Length - 1].productCost = newItemCost;
         }
     }
 }
