@@ -8,27 +8,33 @@ namespace Password
         [TestMethod]
         public void CheckLowerCaseLettersPassword()
         {
-            var password = GeneratePassword(new Password(8,8,0,0,0));
-            Assert.AreEqual(true , OnlyLowerCaseLetters(password));
+            var password = GeneratePassword(new Password(8, 8, 0, 0, 0, 0, 0));
+            Assert.AreEqual(8 , OnlyLowerCaseLetters(password));
         }
         [TestMethod]
         public void CheckUpperCaseLettersPassword()
         {
-            var password = GeneratePassword(new Password(10, 0, 10, 0 , 0));
+            var password = GeneratePassword(new Password(10, 0, 10, 0, 0, 0, 0));
             Assert.AreEqual(10, NumberOfUpperCaseLetters(password));
         }
        [TestMethod]
         public void CheckDigitsPassword()
         {
-            var password = GeneratePassword(new Password(6, 0, 0, 6, 0));
+            var password = GeneratePassword(new Password(6, 0, 0, 6, 0, 0, 0));
             Assert.AreEqual(6, NumberOfDigits(password));
         }
         [TestMethod]
         public void CheckSymbolsPassword()
         {
-            var password = GeneratePassword(new Password(4, 0, 0, 0, 4));
+            var password = GeneratePassword(new Password(4, 0, 0, 0, 4, 0, 0));
             Assert.AreEqual(4, NumberOfSymbols(password));
         }
+        /*[TestMethod]
+        public void PasswordWithoutSimilarOrAmbiguousCharacters()
+        {
+            var password = GeneratePassword(new Password(50, 10, 20, 10, 10, 1, 1));
+            Assert.AreEqual();
+        }*/
         struct Password
         {
             public int passwordLength;
@@ -36,13 +42,17 @@ namespace Password
             public int upperCaseLetters;
             public int digits;
             public int symbols;
-            public Password(int passwordLength, int lowerCaseLetters, int upperCaseLetters, int digits, int symbols)
+            public byte exludeSimilarCharacters;
+            public byte excludeAmbiguousCharacters;
+            public Password(int passwordLength, int lowerCaseLetters, int upperCaseLetters, int digits, int symbols, byte exludeSimilarCharacters, byte excludeAmbiguousCharacters)
             {
                 this.passwordLength = passwordLength;
                 this.lowerCaseLetters = lowerCaseLetters;
                 this.upperCaseLetters = upperCaseLetters;
                 this.digits = digits;
                 this.symbols = symbols;
+                this.exludeSimilarCharacters = exludeSimilarCharacters;
+                this.excludeAmbiguousCharacters = excludeAmbiguousCharacters;
             }
         }
         Random rand = new Random();
@@ -89,18 +99,18 @@ namespace Password
         private int NumberOfSymbols(string password)
         {
             int count = 0;
-            string symbols = " !#$%&'()*+,-./:;<=>?@[]^_`{|}~";
             for (int i = 0; i < password.Length; i++)
-                if (symbols.IndexOf(password[i]) != -1)
+                if (!Char.IsLetterOrDigit(password[i]) )
                     count++;
             return count;
         }
-        private bool OnlyLowerCaseLetters(string password)
+        private int OnlyLowerCaseLetters(string password)
         {
+            int count = 0;
             for (int i = 0; i < password.Length  ; i++)
-                if (Char.IsUpper(password[i]))
-                    return false;      
-            return true;
+                if (Char.IsLower(password[i]))
+                    count++;      
+            return count;
         }
     }
 }
