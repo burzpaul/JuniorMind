@@ -106,7 +106,7 @@ namespace Shopping
         }
         private double CalculateAveragePrice(ShoppingCart[] shoppingItems)
         {
-            return CalculateTotalCost(shoppingItems)/shoppingItems.Length-1;
+            return CalculateTotalCost(shoppingItems)/shoppingItems.Length;
         }
     }
 }
