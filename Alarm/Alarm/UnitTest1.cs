@@ -9,21 +9,20 @@ namespace Alarm
         [TestMethod]
         public void TestTheAlarm()
         {
-            var weekAlarm = new Alarm { hour = 6, day = DayOfWeek.Monday | DayOfWeek.Tuesday | DayOfWeek.Wednesday | DayOfWeek.Thursday | DayOfWeek.Friday };
-            var weekendAlarm = new Alarm { hour = 8, day = DayOfWeek.Saturday | DayOfWeek.Saturday };
-            Assert.AreEqual(true, VerifyAlarm(6, DayOfWeek.Monday,weekAlarm));
-            Assert.AreEqual(false, VerifyAlarm(5, DayOfWeek.Monday, weekAlarm));
-            Assert.AreEqual(true, VerifyAlarm(6, DayOfWeek.Tuesday, weekAlarm));
-            Assert.AreEqual(false, VerifyAlarm(15, DayOfWeek.Wednesday, weekAlarm));
-            Assert.AreEqual(true, VerifyAlarm(6, DayOfWeek.Thursday, weekAlarm));
-            Assert.AreEqual(false, VerifyAlarm(14, DayOfWeek.Friday, weekAlarm));
-            Assert.AreEqual(true, VerifyAlarm(8, DayOfWeek.Saturday, weekendAlarm));
-            Assert.AreEqual(false, VerifyAlarm(9, DayOfWeek.Sunday, weekendAlarm));
-
+            var weekAlarm = new Alarm { hour = 6, day = DaysOfTheWeek.Tuesday | DaysOfTheWeek.Wednesday | DaysOfTheWeek.Thursday | DaysOfTheWeek.Friday };
+            var weekendAlarm = new Alarm { hour = 8, day = DaysOfTheWeek.Saturday | DaysOfTheWeek.Saturday };
+            Assert.AreEqual(false, VerifyAlarm(6, DaysOfTheWeek.Monday, weekAlarm));//Monday was not set
+            Assert.AreEqual(false, VerifyAlarm(8, DaysOfTheWeek.Monday, weekAlarm));
+            Assert.AreEqual(true, VerifyAlarm(6, DaysOfTheWeek.Tuesday, weekAlarm));
+            Assert.AreEqual(false, VerifyAlarm(15, DaysOfTheWeek.Wednesday, weekAlarm));
+            Assert.AreEqual(true, VerifyAlarm(6, DaysOfTheWeek.Thursday, weekAlarm));
+            Assert.AreEqual(false, VerifyAlarm(14, DaysOfTheWeek.Friday, weekAlarm));
+            Assert.AreEqual(true, VerifyAlarm(8, DaysOfTheWeek.Saturday, weekendAlarm));
+            Assert.AreEqual(false, VerifyAlarm(9, DaysOfTheWeek.Sunday, weekendAlarm));
         }
         [Flags]
-        enum Days
-        { 
+        enum DaysOfTheWeek
+        {
             Monday = 0x1,
             Tuesday = 0x2,
             Wednesday = 0x4,
@@ -34,15 +33,15 @@ namespace Alarm
         }
         struct Alarm
         {
-            public DayOfWeek day;
+            public DaysOfTheWeek day;
             public int hour;
-            public Alarm(DayOfWeek day, int hour)
+            public Alarm(DaysOfTheWeek day, int hour)
             {
                 this.day = day;
                 this.hour = hour;
             }
         }
-        private bool VerifyAlarm(int hour, DayOfWeek day,Alarm alarm)
+        private bool VerifyAlarm(int hour,DaysOfTheWeek day,Alarm alarm)
         {  
                 if (((day & alarm.day) != 0) && ((hour & alarm.hour) != 0))
                        if(hour == alarm.hour)
