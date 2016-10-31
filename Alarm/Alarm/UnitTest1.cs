@@ -11,8 +11,8 @@ namespace Alarm
         {
             var weekAlarm = new Alarm { hour = 6, day = DayOfWeek.Monday | DayOfWeek.Tuesday | DayOfWeek.Wednesday | DayOfWeek.Thursday | DayOfWeek.Friday };
             var weekendAlarm = new Alarm { hour = 8, day = DayOfWeek.Saturday | DayOfWeek.Saturday };
-            Assert.AreEqual(true, VerifyAlarm(6, DayOfWeek.Monday));
-
+            Assert.AreEqual(true, VerifyAlarm(6, DayOfWeek.Monday,weekAlarm));
+            Assert.AreEqual(false, VerifyAlarm(5, DayOfWeek.Monday, weekAlarm));
         }
         [Flags]
         enum Days
@@ -35,9 +35,14 @@ namespace Alarm
                 this.hour = hour;
             }
         }
-        private bool VerifyAlarm(int v, DayOfWeek monday)
+        private bool VerifyAlarm(int hour, DayOfWeek day,Alarm alarm)
         {
-            throw new NotImplementedException();
+            
+                if (((day & alarm.day) != 0) && ((hour & alarm.hour) != 0))
+                       if(hour == alarm.hour)
+                            return true;
+            
+            return false;
         }
     }
 }
