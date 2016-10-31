@@ -17,13 +17,14 @@ namespace Alarm
                                           new Alarm(6,DayOfWeek.Saturday),
                                           new Alarm(8,DayOfWeek.Sunday)};
                             
-            Assert.AreEqual(false, VerifyAlarm(6, DayOfWeek.Monday, alarms[0]));
-            Assert.AreEqual(true, VerifyAlarm(6, DayOfWeek.Tuesday, alarms[1]));
-            Assert.AreEqual(false, VerifyAlarm(6, DayOfWeek.Wednesday, alarms[2]));
-            Assert.AreEqual(true, VerifyAlarm(6, DayOfWeek.Thursday, alarms[3]));
-            Assert.AreEqual(false, VerifyAlarm(6, DayOfWeek.Friday, alarms[4]));
-            Assert.AreEqual(false, VerifyAlarm(8, DayOfWeek.Saturday, alarms[5]));
-            Assert.AreEqual(true, VerifyAlarm(8, DayOfWeek.Sunday, alarms[6]));
+            Assert.AreEqual(false, VerifyAlarm(6, alarms[0]));
+            Assert.AreEqual(true, VerifyAlarm(6,alarms[1]));
+            Assert.AreEqual(false, VerifyAlarm(6,alarms[2]));
+            Assert.AreEqual(true, VerifyAlarm(6, alarms[3]));
+            Assert.AreEqual(false, VerifyAlarm(6, alarms[4]));
+            Assert.AreEqual(false, VerifyAlarm(8, alarms[5]));
+            Assert.AreEqual(true, VerifyAlarm(8,alarms[6]));
+
         }
         struct Alarm
         {
@@ -36,9 +37,8 @@ namespace Alarm
                 this.hour = hour;
             }
         }
-        private bool VerifyAlarm(int hour,DayOfWeek day,Alarm alarm)
+        private bool VerifyAlarm(int hour,Alarm alarm)
         {  
-                if (((day & alarm.day) >= 0) && ((hour & alarm.hour) != 0))
                        if(hour == alarm.hour)
                             return true;           
             return false;
