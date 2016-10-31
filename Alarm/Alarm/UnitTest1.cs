@@ -13,6 +13,13 @@ namespace Alarm
             var weekendAlarm = new Alarm { hour = 8, day = DayOfWeek.Saturday | DayOfWeek.Saturday };
             Assert.AreEqual(true, VerifyAlarm(6, DayOfWeek.Monday,weekAlarm));
             Assert.AreEqual(false, VerifyAlarm(5, DayOfWeek.Monday, weekAlarm));
+            Assert.AreEqual(true, VerifyAlarm(6, DayOfWeek.Tuesday, weekAlarm));
+            Assert.AreEqual(false, VerifyAlarm(15, DayOfWeek.Wednesday, weekAlarm));
+            Assert.AreEqual(true, VerifyAlarm(6, DayOfWeek.Thursday, weekAlarm));
+            Assert.AreEqual(false, VerifyAlarm(14, DayOfWeek.Friday, weekAlarm));
+            Assert.AreEqual(true, VerifyAlarm(8, DayOfWeek.Saturday, weekendAlarm));
+            Assert.AreEqual(false, VerifyAlarm(9, DayOfWeek.Sunday, weekendAlarm));
+
         }
         [Flags]
         enum Days
@@ -36,12 +43,10 @@ namespace Alarm
             }
         }
         private bool VerifyAlarm(int hour, DayOfWeek day,Alarm alarm)
-        {
-            
+        {  
                 if (((day & alarm.day) != 0) && ((hour & alarm.hour) != 0))
                        if(hour == alarm.hour)
-                            return true;
-            
+                            return true;           
             return false;
         }
     }
