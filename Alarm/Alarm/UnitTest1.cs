@@ -42,10 +42,8 @@ namespace Alarm
             }
         }
         private bool VerifyAlarm(byte hour,DaysOfTheWeek day,Alarm alarm)
-        {
-            if (((day & alarm.day) != 0) && ((hour & alarm.hour) != 0))
-                return true;           
-            return false;
+        {    
+                return ((day & alarm.day) == 0) & ((hour & alarm.hour) == 0);           
         }
     }
 }
