@@ -10,11 +10,11 @@ namespace Ciclometru
         public void TestMethod1()
         {
             double[] rotationInEverySecondAllCyclists = new double[] { 2, 4, 6, 8, 10, 3, 5, 7, 9, 11, 2, 5, 6, 9, 10 };
-            var cyclist = new Cyclist[] { new Cyclist("Jeremy, Clarkson",10, GetRotationsForEverySecond(rotationInEverySecondAllCyclists,0,4))
-                                          ,new Cyclist("Richard Hammond",11,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,5,9))
-                                          ,new Cyclist("James May",12,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,10,14))};
+            var cyclist = new Cyclist[] { new Cyclist("Jeremy, Clarkson ",10, GetRotationsForEverySecond(rotationInEverySecondAllCyclists,0,4))
+                                          ,new Cyclist("Richard Hammond ",11,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,5,9))
+                                          ,new Cyclist("James May ",12,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,10,14))};
             Assert.AreEqual(33.583, CalculateTotalDistance(cyclist),1);
-           
+            Assert.AreEqual("Richard Hammond second 5" , CalculateTopSpeed(cyclist));
         }
         struct Cyclist
         {
@@ -26,6 +26,16 @@ namespace Ciclometru
                 this.name = name;
                 this.diameterInCentimeters = diameterInCentimeters;
                 this.rotationsForEverySecond = rotationsForEverySecond;
+            }
+        };
+        struct TopSpeedCyclist
+        {
+            public string name;
+            public int second;
+            public TopSpeedCyclist(string name , int second)
+            {
+                this.name = name;
+                this.second = second;
             }
         }
         private double[] GetRotationsForEverySecond(double[] rotationInEverySecondAllCyclists, int lowerBound, int upperBound)
@@ -51,10 +61,13 @@ namespace Ciclometru
         }
         private string CalculateTopSpeed(Cyclist[] cyclist)
         {
+            TopSpeedCyclist getCyclist;
+            double topSpeed = GetTopSpeedForCyclist(cyclist[0]);
+        }
+        private double GetTopSpeedForCyclist(Cyclist cyclist)
+        {
             throw new NotImplementedException();
         }
-
-
     }
 }
 
