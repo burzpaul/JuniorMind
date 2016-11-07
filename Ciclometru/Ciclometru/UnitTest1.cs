@@ -9,33 +9,44 @@ namespace Ciclometru
         [TestMethod]
         public void TestMethod1()
         {
-            double[] rotationsForEverySecond = new double[1];
-            var cyclist = new Cyclist[] { new Cyclist("Dave", 27.4, 320, GetRotationForEverySecond(rotationsForEverySecond))
-                                          ,new Cyclist("Alex",25.7,320,rotationsForEverySecond)};
-            Assert.AreEqual(320, TotalDistanceForAllCyclists(cyclist));
-        }
-        private double TotalDistanceForAllCyclists(Cyclist[] cyclist)
-        {
-
-            return cyclist[2].rotationsForEverySecond[1];
-        }
-        private double[] GetRotationForEverySecond(double[] rotationsForEverySecond)
-        {
-
+            double[] rotationInEverySecondAllCyclists = new double[] { 2, 4, 6, 8, 10, 3, 5, 7, 9, 11, 2, 5, 6, 9, 10 };
+            var cyclist = new Cyclist[] { new Cyclist("Jeremy, Clarkson",10, GetRotationsForEverySecond(rotationInEverySecondAllCyclists,0,4))
+                                          ,new Cyclist("Richard Hammond",11,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,5,9))
+                                          ,new Cyclist("James May",12,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,10,14))};
+            Assert.AreEqual(3358.362, CalculateTotalDistance(cyclist),1);
         }
         struct Cyclist
         {
             public string name;
-            public double diameter;
-            public double totalTimeInSeconds;
+            public double diameterInCentimeters;
             public double[] rotationsForEverySecond;
-            public Cyclist(string name, double diameter, double totalTimeInSeconds, double[] rotationsForEverySecond)
+            public Cyclist(string name, double diameterInCentimeters, double[] rotationsForEverySecond)
             {
                 this.name = name;
-                this.diameter = diameter;
-                this.totalTimeInSeconds = totalTimeInSeconds;
+                this.diameterInCentimeters = diameterInCentimeters;
                 this.rotationsForEverySecond = rotationsForEverySecond;
             }
+        }
+        private double[] GetRotationsForEverySecond(double[] rotationInEverySecondAllCyclists, int lowerBound, int upperBound)
+        {
+            double[] resultArray = new double[upperBound - lowerBound + 1];
+            Array.Copy(rotationInEverySecondAllCyclists, lowerBound, resultArray, 0, resultArray.Length);
+            return resultArray;
+        }
+        private double CalculateTotalDistance(Cyclist[] cyclist)
+        {
+            double distance = 0;
+            for (int i = 0; i < cyclist.Length; i++)
+                distance += CalculateDistanceForCyclist(cyclist[i]);
+            return distance;
+        }
+        private double CalculateDistanceForCyclist(Cyclist cyclist)
+        {
+            double circumferince = Math.PI * cyclist.diameterInCentimeters;
+            double distance = 0;
+            for (int i = 0; i < cyclist.rotationsForEverySecond.Length; i++)
+                distance += cyclist.rotationsForEverySecond[i] * circumferince;
+            return distance;
         }
     }
 }
