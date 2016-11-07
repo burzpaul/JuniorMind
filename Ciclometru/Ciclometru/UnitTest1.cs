@@ -9,12 +9,12 @@ namespace Ciclometru
         [TestMethod]
         public void TestMethod1()
         {
-            double[] rotationInEverySecondAllCyclists = new double[] { 2, 4, 6, 8, 10, 3, 5, 7, 9, 11, 2, 5, 6, 9, 10 };
+            double[] rotationInEverySecondAllCyclists = new double[] { 2, 4, 6, 8, 10, 3, 5, 7, 9, 11, 2, 10, 6, 9, 5 };
             var cyclist = new Cyclist[] { new Cyclist("Jeremy, Clarkson",10, GetRotationsForEverySecond(rotationInEverySecondAllCyclists,0,4))
                                           ,new Cyclist("Richard Hammond",11,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,5,9))
                                           ,new Cyclist("James May",12,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,10,14))};
             Assert.AreEqual(33.583, CalculateTotalDistance(cyclist),1);
-            Assert.AreEqual("James May second 5" , ReturnTopSpeedSecondAndCyclistsName(cyclist));
+            Assert.AreEqual("James May second 2" , ReturnTopSpeedSecondAndCyclistsName(cyclist));
         }
         struct Cyclist
         {
