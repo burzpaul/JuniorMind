@@ -10,11 +10,11 @@ namespace Ciclometru
         public void TestMethod1()
         {
             double[] rotationInEverySecondAllCyclists = new double[] { 2, 4, 6, 8, 10, 3, 5, 7, 9, 11, 2, 5, 6, 9, 10 };
-            var cyclist = new Cyclist[] { new Cyclist("Jeremy, Clarkson ",10, GetRotationsForEverySecond(rotationInEverySecondAllCyclists,0,4))
-                                          ,new Cyclist("Richard Hammond ",11,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,5,9))
-                                          ,new Cyclist("James May ",12,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,10,14))};
+            var cyclist = new Cyclist[] { new Cyclist("Jeremy, Clarkson",10, GetRotationsForEverySecond(rotationInEverySecondAllCyclists,0,4))
+                                          ,new Cyclist("Richard Hammond",11,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,5,9))
+                                          ,new Cyclist("James May",12,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,10,14))};
             Assert.AreEqual(33.583, CalculateTotalDistance(cyclist),1);
-            Assert.AreEqual("Richard Hammond second 5" , CalculateTopSpeed(cyclist));
+            Assert.AreEqual("James May second 5" , ReturnTopSpeedSecondAndCyclistsName(cyclist));
         }
         struct Cyclist
         {
@@ -32,12 +32,14 @@ namespace Ciclometru
         {
             public string name;
             public int second;
-            public TopSpeedCyclist(string name , int second)
+           
+            public TopSpeedCyclist(string name , int second, double speed)
             {
                 this.name = name;
                 this.second = second;
             }
         }
+        TopSpeedCyclist getCyclist;
         private double[] GetRotationsForEverySecond(double[] rotationInEverySecondAllCyclists, int lowerBound, int upperBound)
         {
             double[] resultArray = new double[upperBound - lowerBound + 1];
@@ -53,20 +55,35 @@ namespace Ciclometru
         }
         private double CalculateDistanceForCyclist(Cyclist cyclist)
         {
-            double circumferince = Math.PI * cyclist.diameterInCentimeters;
+            double circumference = Math.PI * cyclist.diameterInCentimeters;
             double distance = 0;
             for (int i = 0; i < cyclist.rotationsForEverySecond.Length; i++)
-                distance += cyclist.rotationsForEverySecond[i] * circumferince;
+                distance += cyclist.rotationsForEverySecond[i] * circumference;
             return distance;
         }
-        private string CalculateTopSpeed(Cyclist[] cyclist)
+        private string ReturnTopSpeedSecondAndCyclistsName(Cyclist[] cyclist)
         {
-            TopSpeedCyclist getCyclist;
-            double topSpeed = GetTopSpeedForCyclist(cyclist[0]);
+            
+            double topSpeed = 0;
+            for (int i = 0; i < cyclist.Length; i++)
+                if (topSpeed < GetTopSpeedForCyclist(cyclist[i]))
+                    topSpeed = GetTopSpeedForCyclist(cyclist[i]);
+            return getCyclist.name + " second " + getCyclist.second  ;
         }
         private double GetTopSpeedForCyclist(Cyclist cyclist)
         {
-            throw new NotImplementedException();
+            double circumference = Math.PI * cyclist.diameterInCentimeters;
+            double holder = 0;
+            int second = 0;
+            for (int i = 0; i < cyclist.rotationsForEverySecond.Length; i++)
+                if (holder < (circumference * cyclist.rotationsForEverySecond[i]))
+                {
+                    holder = circumference * cyclist.rotationsForEverySecond[i];
+                    second = i + 1;
+                }
+            getCyclist.name = cyclist.name;
+            getCyclist.second = second;
+            return holder;
         }
     }
 }
