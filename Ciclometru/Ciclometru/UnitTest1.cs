@@ -13,7 +13,8 @@ namespace Ciclometru
             var cyclist = new Cyclist[] { new Cyclist("Jeremy, Clarkson",10, GetRotationsForEverySecond(rotationInEverySecondAllCyclists,0,4))
                                           ,new Cyclist("Richard Hammond",11,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,5,9))
                                           ,new Cyclist("James May",12,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,10,14))};
-            Assert.AreEqual(3358.362, CalculateTotalDistance(cyclist),1);
+            Assert.AreEqual(33.583, CalculateTotalDistance(cyclist),1);
+           
         }
         struct Cyclist
         {
@@ -38,7 +39,7 @@ namespace Ciclometru
             double distance = 0;
             for (int i = 0; i < cyclist.Length; i++)
                 distance += CalculateDistanceForCyclist(cyclist[i]);
-            return distance;
+            return distance/100;
         }
         private double CalculateDistanceForCyclist(Cyclist cyclist)
         {
@@ -48,6 +49,12 @@ namespace Ciclometru
                 distance += cyclist.rotationsForEverySecond[i] * circumferince;
             return distance;
         }
+        private string CalculateTopSpeed(Cyclist[] cyclist)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
 
