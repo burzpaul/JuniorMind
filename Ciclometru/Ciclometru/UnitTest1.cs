@@ -41,8 +41,7 @@ namespace Ciclometru
         {
             double distance = 0;
             for (int i = 0; i < cyclist.Length; i++)
-                for (int j = 0; j < cyclist[i].rotationsForEverySecond.Length; j++)
-                    distance += cyclist[i].rotationsForEverySecond[j] * cyclist[i].diameterInCentimeters * Math.PI;
+                distance += DistanceForOneCyclist(cyclist[i]);
             return distance / 100;
         }
         private string GetTopSpeedSecondAndCyclistName(Cyclist[] cyclist)
@@ -70,8 +69,7 @@ namespace Ciclometru
             double distance = 0;
             for (int i = 0; i < cyclist.Length; i++)
             {
-                for (int j = 0; j < cyclist[i].rotationsForEverySecond.Length; j++)
-                    distance += cyclist[i].rotationsForEverySecond[j] * cyclist[i].diameterInCentimeters * Math.PI;
+                distance = DistanceForOneCyclist(cyclist[i]);
                 if (averageSpeed < distance)
                 {
                     averageSpeed = distance / (cyclist[i].rotationsForEverySecond.Length + 1);
@@ -79,6 +77,13 @@ namespace Ciclometru
                 }
             }
             return cyclist[counter].name;
+        }
+        private static double DistanceForOneCyclist(Cyclist cyclist)
+        {
+            double distance = 0;
+            for (int j = 0; j < cyclist.rotationsForEverySecond.Length; j++)
+                distance += cyclist.rotationsForEverySecond[j] * cyclist.diameterInCentimeters * Math.PI;
+            return distance;
         }
     }
 }
