@@ -8,7 +8,7 @@ namespace Ciclometru
     public class MyClass
     {
         [TestMethod]
-        public void TestMethods()
+        public void Test1()
         {
             double[] rotationInEverySecondAllCyclists = new double[] { 2,4,6,8,10, 2,10,6,9,5, 3,5,11,9,7 };
             var cyclist = new Cyclist[] { new Cyclist("Jeremy, Clarkson",10, GetRotationsForEverySecond(rotationInEverySecondAllCyclists,0,4))
@@ -18,6 +18,18 @@ namespace Ciclometru
             Assert.AreEqual(33.583, CalculateTotalDistance(cyclist),1);
             Assert.AreEqual("Richard Hammond second 3", GetTopSpeedSecondAndCyclistName(cyclist));
             Assert.AreEqual("Richard Hammond", CyclistWithBestAverageSpeed(cyclist));
+        }
+        [TestMethod]
+        public void Test2()
+        {
+            double[] rotationInEverySecondAllCyclists = new double[] {5,6,7,8,9, 6,7,11,12,10, 3,5,9,10,11, 4,6,8,11,11  };
+            var cyclist = new Cyclist[] { new Cyclist("Dave",10,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,0,4))
+                                        , new Cyclist("Mike",10,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,5,9))
+                                        , new Cyclist("Alex",10,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,10,14))
+                                        , new Cyclist("Alice",10,GetRotationsForEverySecond(rotationInEverySecondAllCyclists,15,19)) };
+            Assert.AreEqual(49.98, CalculateTotalDistance(cyclist), 1);
+            Assert.AreEqual("Mike second 4", GetTopSpeedSecondAndCyclistName(cyclist));
+            Assert.AreEqual("Alice", CyclistWithBestAverageSpeed(cyclist));
         }
         struct Cyclist
         {
