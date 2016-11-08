@@ -17,6 +17,7 @@ namespace Ciclometru
 
             Assert.AreEqual(33.583, CalculateTotalDistance(cyclist),1);
             Assert.AreEqual("Richard Hammond second 3", GetTopSpeedSecondAndCyclistName(cyclist));
+            Assert.AreEqual("Richard Hammond", CyclistWithBestAverageSpeed(cyclist));
         }
         struct Cyclist
         {
@@ -61,6 +62,23 @@ namespace Ciclometru
                 if (maxRotations == cyclist[counter].rotationsForEverySecond[second])
                     break;
             return cyclist[counter].name +" second " + (second+1);
+        }
+        private string CyclistWithBestAverageSpeed(Cyclist[] cyclist)
+        {
+            double averageSpeed = 0;
+            int counter = -1;
+            double distance = 0;
+            for (int i = 0; i < cyclist.Length; i++)
+            {
+                for (int j = 0; j < cyclist[i].rotationsForEverySecond.Length; j++)
+                    distance += cyclist[i].rotationsForEverySecond[j] * cyclist[i].diameterInCentimeters * Math.PI;
+                if (averageSpeed < distance)
+                {
+                    averageSpeed = distance / (cyclist[i].rotationsForEverySecond.Length + 1);
+                    counter++;
+                }
+            }
+            return cyclist[counter].name;
         }
     }
 }
