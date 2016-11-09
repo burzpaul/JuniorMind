@@ -40,21 +40,7 @@ namespace Sections
             Point[] storedPoints = new Point[directions.Length];
             for(int i=0;i<directions.Length;i++)
             {
-                switch(directions[i])
-                {
-                    case Directions.up :
-                        point.GetDirections(Directions.up, 1);
-                        break;
-                    case Directions.down:
-                        point.GetDirections(Directions.down, 1);
-                        break;
-                    case Directions.right:
-                        point.GetDirections(Directions.right, 1);
-                        break;
-                    case Directions.left:
-                        point.GetDirections(Directions.left, 1);
-                        break;
-                }
+                point.GetDirections(directions[i], 1);
                 storedPoints[i] = point;
                 if (CheckIntersection(point, storedPoints))
                     return point;
