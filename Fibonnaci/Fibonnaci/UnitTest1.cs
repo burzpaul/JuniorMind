@@ -23,10 +23,7 @@ namespace Fibonnaci
         }
         public int Fibonacci(int elementNumber,int previous,int current)
         {
-            if (elementNumber == 1)
-                return previous;
-            else
-                return Fibonacci(elementNumber - 1, current, previous + current);
+            return elementNumber == 1 ? previous : Fibonacci(elementNumber - 1, current, previous + current);
         }
     }
 }
