@@ -4,11 +4,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ReverseString
 {
     [TestClass]
-    public class UnitTest1
+    public class MyClass
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Test1()
         {
+            Assert.AreEqual("gfedcba", ReverseTheString("abcdefg"));
+        }
+        public string ReverseTheString(string givenString)
+        {
+            return null;
         }
     }
 }
