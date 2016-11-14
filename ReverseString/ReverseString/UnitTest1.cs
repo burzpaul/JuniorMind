@@ -11,9 +11,20 @@ namespace ReverseString
         {
             Assert.AreEqual("gfedcba", ReverseTheString("abcdefg"));
         }
+        [TestMethod]
+        public void Test2()
+        {
+            Assert.AreEqual("lac", ReverseTheString("cal"));
+        }
+        [TestMethod]
+        public void Test3()
+        {
+            Assert.AreEqual("a", ReverseTheString("a"));
+        }
         public string ReverseTheString(string givenString)
         {
-            return null;
+            if (givenString.Length == 1) return givenString;
+            return givenString.Substring(givenString.Length - 1) + (givenString.Length > 2 ?ReverseTheString(givenString.Substring(0,givenString.Length -1)) : givenString.Substring(0,1));    
         }
     }
 }
