@@ -9,17 +9,17 @@ namespace Fibonnaci
         [TestMethod]
         public void FibonacciTest1()
         {
-            Assert.AreEqual(55, Fibonacci(11));
+            Assert.AreEqual(55, Fibonacci(10));
         }
         [TestMethod]
         public void FibonacciTest2()
         {
-            Assert.AreEqual(0, Fibonacci(1));
+            Assert.AreEqual(0, Fibonacci(0));
         }
         [TestMethod]
         public void FibonacciTest3()
         {
-            Assert.AreEqual(987, Fibonacci(17));
+            Assert.AreEqual(987, Fibonacci(16));
         }
         public int Fibonacci(int n)
         {
@@ -29,7 +29,7 @@ namespace Fibonnaci
         }
         public int Fibonacci(int elementNumber, int previous, int current)
         {
-            return elementNumber == 1 ? previous : Fibonacci(elementNumber - 1, current, previous + current);
+            return elementNumber == 0 ? previous : Fibonacci(elementNumber - 1, current, previous + current);
         }
     }
 }
