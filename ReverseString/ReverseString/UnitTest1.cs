@@ -24,7 +24,7 @@ namespace ReverseString
         public string ReverseTheString(string givenString)
         {
             if (givenString.Length == 1) return givenString;
-            return givenString.Substring(givenString.Length - 1) + (givenString.Length > 2 ?ReverseTheString(givenString.Substring(0,givenString.Length -1)) : givenString.Substring(0,1));    
+            return givenString.Substring(givenString.Length - 1) + ReverseTheString(givenString.Substring(0,givenString.Length -1)) ;    
         }
     }
 }
