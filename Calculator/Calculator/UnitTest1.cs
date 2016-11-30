@@ -32,7 +32,6 @@ namespace Calculator
             {
                 return result;
             }
-
             switch (currentElement)
             {
                 case "+": return Calculate(elements, ref i) + Calculate(elements, ref i);
