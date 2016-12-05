@@ -9,7 +9,7 @@ namespace Hanoi_Towers
         [TestMethod]
         public void TestMethod1()
         {
-            int n = 10;
+            int n = 20;
             CollectionAssert.AreEqual(GenerateNumberOfDisks(n), HanoiTowers(n, GenerateNumberOfDisks(n), new int[n], new int[n]));
         }
         public int[] HanoiTowers(int disks, int[] A, int[] B, int[] C)
