@@ -9,7 +9,8 @@ namespace Hanoi_Towers
         [TestMethod]
         public void TestMethod1()
         {
-            CollectionAssert.AreEqual(new int[] { 5, 4, 3, 2, 1 }, HanoiTowers(5, new int[] { 5, 4, 3, 2, 1 }, new int[5], new int[5]));
+            int n = 5;
+            CollectionAssert.AreEqual(GenerateNumberOfDisks(n), HanoiTowers(n, GenerateNumberOfDisks(n), new int[n], new int[n]));
         }
         public int[] HanoiTowers(int disks, int[] A, int[] B, int[] C)
         {
@@ -25,11 +26,22 @@ namespace Hanoi_Towers
             }
             return C;
         }
-        int[] MoveDisks(int numberOfDisks, int[] fromTower, int[] toTower)
+        public int[] MoveDisks(int numberOfDisks, int[] fromTower, int[] toTower)
         {
             toTower[numberOfDisks - 1] = fromTower[numberOfDisks - 1];
             Array.Resize(ref fromTower, fromTower.Length - 1);
             return fromTower;
+        }
+        public int[] GenerateNumberOfDisks(int number)
+        {
+            int[] generated = new int[number];
+            int j = 0;
+            for (int i = number; i >= 1; i--) 
+            {
+                generated[j] = i;
+                j++;
+            }
+            return generated;
         }
     }
 }
