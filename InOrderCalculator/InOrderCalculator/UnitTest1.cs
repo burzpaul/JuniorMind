@@ -12,11 +12,16 @@ namespace InOrderCalculator
             Assert.AreEqual(24, Calculate("8 + 9 - 1 / 2 * 3"), 1);
         }
         [TestMethod]
+        public void Test2()
+        {
+            Assert.AreEqual(24, Calculate("4 - 3 + 8 + 3 * 10 / 5"), 1);
+        }
+        [TestMethod]
         public double Calculate(string input)
         {
             string[] elements = input.Split(' ');
             double result = Convert.ToDouble(elements[0]);
-            return Calculate(elements,1, ref result );
+            return Calculate(elements, 1, ref result);
         }
         private double Calculate(string[] elements, int i, ref double result)
         {
