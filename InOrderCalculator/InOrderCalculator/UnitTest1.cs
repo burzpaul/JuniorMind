@@ -14,7 +14,7 @@ namespace InOrderCalculator
         [TestMethod]
         public void Test2()
         {
-            Assert.AreEqual(24, Calculate("4 - 3 + 8 + 3 * 10 / 5"), 1);
+            Assert.AreEqual(7, Calculate("4 - 3 + 8 + 3 * 10 / 5 - 4 / 5 + 2"), 1);
         }
         [TestMethod]
         public double Calculate(string input)
