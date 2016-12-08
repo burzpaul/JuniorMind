@@ -7,31 +7,36 @@ namespace InOrderCalculator
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Test1()
         {
-            Assert.AreEqual(6, Calculate("3 + 2 + 1"), 1);
+            Assert.AreEqual(24, Calculate("8 + 9 - 1 / 2 * 3"), 1);
         }
+        [TestMethod]
         public double Calculate(string input)
         {
             string[] elements = input.Split(' ');
-            return Calculate(elements,0);
+            double result = Convert.ToDouble(elements[0]);
+            return Calculate(elements,1, ref result );
         }
-        private double Calculate(string[] elements, int i)
+        private double Calculate(string[] elements, int i, ref double result)
         {
-            double result = 0;
-            if (i < elements.Length - 2) 
+            if (i < elements.Length - 1)
             {
-                string currentElement = elements[i + 1];
-                result = Convert.ToDouble(elements[i]);
-                switch (currentElement)
+                double temp = Convert.ToDouble(elements[i+1]);
+                switch (elements[i])
                 {
-                    case "+": return result + Calculate(elements, i + 2);
-                    case "-": return result - Calculate(elements, i + 2);
-                    case "*": return result * Calculate(elements, i + 2);
-                    default: return result / Calculate(elements, i + 2);
+                    case "+": result = result + temp;
+                        break;
+                    case "-": result = result - temp;
+                        break;
+                    case "*": result = result * temp;
+                        break;
+                    case "/" : result = result / temp;
+                        break;
                 }
+                return Calculate(elements, i + 2, ref result);
             }
-            return result;
+            return result; 
         }
     }
 }
