@@ -25,8 +25,10 @@ namespace InOrderCalculator
         {
             if (input.IndexOf('(') != -1)
             {
-                double subString = Calculate(input.Substring(input.LastIndexOf('(') + 1, input.IndexOf(')') - input.LastIndexOf('(') - 1));
-                input = string.Concat(string.Concat(input.Substring(0, input.LastIndexOf('(')), subString), input.Substring(input.IndexOf(')') + 1, input.Length - input.IndexOf(')') - 1));
+                int lastLeftParenthesis = input.LastIndexOf('(');
+                int firstRightParenthesis = input.IndexOf(')');
+                double subString = Calculate(input.Substring(lastLeftParenthesis + 1, firstRightParenthesis - lastLeftParenthesis - 1));
+                input = string.Concat(string.Concat(input.Substring(0, lastLeftParenthesis), subString), input.Substring(firstRightParenthesis + 1, input.Length - firstRightParenthesis - 1));
                 return Calculate(input);
             }
             string[] elements = input.Split(' ');
