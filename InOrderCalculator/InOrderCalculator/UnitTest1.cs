@@ -17,31 +17,55 @@ namespace InOrderCalculator
             Assert.AreEqual(7, Calculate("4 - 3 + 8 + 3 * 10 / 5 - 4 / 5 + 2"), 1);
         }
         [TestMethod]
-        public double Calculate(string input)
+        public void Test3()
         {
+            Assert.AreEqual(2, Calculate("3 * (((5 - 2) + 4) - 3) / 6"), 1);
+        }
+        private double Calculate(string input)
+        {
+            if (input.IndexOf('(') != -1)
+            {
+                double subString = Calculate(input.Substring(input.LastIndexOf('(') + 1, input.IndexOf(')') - input.LastIndexOf('(') - 1));
+                input = string.Concat(string.Concat(input.Substring(0, input.LastIndexOf('(')), subString), input.Substring(input.IndexOf(')') + 1, input.Length - input.IndexOf(')') - 1));
+                return Calculate(input);
+            }
             string[] elements = input.Split(' ');
             double result = Convert.ToDouble(elements[0]);
-            return Calculate(elements, 1, ref result);
+            int i = 0;
+            return Calculate(elements, ref i, ref result);
         }
-        private double Calculate(string[] elements, int i, ref double result)
+        private double Calculate(string[] elements, ref int i, ref double result)
         {
-            if (i < elements.Length - 1)
+            string currentOperation = elements[i++];
+            if (i < elements.Length)
             {
-                double temp = Convert.ToDouble(elements[i+1]);
-                switch (elements[i])
+                double temp = 0;
+                if (double.TryParse(elements[i], out temp))
                 {
-                    case "+": result = result + temp;
-                        break;
-                    case "-": result = result - temp;
-                        break;
-                    case "*": result = result * temp;
-                        break;
-                    case "/" : result = result / temp;
-                        break;
+                    result = GetResult(currentOperation, result, temp);
                 }
-                return Calculate(elements, i + 2, ref result);
+                return Calculate(elements, ref i, ref result);
             }
-            return result; 
+            return result;
+        }
+        private static double GetResult(string operation, double result, double temp)
+        {
+            switch (operation)
+            {
+                case "+":
+                    result = result + temp;
+                    break;
+                case "-":
+                    result = result - temp;
+                    break;
+                case "*":
+                    result = result * temp;
+                    break;
+                case "/":
+                    result = result / temp;
+                    break;
+            }
+            return result;
         }
     }
 }
