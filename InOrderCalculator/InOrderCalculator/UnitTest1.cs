@@ -19,17 +19,17 @@ namespace InOrderCalculator
         [TestMethod]
         public void Test3()
         {
-            Assert.AreEqual(2, Calculate("3 * (((5 - 2) + 4) - 3) / 6"), 1);
+            Assert.AreEqual(7, Calculate("(1 + 2) * 2"), 1);
         }
         private double Calculate(string input)
         {
             if (input.IndexOf('(') != -1)
             {
-                int lastLeftParenthesis = input.LastIndexOf('(');
-                int firstRightParenthesis = input.IndexOf(')');
-                double subString = Calculate(input.Substring(lastLeftParenthesis + 1, firstRightParenthesis - lastLeftParenthesis - 1));
-                input = string.Concat(string.Concat(input.Substring(0, lastLeftParenthesis), subString), input.Substring(firstRightParenthesis + 1, input.Length - firstRightParenthesis - 1));
-                return Calculate(input);
+                int lastLeft = input.LastIndexOf('(');
+                int firstRight = input.IndexOf(')');
+                string beforeCalculate = input.Substring(0, lastLeft);
+                string afterCalculate = input.Substring(firstRight + 1, input.Length - firstRight - 1);
+                return Calculate(string.Concat(beforeCalculate, Calculate(input.Substring(lastLeft + 1, firstRight - lastLeft - 1))) + afterCalculate);
             }
             string[] elements = input.Split(' ');
             double result = Convert.ToDouble(elements[0]);
