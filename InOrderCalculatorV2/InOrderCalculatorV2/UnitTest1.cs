@@ -7,12 +7,18 @@ namespace InOrderCalculatorV2
     public class UnitTest1
     {
         [TestMethod]
-        public void Test1()
+        public void TestOnlyPlusAndMinusOperations()
         {
-            Assert.AreEqual(15.5, Calculate("8 + 9 - 1 / 2 * 3"), 1);
+            Assert.AreEqual(15, Calculate("8 + 9 - 3"), 1);
         }
         [TestMethod]
-        public void Test2()
+        public void TestOnlyMultiplyAndDivideOperations()
+        {
+            Assert.AreEqual(4.8, Calculate("3 * 10 / 5 * 4 / 5"), 1);
+        }
+        
+        [TestMethod]
+        public void TestAllOperations()
         {
             Assert.AreEqual(16.2, Calculate("4 - 3 + 8 + 3 * 10 / 5 - 4 / 5 + 2"), 1);
         }
