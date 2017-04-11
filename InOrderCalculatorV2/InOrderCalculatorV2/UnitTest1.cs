@@ -16,32 +16,26 @@ namespace InOrderCalculatorV2
         {
             Assert.AreEqual(4.8, Calculate("3 * 10 / 5 * 4 / 5"), 1);
         }
-        
         [TestMethod]
         public void TestAllOperations()
         {
             Assert.AreEqual(16.2, Calculate("4 - 3 + 8 + 3 * 10 / 5 - 4 / 5 + 2"), 1);
         }
         [TestMethod]
-        public void Test3()
+        public void TestForOneParanthesis()
         {
-            Assert.AreEqual(6, Calculate("(1 + 2) * 2"), 1);
+            Assert.AreEqual(6, Calculate("(1 + 2)"), 1);
         }
         [TestMethod]
-        public void Test4()
+        public void TestForMultipleParanthesisApart()
         {
             Assert.AreEqual(15, Calculate("(1 + 2) * (2 + 3)"), 1);
         }
         [TestMethod]
-        public void Test5()
+        public void TestForParanthesisAndAllOperations()
         {
             Assert.AreEqual(-74.5, Calculate("7 + (5 - (6 * 9 - 5 + 7 / 2) +10 / 5 + 6 - 7 * 5)"), 1);
                 
-        }
-        [TestMethod]
-        public void Test6()
-        {
-            Assert.AreEqual(455, Calculate("(8 * (6 - 5 * 8 / 2 + 6 - 9) + 197 * 3)"), 1);
         }
         [TestMethod]
         public void RandomTest()
