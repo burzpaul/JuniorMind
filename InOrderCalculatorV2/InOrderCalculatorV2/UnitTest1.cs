@@ -24,7 +24,7 @@ namespace InOrderCalculatorV2
         [TestMethod]
         public void TestForOneParanthesis()
         {
-            Assert.AreEqual(6, Calculate("(1 + 2)"), 1);
+            Assert.AreEqual(3, Calculate("(1 + 2)"), 1);
         }
         [TestMethod]
         public void TestForMultipleParanthesisApart()
@@ -34,39 +34,61 @@ namespace InOrderCalculatorV2
         [TestMethod]
         public void TestForParanthesisAndAllOperations()
         {
-            Assert.AreEqual(-74.5, Calculate("7 + (5 - (6 * 9 - 5 + 7 / 2) +10 / 5 + 6 - 7 * 5)"), 1);
-                
+            Assert.AreEqual(-67.5, Calculate("7 + (5 - (6 * 9 - 5 + 7 / 2) + 10 / 5 + 6 - 7 * 5)"), 1);
         }
         [TestMethod]
         public void RandomTest()
         {
-
+            Assert.AreEqual(7, RezolveParantheses("(3 + 2) + 2"), 1);
         }
+        [TestMethod]
+        public void RandomTest2()
+        {
+            Assert.AreEqual("123", RezolveParantheses2("7 + (5 - (6 * 9 - 5 + 7 / 2) + 10 / 5 + 6 - 7 * 5)", 0));
+        }
+
         public double Calculate(string input)
         {
             if (input.IndexOf('(') != -1)
             {
-                if (input.Length > 6)
-                {
-                    int from = 0;
-                    int to = 0;
-                    DetermineParanthesisOperation(input, from, to);
-                    return Calculate(input.Substring(0, from - 1) + Calculate(input.Substring(from + 1, to - 1)) + input.Substring(to + 1, input.Length - to));
-                }
-                return Calculate(input.Substring(1, input.Length - 1));
+                return RezolveParantheses(input);
             }
             string[] elements = input.Split(' ');
+            if (elements.Length == 1)
+                return double.Parse(elements[0]);
             return Calculate(elements);
         }
 
-        private void DetermineParanthesisOperation(string input, int from, int to)
+        public double RezolveParantheses(string input)
         {
-            from = input.LastIndexOf('(');
-            int a = input.Length;
-            string fromToFinishInput = input.Substring(from, a - from);
-            to = fromToFinishInput.IndexOf(')') + from;
-        }
+            if(input.IndexOf('(') != -1)
+            {
+                int from = input.LastIndexOf('(');
 
+                string subString = input.Substring(from, input.Length - from);
+
+                string currentEcuation = subString.Substring(0, subString.IndexOf(')') + 1);
+
+                double result = Calculate(currentEcuation.Substring(1, currentEcuation.Length - 2));
+
+                input = input.Replace(currentEcuation, result.ToString());
+
+                return RezolveParantheses(input);
+            }
+            return Calculate(input);
+        }
+        public string RezolveParantheses2(string input, int index)
+        {
+            if (input.IndexOf('(') != -1) 
+            {
+                int from = input.LastIndexOf('(');
+
+                string subString = input.Substring(from, input.Length - from);
+                string currentEcuation = subString.Substring(0, subString.IndexOf(')') + 1);
+                return currentEcuation.Substring(1, currentEcuation.Length - 2);
+            }
+            return null;
+        }
         public double Calculate(string[] elements)
         {
             string currentOperation = MultiplicationOrDivideOpIndex(elements) > -1 ? elements[MultiplicationOrDivideOpIndex(elements)] : elements[1];
