@@ -39,12 +39,7 @@ namespace InOrderCalculatorV2
         [TestMethod]
         public void RandomTest()
         {
-            Assert.AreEqual(7, RezolveParantheses("(3 + 2) + 2"), 1);
-        }
-        [TestMethod]
-        public void RandomTest2()
-        {
-            Assert.AreEqual("123", RezolveParantheses2("7 + (5 - (6 * 9 - 5 + 7 / 2) + 10 / 5 + 6 - 7 * 5)", 0));
+            Assert.AreEqual(7, RezolveParantheses("3 + 2 + 2"), 1);
         }
 
         public double Calculate(string input)
@@ -55,13 +50,15 @@ namespace InOrderCalculatorV2
             }
             string[] elements = input.Split(' ');
             if (elements.Length == 1)
+            {
                 return double.Parse(elements[0]);
+            }
             return Calculate(elements);
         }
 
         public double RezolveParantheses(string input)
         {
-            if(input.IndexOf('(') != -1)
+            if (input.IndexOf('(') != -1)
             {
                 int from = input.LastIndexOf('(');
 
@@ -77,63 +74,60 @@ namespace InOrderCalculatorV2
             }
             return Calculate(input);
         }
-        public string RezolveParantheses2(string input, int index)
-        {
-            if (input.IndexOf('(') != -1) 
-            {
-                int from = input.LastIndexOf('(');
 
-                string subString = input.Substring(from, input.Length - from);
-                string currentEcuation = subString.Substring(0, subString.IndexOf(')') + 1);
-                return currentEcuation.Substring(1, currentEcuation.Length - 2);
-            }
-            return null;
-        }
         public double Calculate(string[] elements)
         {
-            string currentOperation = MultiplicationOrDivideOpIndex(elements) > -1 ? elements[MultiplicationOrDivideOpIndex(elements)] : elements[1];
-
-            int indexOfOperation = MultiplicationOrDivideOpIndex(elements) > -1 ? MultiplicationOrDivideOpIndex(elements) : 1;
-
-            double firstNumberOfEcuation;
-            double secondNumberOfEcuation;
-
-            Double.TryParse(elements[indexOfOperation - 1], out firstNumberOfEcuation);
-            Double.TryParse(elements[indexOfOperation + 1], out secondNumberOfEcuation);
-
-            double result = GetResult(currentOperation, firstNumberOfEcuation, secondNumberOfEcuation);
-
             if (elements.Length > 3)
             {
-                elements[indexOfOperation - 1] = Convert.ToString(result);
+                int index = OrderOfOperations(elements);
+                if (index != -1)
+                {
+                    PutResultInArray(elements, index);
+                    return Calculate(RemoveFromArray(elements, index, 2));
+                }
 
-                return Calculate(ChangeArray(elements, indexOfOperation));
+                PutResultInArray(elements, 1);
+                return Calculate(RemoveFromArray(elements, 1, 2));
             }
-            return result;
+            return GetResult(elements[1], double.Parse(elements[0]), double.Parse(elements[2]));
         }
 
-        private string[] ChangeArray(string[] elements, int index)
+        private void PutResultInArray(string[] array, int index)
         {
-            for (int i = index; i < elements.Length - 2; i++)
+            double result = GetResult(array[index], double.Parse(array[index - 1]), double.Parse(array[index + 1]));
+            array[index - 1] = result.ToString();
+        }
+
+        public int OrderOfOperations(string[] elements)
+        {
+            int divide = Array.IndexOf(elements, "/");
+
+            int multiply = Array.IndexOf(elements, "*");
+
+            if (multiply != -1 && divide != -1)
             {
-                elements[i] = elements[i + 2];
+                return Math.Min(multiply, divide);
+            }
+            if (multiply != -1 || divide != -1)
+            {
+                return multiply != -1 ? multiply : divide;
+            }
+            return -1;
+        }
+
+        private string[] RemoveFromArray(string[] elements, int index, int count)
+        {
+            for (int i = index; i < elements.Length; i++)
+            {
+                if (i < elements.Length - 2)
+                {
+                    elements[i] = elements[i + 2];
+
+                }
             }
             Array.Resize(ref elements, elements.Length - 2);
 
             return elements;
-        }
-
-        private int MultiplicationOrDivideOpIndex(string[] elements)
-        {
-            if (Array.IndexOf(elements, "*") != -1 || Array.IndexOf(elements, "/") != -1)
-            {
-                if (Array.IndexOf(elements, "*") != -1 && Array.IndexOf(elements, "/") != -1)
-                {
-                    return Array.IndexOf(elements, "/") < Array.IndexOf(elements, "*") ? Array.IndexOf(elements, "/") : Array.IndexOf(elements, "*");
-                }
-                return Array.IndexOf(elements, "*") != -1 ? Array.IndexOf(elements, "*") : Array.IndexOf(elements, "/");
-            }
-            return -1;
         }
 
         private static double GetResult(string operation, double firstNumber, double secondNumber)
