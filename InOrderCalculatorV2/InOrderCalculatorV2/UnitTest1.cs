@@ -39,7 +39,8 @@ namespace InOrderCalculatorV2
         [TestMethod]
         public void RandomTest()
         {
-            Assert.AreEqual(7, RezolveParantheses("3 + 2 + 2"), 1);
+            string[] elements = { "V3", "+", "2" };
+            Assert.AreEqual(true, DoRadicalTerms(elements ,0));
         }
 
         public double Calculate(string input)
@@ -77,6 +78,7 @@ namespace InOrderCalculatorV2
 
         public double Calculate(string[] elements)
         {
+            DoRadicalTerms(elements, 0);
             if (elements.Length > 3)
             {
                 int index = OrderOfOperations(elements);
@@ -85,11 +87,21 @@ namespace InOrderCalculatorV2
                     PutResultInArray(elements, index);
                     return Calculate(RemoveFromArray(elements, index, 2));
                 }
-
                 PutResultInArray(elements, 1);
                 return Calculate(RemoveFromArray(elements, 1, 2));
             }
             return GetResult(elements[1], double.Parse(elements[0]), double.Parse(elements[2]));
+        }
+
+        public bool DoRadicalTerms(string[] elements, int index)
+        {
+            int a = elements[index].IndexOf('V');
+            if (a != -1)
+            {
+                elements[index].Contains("V");
+                    return true;
+            }
+            return false;
         }
 
         private void PutResultInArray(string[] array, int index)
@@ -122,7 +134,6 @@ namespace InOrderCalculatorV2
                 if (i < elements.Length - 2)
                 {
                     elements[i] = elements[i + 2];
-
                 }
             }
             Array.Resize(ref elements, elements.Length - 2);
