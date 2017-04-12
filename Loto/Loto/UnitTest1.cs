@@ -20,13 +20,17 @@ namespace Loto
                 {
                     if (numbersArray[j - 1] > numbersArray[j])
                     {
-                        numbersArray[j - 1] ^= numbersArray[j];
-                        numbersArray[j] ^= numbersArray[j - 1];
-                        numbersArray[j - 1] ^= numbersArray[j];
+                        Swap(ref numbersArray[j - 1], ref numbersArray[j]);
                     }
                 }
             }
             return numbersArray;
+        }
+        void Swap(ref int first, ref int second)
+        {
+            int temp = first;
+            first = second;
+            second = temp;
         }
     }
 }
