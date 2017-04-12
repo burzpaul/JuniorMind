@@ -9,6 +9,11 @@ namespace RepairShop
         [TestMethod]
         public void TestMethod1()
         {
+            CollectionAssert.AreEqual(,RepairShopPriorityOrder)
+        }
+        public string[] OrderPriority()
+        {
+
         }
     }
 }
