@@ -37,10 +37,24 @@ namespace InOrderCalculatorV2
             Assert.AreEqual(-67.5, Calculate("7 + (5 - (6 * 9 - 5 + 7 / 2) + 10 / 5 + 6 - 7 * 5)"), 1);
         }
         [TestMethod]
-        public void RandomTest()
+        public void TestForOneRadicalTerm()
         {
-            string[] elements = { "V3", "+", "2" };
-            Assert.AreEqual(true, DoRadicalTerms(elements ,0));
+            Assert.AreEqual(3.7320508075688772935274463415059, Calculate("V3 + 2"), 1);
+        }
+        [TestMethod]
+        public void TestForMultipleRadicalTerms()
+        {
+            Assert.AreEqual(16.970562748477140585620264690516, Calculate("V8 * 5 + V32 / 2"), 1);
+        }
+        [TestMethod]
+        public void TestForOneRadicalAndParanthesis()
+        {
+            Assert.AreEqual(2, Calculate("V(V9 + 1)"), 1);
+        }
+        [TestMethod]
+        public void TestForRadicalsAndMultipleParanthesis()
+        {
+            Assert.AreEqual(3, Calculate("V(V(V9 + 1) + V(V121 + V169))"), 1);
         }
 
         public double Calculate(string input)
@@ -50,10 +64,6 @@ namespace InOrderCalculatorV2
                 return RezolveParantheses(input);
             }
             string[] elements = input.Split(' ');
-            if (elements.Length == 1)
-            {
-                return double.Parse(elements[0]);
-            }
             return Calculate(elements);
         }
 
@@ -73,13 +83,15 @@ namespace InOrderCalculatorV2
 
                 return RezolveParantheses(input);
             }
-            return Calculate(input);
+            string[] elements = input.Split(' ');
+            return Calculate(elements);
         }
 
         public double Calculate(string[] elements)
         {
-            DoRadicalTerms(elements, 0);
-            if (elements.Length > 3)
+            DoRadicalTerms(elements);
+
+            if (elements.Length != 1)
             {
                 int index = OrderOfOperations(elements);
                 if (index != -1)
@@ -90,23 +102,29 @@ namespace InOrderCalculatorV2
                 PutResultInArray(elements, 1);
                 return Calculate(RemoveFromArray(elements, 1, 2));
             }
-            return GetResult(elements[1], double.Parse(elements[0]), double.Parse(elements[2]));
+            return double.Parse(elements[0]);
         }
 
-        public bool DoRadicalTerms(string[] elements, int index)
+        public string[] DoRadicalTerms(string[] elements)
         {
-            int a = elements[index].IndexOf('V');
-            if (a != -1)
+            for (int index = 0; index < elements.Length; index++)
             {
-                elements[index].Contains("V");
-                    return true;
+                if (elements[index].Contains("V"))
+                {
+                    elements[index] = elements[index].Remove(0, 1);
+
+                    double result = Math.Sqrt(double.Parse(elements[index]));
+
+                    elements[index] = result.ToString();
+                }
             }
-            return false;
+            return elements;
         }
 
         private void PutResultInArray(string[] array, int index)
         {
-            double result = GetResult(array[index], double.Parse(array[index - 1]), double.Parse(array[index + 1]));
+            double result = GetResult(array[index], double.Parse(array[index - 1]), 
+                double.Parse(array[index + 1]));
             array[index - 1] = result.ToString();
         }
 
