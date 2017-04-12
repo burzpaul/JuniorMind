@@ -16,16 +16,14 @@ namespace Loto
         {
             for (int i = 0; i < numbersArray.Length - 1; i++) 
             {
-                int j = i + 1;
-                while (j > 0)
+                for (int j = i + 1; j < numbersArray.Length; j++) 
                 {
                     if (numbersArray[j - 1] > numbersArray[j])
                     {
-                        int temp = numbersArray[j - 1];
-                        numbersArray[j - 1] = numbersArray[j];
-                        numbersArray[j] = temp;
+                        numbersArray[j - 1] ^= numbersArray[j];
+                        numbersArray[j] ^= numbersArray[j - 1];
+                        numbersArray[j - 1] ^= numbersArray[j];
                     }
-                    j--;
                 }
             }
             return numbersArray;
