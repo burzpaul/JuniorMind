@@ -54,7 +54,7 @@ namespace InOrderCalculatorV2
         [TestMethod]
         public void TestForRadicalsAndMultipleParanthesis()
         {
-            Assert.AreEqual(3, Calculate("V(V(V9 + 1) + V(V121 + V169))"), 1);
+            Assert.AreEqual(11, Calculate("V((V(V225 + V400 + 1) + V(V144 + V169)) * 11)"), 1);
         }
 
         public double Calculate(string input)
