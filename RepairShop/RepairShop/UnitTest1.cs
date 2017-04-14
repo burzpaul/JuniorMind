@@ -25,6 +25,7 @@ namespace RepairShop
         {
             var ordersInfo = new OrdersInfo[] { new OrdersInfo(3, "Engine", PriorityLevels.High),
                                                 new OrdersInfo(5,"Direction",PriorityLevels.High),
+                                                new OrdersInfo(7,"HeadRest",PriorityLevels.High),
                                                 new OrdersInfo( 1, "Wheels", PriorityLevels.Medium),
                                                 new OrdersInfo( 4, "FrontWindows", PriorityLevels.Medium),
                                                 new OrdersInfo( 2, "Mirrors", PriorityLevels.Low),
@@ -35,17 +36,21 @@ namespace RepairShop
                                                 new OrdersInfo( 3, "Engine", PriorityLevels.High),
                                                 new OrdersInfo( 4, "FrontWindows", PriorityLevels.Medium),
                                                 new OrdersInfo( 5, "Direction", PriorityLevels.High),
-                                                new OrdersInfo( 6, "Seat", PriorityLevels.Low)};
+                                                new OrdersInfo( 6, "Seat", PriorityLevels.Low),
+                                                new OrdersInfo(7,"HeadRest",PriorityLevels.High)};
             var a = OrderTheOrders(unorganizedOrders);
 
             CollectionAssert.AreEqual(ordersInfo, a);
         }
         [TestMethod]
-        public void TestFor_When_Both_Have_EqualPriorityLevelButDifferentOrderNumber()
+        public void Test_When_Both_Have_Equal_Priority_Level_But_Different_Order_Number()
         {
-            var order1 = new OrdersInfo[] { new OrdersInfo(2, "Heat", PriorityLevels.High), new OrdersInfo(1, "Wheels", PriorityLevels.High) };
+            var order1 = new OrdersInfo[] { new OrdersInfo(2, "Heat", PriorityLevels.High),
+                                            new OrdersInfo(1, "Wheels", PriorityLevels.High)};
+
             var order2 = new OrdersInfo(1, "Wheels", PriorityLevels.High);
             var actual = OrderTheOrders(order1)[0];
+
             Assert.AreEqual(order2.orderNumber, actual.orderNumber);
         }
         [TestMethod]
@@ -63,14 +68,14 @@ namespace RepairShop
         } 
             private void QuickSort3(OrdersInfo[] ordersInformation, int start, int end)
             {
-                if (end < start) return;
-                int left = start;
-                int right = end;
-                var pivot = ordersInformation[start];
-                int index = start;
-                while (index < right)
+            if (end <= start) return;   
+            int left = start;
+            int right = end;
+            var pivot = ordersInformation[start];
+            int index = start;
+            while (index <= right) 
             {
-                if (LessThen(pivot, ordersInformation[index]))
+                if (LessThen(pivot, ordersInformation[index])) 
                 {
                     Swap(ref ordersInformation[left++], ref ordersInformation[index++]);
                 }
@@ -90,7 +95,7 @@ namespace RepairShop
         private static bool LessThen(OrdersInfo a, OrdersInfo b)
         {
             if (a.priorityLevel == b.priorityLevel)
-                return a.orderNumber < b.orderNumber;
+                return a.orderNumber > b.orderNumber;
             return a.priorityLevel < b.priorityLevel;
         }
 
