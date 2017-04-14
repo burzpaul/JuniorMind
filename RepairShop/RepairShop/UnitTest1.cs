@@ -6,7 +6,7 @@ namespace RepairShop
     [TestClass]
     public class UnitTest1
     {
-        public enum PriorityLevels { Low=1,Medium,High};
+        public enum PriorityLevels { Low = 1, Medium, High };
         struct OrdersInfo
         {
             public int orderNumber;
@@ -26,17 +26,17 @@ namespace RepairShop
             var ordersInfo = new OrdersInfo[] { new OrdersInfo(3, "Engine", PriorityLevels.High),
                                                 new OrdersInfo(5,"Direction",PriorityLevels.High),
                                                 new OrdersInfo(7,"HeadRest",PriorityLevels.High),
-                                                new OrdersInfo( 1, "Wheels", PriorityLevels.Medium),
-                                                new OrdersInfo( 4, "FrontWindows", PriorityLevels.Medium),
-                                                new OrdersInfo( 2, "Mirrors", PriorityLevels.Low),
-                                                new OrdersInfo( 6, "Seat", PriorityLevels.Low),};
+                                                new OrdersInfo(1, "Wheels", PriorityLevels.Medium),
+                                                new OrdersInfo(4, "FrontWindows", PriorityLevels.Medium),
+                                                new OrdersInfo(2, "Mirrors", PriorityLevels.Low),
+                                                new OrdersInfo(6, "Seat", PriorityLevels.Low),};
 
             var unorganizedOrders = new OrdersInfo[] { new OrdersInfo(1, "Wheels", PriorityLevels.Medium),
                                                 new OrdersInfo(2,"Mirrors",PriorityLevels.Low),
-                                                new OrdersInfo( 3, "Engine", PriorityLevels.High),
-                                                new OrdersInfo( 4, "FrontWindows", PriorityLevels.Medium),
-                                                new OrdersInfo( 5, "Direction", PriorityLevels.High),
-                                                new OrdersInfo( 6, "Seat", PriorityLevels.Low),
+                                                new OrdersInfo(3, "Engine", PriorityLevels.High),
+                                                new OrdersInfo(4, "FrontWindows", PriorityLevels.Medium),
+                                                new OrdersInfo(5, "Direction", PriorityLevels.High),
+                                                new OrdersInfo(6, "Seat", PriorityLevels.Low),
                                                 new OrdersInfo(7,"HeadRest",PriorityLevels.High)};
             var a = OrderTheOrders(unorganizedOrders);
 
@@ -63,23 +63,23 @@ namespace RepairShop
         }
         private OrdersInfo[] OrderTheOrders(OrdersInfo[] ordersInformation)
         {
-            QuickSort3(ordersInformation, 0, ordersInformation.Length - 1);
+            QuickSort(ordersInformation, 0, ordersInformation.Length - 1);
             return ordersInformation;
-        } 
-            private void QuickSort3(OrdersInfo[] ordersInformation, int start, int end)
-            {
-            if (end <= start) return;   
+        }
+        private void QuickSort(OrdersInfo[] ordersInformation, int start, int end)
+        {
+            if (end <= start) return;
             int left = start;
             int right = end;
             var pivot = ordersInformation[start];
             int index = start;
-            while (index <= right) 
+            while (index <= right)
             {
-                if (LessThen(pivot, ordersInformation[index])) 
+                if (LessThen(pivot, ordersInformation[index]))
                 {
                     Swap(ref ordersInformation[left++], ref ordersInformation[index++]);
                 }
-                else if (LessThen(ordersInformation[index], pivot)) 
+                else if (LessThen(ordersInformation[index], pivot))
                 {
                     Swap(ref ordersInformation[index], ref ordersInformation[right--]);
                 }
@@ -88,9 +88,9 @@ namespace RepairShop
                     index++;
                 }
             }
-            QuickSort3(ordersInformation, start, left - 1);
-            QuickSort3(ordersInformation, right + 1, end);
-            }
+            QuickSort(ordersInformation, start, left - 1);
+            QuickSort(ordersInformation, right + 1, end);
+        }
 
         private static bool LessThen(OrdersInfo a, OrdersInfo b)
         {
