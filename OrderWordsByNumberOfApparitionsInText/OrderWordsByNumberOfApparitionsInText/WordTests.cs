@@ -3,7 +3,7 @@
 namespace OrderWordsByNumberOfApparitionsInText
 {
     [TestClass]
-    public class WordTests
+    public class WordTests 
     {
         [TestMethod]
         public void Test1()
@@ -29,7 +29,6 @@ namespace OrderWordsByNumberOfApparitionsInText
             Assert.AreEqual(0, CompareWords(expected, actual));
 
         }
-
         [TestMethod]
         public void Test3()
         {
