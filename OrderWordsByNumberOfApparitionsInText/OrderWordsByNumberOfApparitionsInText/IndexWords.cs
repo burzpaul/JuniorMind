@@ -4,12 +4,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace OrderWordsByNumberOfApparitionsInText
 {
     [TestClass]
-    public class MyClass
+    public class IndexWords
     {
         public Word[] OrderTheWordsByNumberOfAppearances(string text)
         {
             var words = SearchForWord(text.Split(' '));
-            HeapSort heapSort = new HeapSort();
+            SortByMostCommon heapSort = new SortByMostCommon();
             heapSort.HeapSorting(words);
             return words;
         }
