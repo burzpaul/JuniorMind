@@ -20,21 +20,17 @@ namespace OrderWordsByNumberOfApparitionsInText
         [TestMethod]
         public void Test_The_Number_Apparitions_Of_Key_Words()
         {
-            string text = "word word word word pc pc pc germany germany one one one two two";
-
             var expected = new Word[] { new Word("two", 2), new Word("germany", 2), new Word("one", 3),
                                         new Word("pc", 3), new Word("word", 4) };
 
-            CollectionAssert.AreEqual(expected, OrderTheWordsByNumberOfAppearances(text));
+            CollectionAssert.AreEqual(expected, OrderTheWordsByNumberOfAppearances("word word word word pc pc pc germany germany one one one two two"));
         }
         [TestMethod]
         public void Test_The_Number_Apparitions_Of_Key_Words2()
         {
-            string text = "abc abc abc CCC CCC oOo";
-
             var expected = new Word[] { new Word("ooo", 1), new Word("ccc", 2), new Word("abc", 3) };
 
-            CollectionAssert.AreEqual(expected, OrderTheWordsByNumberOfAppearances(text));
+            CollectionAssert.AreEqual(expected, OrderTheWordsByNumberOfAppearances("abc abc abc CCC CCC oOo"));
         }
 
         public Word[] OrderTheWordsByNumberOfAppearances(string text)
