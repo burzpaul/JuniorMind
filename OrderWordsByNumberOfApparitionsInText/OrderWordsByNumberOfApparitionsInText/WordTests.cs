@@ -15,7 +15,7 @@ namespace OrderWordsByNumberOfApparitionsInText
             var expected = new WordClass();
             expected.Details("two", 2);
             
-            Assert.AreEqual(expected.GetWord(), actual[0].GetWord());
+            Assert.AreEqual(expected.GetNumberOfApparitions(), actual[0].GetNumberOfApparitions());
         }
     }
 }
