@@ -6,8 +6,28 @@ using System.Threading.Tasks;
 
 namespace OrderWordsByNumberOfApparitionsInText
 {
-    class WordClass
+    public class WordClass
     {
-
+        private string theWord;
+        private int numberOfApparitions;
+            
+        public void Details(string word, int apparitionsInText)
+        {
+            theWord = word;
+            numberOfApparitions = apparitionsInText;
+        }
+        public string GetWord()
+        {
+            return theWord;
+        }
+        public int GetNumberOfApparitions()
+        {
+            return numberOfApparitions;
+        }
+        public void IncreaseNumberOfApparitions()
+        {
+            numberOfApparitions++;
+        }
+        
     }
 }
