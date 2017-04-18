@@ -54,9 +54,8 @@ namespace OrderWordsByNumberOfApparitionsInText
         }
 
         public void Swap(ref Word firstWord, ref Word words2)
-        {
-            var temp = new Word("");
-            temp = firstWord;
+        {        
+            var temp = firstWord;
             firstWord = words2;
             words2 = temp;
         }

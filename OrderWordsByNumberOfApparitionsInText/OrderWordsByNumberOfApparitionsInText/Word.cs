@@ -22,7 +22,7 @@
 
         public bool EqualWords(Word other)
         {
-            return this.theWord.Equals(other.theWord.ToLower());
+            return this.theWord.Equals(other.theWord);
         }
 
         public bool IsMoreCommon(Word other)

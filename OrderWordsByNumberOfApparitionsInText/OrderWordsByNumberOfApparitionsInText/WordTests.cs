@@ -30,6 +30,18 @@ namespace OrderWordsByNumberOfApparitionsInText
 
         }
 
+        [TestMethod]
+        public void Test3()
+        {
+            string text = "W I o P Ww WW OO PP";
+
+            var expected = new Word[] { new Word("w"), new Word("o"), new Word("p"), new Word("i"), new Word("oo"), new Word("pp"), new Word("ww") };
+
+            var actual = new MyClass().OrderTheWordsByNumberOfAppearances(text);
+
+            Assert.AreEqual(0,CompareWords(expected,actual));
+        }
+
         private int CompareWords(Word[] expected, Word[] actual)
         {
             int ok = 0;
