@@ -25,5 +25,13 @@ namespace OrderWordsByNumberOfApparitionsInText
             if (word1.EqualWords(word2))
                 Assert.AreEqual(true, word2.IsMoreCommon(word1));
         }
+        [TestMethod]
+        public void Test_For_Increase_Apparitions_Function()
+        {
+            var word1 = new Word("word", 1);
+            word1.IncreaseApparition();
+            var word2 = new Word("xyz", 2);
+            Assert.AreEqual(true, word1.EqualApparitions(word2));
+        }
     }
 }
