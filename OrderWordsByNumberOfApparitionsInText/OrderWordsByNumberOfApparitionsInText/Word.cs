@@ -31,6 +31,16 @@
             return this.theWord.Equals(other.theWord);
         }
 
+        public bool EqualApparitions(int numberOfApparitions)
+        {
+            return this.numberOfApparitions.Equals(numberOfApparitions);
+        }
+
+        public bool EqualApparitions(Word other)
+        {
+            return this.numberOfApparitions.Equals(other.numberOfApparitions);
+        }
+
         public bool IsMoreCommon(Word other)
         {
             return this.numberOfApparitions > other.numberOfApparitions;
