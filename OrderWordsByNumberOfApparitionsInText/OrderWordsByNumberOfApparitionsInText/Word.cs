@@ -5,10 +5,16 @@
         private string theWord;
         private int numberOfApparitions;
 
-        public Word(string word)
+        public Word(string word) : this(word, 0)
         {
-            this.theWord = word.ToLower();
-        } 
+            
+        }
+
+        public Word(string words, int numberOfApparitions)
+        {
+            this.theWord = words.ToLower();
+            this.numberOfApparitions = numberOfApparitions;
+        }
 
         public void IncreaseApparition()
         {

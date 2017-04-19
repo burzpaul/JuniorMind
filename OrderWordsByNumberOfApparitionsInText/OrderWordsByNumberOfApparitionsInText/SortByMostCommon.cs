@@ -2,9 +2,8 @@
 
 namespace OrderWordsByNumberOfApparitionsInText
 {
-    public class HeapSort
+    public class SortByMostCommon
     {
-        
         public void HeapSorting(Word[] words)
         {
             int n = words.Length;
