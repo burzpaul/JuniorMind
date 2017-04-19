@@ -9,15 +9,20 @@ namespace OrderWordsByNumberOfApparitionsInText
         [TestMethod]
         public void TestIfSorted()
         {
-            var words = new Word[] { new Word("third", 3), new Word("first", 1),
-                                        new Word("fourth", 4), new Word("second", 2) };
+            var words = new Word[] { new Word("third", 3), new Word("first", 1), new Word("fourth", 4), new Word("second", 2) };
 
-            var expected = new Word[] { new Word("first", 1), new Word("second", 2),
-                                        new Word("third", 3),new Word("fourth", 4),};
+            var expected = new Word[] { words[1], words[3], words[0], words[2] };
 
-            var actual = new MostCommonWords(words).Sort();
+            Word word;
+            var common = new MostCommonWords(words);
 
-            Assert.AreEqual(true, actual[0].EqualWords(expected[0], false));
+            Assert.IsTrue(common.GetNext(out word));
+            Assert.AreEqual(words[1], word);
+            Assert.IsTrue(common.GetNext(out word));
+            Assert.IsTrue(common.GetNext(out word));
+            Assert.IsTrue(common.GetNext(out word));
+            Assert.AreEqual(words[2], word);
+            Assert.IsFalse(common.GetNext(out word));
         }
 
         [TestMethod]
@@ -26,12 +31,18 @@ namespace OrderWordsByNumberOfApparitionsInText
             var words = new Word[] { new Word("third", 10), new Word("first", 4),
                                         new Word("fourth", 4), new Word("second", 2) };
 
-            var expected = new Word[] { new Word("second", 2), new Word("first", 4),
-                                        new Word("fourth", 4),new Word("third", 10)};
+            var expected = new Word[] { words[3], words[2], words[1], words[0]};
 
-            var actual = new MostCommonWords(words).Sort();
+            Word word;
+            var common = new MostCommonWords(words);
 
-            Assert.AreEqual(true, actual[0].EqualWords(expected[0], false));
+            Assert.IsTrue(common.GetNext(out word));
+            Assert.AreEqual(words[3], word);
+            Assert.IsTrue(common.GetNext(out word));
+            Assert.IsTrue(common.GetNext(out word));
+            Assert.IsTrue(common.GetNext(out word));
+            Assert.AreEqual(words[0], word);
+            Assert.IsFalse(common.GetNext(out word));
         }
     }
 }

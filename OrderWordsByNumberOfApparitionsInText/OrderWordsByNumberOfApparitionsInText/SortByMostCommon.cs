@@ -1,21 +1,29 @@
 ﻿using System;
+using System.Linq;
 
 namespace OrderWordsByNumberOfApparitionsInText
 {
     public class MostCommonWords
     {
         private Word[] words;
+        private int index = 0;
 
         public MostCommonWords(Word[] words)
         {
-            this.words = words;
+            this.words = words.ToArray();
+            HeapSort();
         }
 
-        public Word[] Sort()
+        public bool GetNext(out Word word)
         {
-            HeapSort();
-            return words;
-        }
+            if (index < words.Length)
+            {
+                word = words[index++];
+                return true;
+            }
+            word = null;
+            return false;
+        } 
 
         private void HeapSort()
         {

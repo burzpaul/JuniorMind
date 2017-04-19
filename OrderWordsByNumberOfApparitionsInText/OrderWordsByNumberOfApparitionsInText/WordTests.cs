@@ -12,18 +12,21 @@ namespace OrderWordsByNumberOfApparitionsInText
             Assert.AreEqual(true, word.EqualWords(new Word("abc"), false));
         }
         [TestMethod]
+
         public void Test_For_Word_Functon_With_Number_Of_Apparitions_Test_Number_Of_Apparitions()
         {
             var word = new Word("abc", 2);
             Assert.AreEqual(true, word.EqualWords(new Word("abc", 2), true));
         }
+
         [TestMethod]
         public void Test_For_Same_Word_But_Different_Numbers_Of_Apparitions()
         {
             var word1 = new Word("same", 1);
             var word2 = new Word("same", 2);
-                Assert.AreEqual(true, word2.IsMoreCommon(word1));
+            Assert.AreEqual(true, word2.IsMoreCommon(word1));
         }
+
         [TestMethod]
         public void Test_For_Increase_Apparitions_Function()
         {

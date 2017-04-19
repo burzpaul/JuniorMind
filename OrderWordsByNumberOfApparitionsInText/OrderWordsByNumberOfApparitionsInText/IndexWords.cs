@@ -11,13 +11,13 @@ namespace OrderWordsByNumberOfApparitionsInText
         {
             string text = "this words should be indexed";
 
-            var expected = new Word[] { new Word("words", 1),
-                        new Word("should", 1), new Word("be", 1), new Word("indexed", 1), new Word("this", 1) };
+            var expected = new Word[] { new Word("words", 1), new Word("should", 1), new Word("be", 1), new Word("indexed", 1), new Word("this", 1) };
 
             var actual = IndexWordsInText(text);
 
             Assert.AreEqual(true, actual[0].EqualWords(expected[0], false));
         }
+
         [TestMethod]
         public void Test_For_Search_And_For_Index_Words_By_Most_Common()
         {
@@ -34,8 +34,18 @@ namespace OrderWordsByNumberOfApparitionsInText
         public Word[] IndexWordsInText(string text)
         {
             Word[] words = SearchForWord(text.Split(' '));
-           
-            return  new MostCommonWords(words).Sort();
+
+            Word word;
+
+            int index = 0;
+
+            var common = new MostCommonWords(words);
+            while (common.GetNext(out word) == true) 
+            {
+                words[index++] = word;
+            }
+            
+            return words;
         }
 
         public Word[] SearchForWord(string[] textWords)
