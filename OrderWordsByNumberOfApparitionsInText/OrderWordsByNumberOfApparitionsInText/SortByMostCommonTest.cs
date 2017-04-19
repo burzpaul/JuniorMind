@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace OrderWordsByNumberOfApparitionsInText
 {
     [TestClass]
-    public class MostCommonWordsTest
+    public class SortByMostCommonTest
     {
         [TestMethod]
         public void TestIfSorted()

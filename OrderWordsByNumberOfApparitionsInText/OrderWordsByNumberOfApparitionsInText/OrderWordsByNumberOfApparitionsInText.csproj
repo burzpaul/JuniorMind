@@ -48,11 +48,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IndexWordsTest.cs" />
     <Compile Include="SortByMostCommon.cs" />
     <Compile Include="IndexWords.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MostCommonWordsTest.cs" />
+    <Compile Include="SortByMostCommonTest.cs" />
     <Compile Include="Word.cs" />
     <Compile Include="WordTests.cs" />
   </ItemGroup>

@@ -22,7 +22,6 @@ namespace OrderWordsByNumberOfApparitionsInText
         {
             var word1 = new Word("same", 1);
             var word2 = new Word("same", 2);
-            if (word1.EqualWords(word2))
                 Assert.AreEqual(true, word2.IsMoreCommon(word1));
         }
         [TestMethod]
