@@ -9,8 +9,10 @@ namespace OrderWordsByNumberOfApparitionsInText
         public Word[] IndexWordsInText(string text)
         {
             var words = SearchForWord(text.Split(' '));
-            SortByMostCommon heapSort = new SortByMostCommon();
-            heapSort.HeapSorting(words);
+
+            var heapsort = new GiveWordsArray(words);
+            heapsort.HeapSorting();
+
             return words;
         }
 

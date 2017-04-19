@@ -15,8 +15,8 @@ namespace OrderWordsByNumberOfApparitionsInText
             var expected = new Word[] { new Word("first", 1), new Word("second", 2),
                                         new Word("third", 3),new Word("fourth", 4),};
 
-            var sort = new SortByMostCommon();
-            sort.HeapSorting(words);
+            var sort = new GiveWordsArray(words);
+            sort.HeapSorting();
 
             Assert.AreEqual(0, CompareWords(expected, words) +
                 CompareWordsByNumberOfApparitions(expected, words));

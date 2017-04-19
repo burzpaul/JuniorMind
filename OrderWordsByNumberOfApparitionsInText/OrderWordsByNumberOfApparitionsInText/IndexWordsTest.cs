@@ -19,11 +19,11 @@ namespace OrderWordsByNumberOfApparitionsInText
             Assert.AreEqual(0, CompareWords(expected, actual));
         }
         [TestMethod]
-        public void Test_For_Search_For_Index_Words_By_Most_Common()
+        public void Test_For_Search_And_For_Index_Words_By_Most_Common()
         {
             string text = "this this this this words words should should should be indexed";
 
-            var expected = new Word[] {new Word("indexed",1),new Word("be",1), new Word("words",2),
+            var expected = new Word[] { new Word("be", 1), new Word("indexed", 1), new Word("words", 2),
                         new Word("should",3),new Word("this",4) };
 
             var actual = new IndexWords().IndexWordsInText(text);
