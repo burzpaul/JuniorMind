@@ -6,7 +6,7 @@ namespace OrderWordsByNumberOfApparitionsInText
     [TestClass]
     public class IndexWords
     {
-        public Word[] OrderTheWordsByNumberOfAppearances(string text)
+        public Word[] IndexWordsInText(string text)
         {
             var words = SearchForWord(text.Split(' '));
             SortByMostCommon heapSort = new SortByMostCommon();

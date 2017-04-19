@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IndexWordsTest.cs" />
     <Compile Include="SortByMostCommon.cs" />
     <Compile Include="IndexWords.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
