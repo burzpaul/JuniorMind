@@ -2,19 +2,25 @@
 
 namespace OrderWordsByNumberOfApparitionsInText
 {
-    public class GiveWordsArray
+    public class MostCommonWords
     {
         private Word[] words;
 
-        public GiveWordsArray(Word[] words)
+        public MostCommonWords(Word[] words)
         {
             this.words = words;
         }
 
-        public void HeapSorting()
+        public Word[] Sort()
         {
-            int n = this.words.Length;
-            for (int i = n / 2 - 1; i >= 0; i--)
+            HeapSort();
+            return words;
+        }
+
+        private void HeapSort()
+        {
+            int n = words.Length ;
+            for (int i = n / 2 - 1; i >= 0; i--) 
             {
                 Heapify(n, i);
             }
@@ -26,7 +32,7 @@ namespace OrderWordsByNumberOfApparitionsInText
             }
         }
 
-        public void Heapify(int n, int root)
+        private void Heapify(int n, int root)
         {
             int largest = root;
             int left = 2 * root + 1;
@@ -47,11 +53,11 @@ namespace OrderWordsByNumberOfApparitionsInText
             }
         }
 
-        public void Swap(ref Word firstWord, ref Word words2)
+        private static void Swap(ref Word firstWord, ref Word words2)
         {
             var temp = firstWord;
             firstWord = words2;
             words2 = temp;
-        }
+        }  
     }
 }

@@ -7,38 +7,34 @@
 
         public Word(string word) : this(word, 0)
         {
-            
+
         }
 
-        public Word(string words, int numberOfApparitions)
+        public Word(string word, int numberOfApparitions)
         {
-            this.theWord = words.ToLower();
+            this.theWord = word.ToLower();
             this.numberOfApparitions = numberOfApparitions;
         }
 
         public void IncreaseApparition()
         {
-            numberOfApparitions++;
+           this.numberOfApparitions++;
         }
 
-        public bool EqualWords(string word)
+        public bool EqualWords(string word, bool compareApparitions)
         {
+            if (compareApparitions)
+                return this.numberOfApparitions.Equals(numberOfApparitions);
             return this.theWord.Equals(word.ToLower());
+            
         }
 
-        public bool EqualWords(Word other)
+        public bool EqualWords(Word other, bool compareApparitions)
         {
+            if (compareApparitions)
+                return this.numberOfApparitions.Equals(other.numberOfApparitions);
             return this.theWord.Equals(other.theWord);
-        }
-
-        public bool EqualApparitions(int numberOfApparitions)
-        {
-            return this.numberOfApparitions.Equals(numberOfApparitions);
-        }
-
-        public bool EqualApparitions(Word other)
-        {
-            return this.numberOfApparitions.Equals(other.numberOfApparitions);
+            
         }
 
         public bool IsMoreCommon(Word other)

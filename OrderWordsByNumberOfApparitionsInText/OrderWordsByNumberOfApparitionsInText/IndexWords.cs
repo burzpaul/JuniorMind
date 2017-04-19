@@ -11,12 +11,12 @@ namespace OrderWordsByNumberOfApparitionsInText
         {
             string text = "this words should be indexed";
 
-            var expected = new Word[] { new Word("words"),
-                        new Word("should"),new Word("be"),new Word("indexed"),new Word("this") };
+            var expected = new Word[] { new Word("words", 1),
+                        new Word("should", 1), new Word("be", 1), new Word("indexed", 1), new Word("this", 1) };
 
             var actual = IndexWordsInText(text);
 
-            Assert.AreEqual(0, CompareWords(expected, actual));
+            Assert.AreEqual(true, actual[0].EqualWords(expected[0], false));
         }
         [TestMethod]
         public void Test_For_Search_And_For_Index_Words_By_Most_Common()
@@ -28,52 +28,14 @@ namespace OrderWordsByNumberOfApparitionsInText
 
             var actual = IndexWordsInText(text);
 
-            Assert.AreEqual(0, CompareWords(expected, actual) + CompareWordsByNumberOfApparitions(expected, actual));
-        }
-
-        private int CompareWords(Word[] expected, Word[] actual)
-        {
-            int ok = 0;
-            for (int i = 0; i < expected.Length; i++)
-            {
-                if (IsEqualTo(expected[i], actual[i]) == false)
-                {
-                    ok = 1;
-                    break;
-                }
-            }
-            return ok;
-        }
-        private int CompareWordsByNumberOfApparitions(Word[] expected, Word[] actual)
-        {
-            int ok = 0;
-            for (int i = 0; i < expected.Length; i++)
-            {
-                if (IsNumberOfApparitionsEqualTo(expected[i], actual[i]) == false)
-                {
-                    ok = 1;
-                    break;
-                }
-            }
-            return ok;
-        }
-        bool IsEqualTo(Word firstWord, Word secondWord)
-        {
-            return firstWord.EqualWords(secondWord);
-        }
-        bool IsNumberOfApparitionsEqualTo(Word firstWord, Word secondWord)
-        {
-            return firstWord.EqualApparitions(secondWord);
+            Assert.AreEqual(true, actual[0].EqualWords(expected[0], false));
         }
 
         public Word[] IndexWordsInText(string text)
         {
-            var words = SearchForWord(text.Split(' '));
-
-            var heapsort = new GiveWordsArray(words);
-            heapsort.HeapSorting();
-
-            return words;
+            Word[] words = SearchForWord(text.Split(' '));
+           
+            return  new MostCommonWords(words).Sort();
         }
 
         public Word[] SearchForWord(string[] textWords)
@@ -97,11 +59,11 @@ namespace OrderWordsByNumberOfApparitionsInText
             word.IncreaseApparition();
         }
 
-        public int FindWordIndex(Word[] words, string currentWord)
+        public int FindWordIndex(Word[] word, string currentWord)
         {
-            for (int index = 0; index < words.Length; index++)
+            for (int index = 0; index < word.Length; index++)
             {
-                if (words[index].EqualWords(currentWord)) 
+                if (word[index].EqualWords(currentWord, false))     
                 {
                     return index;
                 }
@@ -109,11 +71,11 @@ namespace OrderWordsByNumberOfApparitionsInText
             return -1;
         }
 
-        public void AddWord(ref Word[] words, string textWordNotIndexed)
+        public void AddWord(ref Word[] word, string textWordNotIndexed)
         {
-            Array.Resize(ref words, words.Length + 1);
-            words[words.Length - 1] = new Word(textWordNotIndexed);
-            words[words.Length - 1].IncreaseApparition();
+            Array.Resize(ref word, word.Length + 1);
+            word[word.Length - 1] = new Word(textWordNotIndexed);
+            word[word.Length - 1].IncreaseApparition();
         }
     }
 }
