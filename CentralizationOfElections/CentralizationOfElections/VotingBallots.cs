@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace CentralizationOfElections
 {
-    class VotingBallot
+    class VotingBallots
     {
-        private string votingLocation;
+        private string votingBallot;
         private Candidate[] candidate;
 
-        public VotingBallot(Candidate[] candidate)
+        public void VotingBallotName(string name)
+        {
+            this.votingBallot = name;
+        }
+   
+        public VotingBallots(Candidate[] candidate)
         {
             this.candidate = candidate;
-        }
-
-        public void VotingLocationName(string name)
-        {
-            this.votingLocation = name;
-        }
+        }  
     }
 }

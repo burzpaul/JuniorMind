@@ -16,7 +16,7 @@ namespace CentralizationOfElections
             this.candidateName = name;
             this.numberOfVotes = votes;
         }
-        public void IncreaseVotes(int toBeAddedVotes)
+        public void AddVotes(int toBeAddedVotes)
         {
             numberOfVotes = numberOfVotes + toBeAddedVotes;
         }
