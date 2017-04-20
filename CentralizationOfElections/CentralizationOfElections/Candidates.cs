@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CentralizationOfElections
 {
-    public class Candidate
+    public class Candidate 
     {
         private string candidateName;
         private int numberOfVotes;
@@ -16,9 +16,25 @@ namespace CentralizationOfElections
             this.candidateName = name;
             this.numberOfVotes = votes;
         }
-        public void AddVotes(int toBeAddedVotes)
+
+        public void AddVotes(Candidate votesFromBallot)
         {
-            numberOfVotes = numberOfVotes + toBeAddedVotes;
+            numberOfVotes = numberOfVotes + votesFromBallot.numberOfVotes;
+        }
+
+        public bool IsSameCandidate(string name)
+        {
+            return candidateName.Equals(name);
+        }
+
+        public bool IsSameCandidate(Candidate other)
+        {
+            return candidateName.Equals(other.candidateName);
+        }
+
+        public bool HasMoreVotes(Candidate other)
+        {
+            return numberOfVotes > other.numberOfVotes;
         }
     }
 }

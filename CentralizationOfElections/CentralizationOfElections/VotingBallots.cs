@@ -6,19 +6,28 @@ using System.Threading.Tasks;
 
 namespace CentralizationOfElections
 {
-    class VotingBallots
+    public class VotingBalot
     {
-        private string votingBallot;
-        private Candidate[] candidate;
+        private string vottingBalletName;
+        private Candidate[] candidatesArray;
 
-        public void VotingBallotName(string name)
+        public VotingBalot(string name, Candidate[] candidates)
         {
-            this.votingBallot = name;
+            this.vottingBalletName = name;
+            this.candidatesArray = candidates;
         }
-   
-        public VotingBallots(Candidate[] candidate)
+
+        public void AddCandidatesAndAddTheirVotesFromBallots(VotingBalot votingBallet)
         {
-            this.candidate = candidate;
-        }  
+            for (int i = 0; i < candidatesArray.Length; i++)
+            {
+                candidatesArray[i].AddVotes(votingBallet.candidatesArray[i]);
+            }
+        }
+
+        public Candidate[] ReturnCandidatesArray()
+        {
+            return candidatesArray;
+        }
     }
 }

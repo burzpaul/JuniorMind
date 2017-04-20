@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CentralizationOfElections
 {
-    class OrderCandidateAlphabetically
+    public class OrderAlphabetically
     {
 
     }

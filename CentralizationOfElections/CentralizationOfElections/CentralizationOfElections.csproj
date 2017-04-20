@@ -48,8 +48,15 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Candidates.cs" />
+    <Compile Include="Election.cs" />
+    <Compile Include="ElectionTest.cs" />
+    <Compile Include="OrderAlphabeticallyTest.cs" />
+    <Compile Include="OrderAlphabetically.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CandidatesTest.cs" />
+    <Compile Include="VotingBallots.cs" />
+    <Compile Include="VotingBallotsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
