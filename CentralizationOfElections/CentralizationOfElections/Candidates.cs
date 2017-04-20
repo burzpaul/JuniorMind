@@ -34,7 +34,12 @@ namespace CentralizationOfElections
 
         public bool HasMoreVotes(Candidate other)
         {
-            return numberOfVotes > other.numberOfVotes;
+            return numberOfVotes < other.numberOfVotes;
+        }
+
+        public int WhoIsFirstAlphabetically(Candidate otherCandidate)
+        {
+            return string.Compare(candidateName, otherCandidate.candidateName);
         }
     }
 }

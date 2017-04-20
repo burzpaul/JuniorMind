@@ -21,7 +21,7 @@ namespace CentralizationOfElections
             Assert.AreEqual(false,votingBallots[0].Equals(votingBallots[1]));
         }
         [TestMethod]
-        public void MyTestMethod()
+        public void Test_If_New_Ballot_Added()
         {
             var state1 = new Candidate[] { new Candidate("A", 31), new Candidate("B", 30), new Candidate("C", 29),
                                                      new Candidate("D", 28), new Candidate("E", 27) };

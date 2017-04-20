@@ -29,7 +29,7 @@ namespace CentralizationOfElections
 
             var candidate2 = new Candidate("Raul", 31);
 
-            Assert.AreEqual(true, candidate.HasMoreVotes(candidate2));
+            Assert.AreEqual(false, candidate.HasMoreVotes(candidate2));
         }
         [TestMethod]
         public void TestHasLessVotes()
@@ -38,7 +38,7 @@ namespace CentralizationOfElections
 
             var candidate2 = new Candidate("Raul", 31);
 
-            Assert.AreEqual(false, candidate2.HasMoreVotes(candidate));
+            Assert.AreEqual(true, candidate2.HasMoreVotes(candidate));
         }
     }
 }

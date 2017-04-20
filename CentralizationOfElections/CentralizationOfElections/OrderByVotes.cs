@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace CentralizationOfElections
 {
-    public class OrderAlphabetically
+    class OrderByVotes
     {
         private Candidate[] candidate;
         private int index = 0;
 
-        public OrderAlphabetically(Candidate[] candidate)
+        public OrderByVotes(Candidate[] candidate)
         {
             this.candidate = candidate;
-            HeapSort(); 
+            HeapSort();
         }
 
         public bool GetNext(out Candidate candidate)
@@ -49,11 +49,11 @@ namespace CentralizationOfElections
             int left = 2 * root + 1;
             int right = 2 * root + 2;
 
-            if (left < n && candidate[left].WhoIsFirstAlphabetically(candidate[largest]) != -1) 
+            if (left < n && candidate[left].HasMoreVotes(candidate[largest]))
             {
                 largest = left;
             }
-            if (right < n && candidate[right].WhoIsFirstAlphabetically(candidate[largest]) != -1)
+            if (right < n && candidate[right].HasMoreVotes(candidate[largest]))
             {
                 largest = right;
             }
