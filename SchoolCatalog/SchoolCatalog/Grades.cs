@@ -23,15 +23,12 @@ namespace SchoolCatalog
                 result = result + grades[i];
             }
             return result / grades.Length;
-        }
+        }    
 
-        public bool AreSameGrades(int[] other)
+        public void NewGrade(int newGrade)
         {
-            return this.grades.SequenceEqual(other);
-        }
-        public bool AreSameGrades(Grades other)
-        {
-            return this.grades.SequenceEqual(other.grades);
+            Array.Resize(ref grades, grades.Length + 1);
+            grades[grades.Length - 1] = newGrade;
         }
     }
 }
