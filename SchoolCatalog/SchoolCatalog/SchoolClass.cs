@@ -17,13 +17,15 @@ namespace SchoolCatalog
             this.students = students;
         }
 
+        public void AddStudent(Student newStudent)
+        {
+            Array.Resize(ref students, students.Length + 1);
+            students[students.Length - 1] = newStudent;
+        }
+
         public bool IsSameClass(string other)
         {
             return this.nameOfClass.Equals(other);
-        }
-        public bool IsSameClass(SchoolClass other)
-        {
-            return this.nameOfClass.Equals(other.nameOfClass);
         }
     }
 }

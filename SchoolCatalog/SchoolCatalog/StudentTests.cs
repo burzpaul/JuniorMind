@@ -26,7 +26,7 @@ namespace SchoolCatalog
 
             var gpaTotal = student.GeneralAverage();
 
-            Assert.AreEqual(13.16, gpaTotal,1);
+            Assert.AreEqual(6.58, gpaTotal, 1);
         }
     }
 }
