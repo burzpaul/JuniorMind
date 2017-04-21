@@ -21,9 +21,15 @@ namespace SchoolCatalog
         {
             return this.nameOfStudent.Equals(other);
         }
+
         public bool IsSameStudent(Student other)
         {
             return this.nameOfStudent.Equals(other.nameOfStudent);
         }
+
+        public int WhoIsFirstAlphabetically(Student otherStudent)
+        {
+            return string.Compare(nameOfStudent, otherStudent.nameOfStudent);
+        } 
     }
 }
