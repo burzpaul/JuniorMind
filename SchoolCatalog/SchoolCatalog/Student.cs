@@ -32,11 +32,6 @@ namespace SchoolCatalog
             return this.nameOfStudent.Equals(other);
         }
 
-        internal bool IsSameStudent(Student[] students)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool IsSameStudent(Student other)
         {
             return this.nameOfStudent.Equals(other.nameOfStudent);

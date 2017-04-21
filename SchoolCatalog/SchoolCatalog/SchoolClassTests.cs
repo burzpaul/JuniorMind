@@ -35,7 +35,6 @@ namespace SchoolCatalog
             schoolClass.AddStudent(newStudent);
 
             Assert.AreEqual(true, schoolClass.Equals(updatedSchoolClass));
-
         }
     }
 }

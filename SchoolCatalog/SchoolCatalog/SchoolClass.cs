@@ -11,7 +11,7 @@ namespace SchoolCatalog
         private string nameOfClass;
         private Student[] students;
 
-        public SchoolClass(string name, Student[] students)
+        public SchoolClass(string name, Student[] students) 
         {
             this.nameOfClass = name;
             this.students = students;

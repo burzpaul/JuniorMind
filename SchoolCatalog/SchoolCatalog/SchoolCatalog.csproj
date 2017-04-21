@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OrderAlphabetically.cs" />
+    <Compile Include="SpecificGPAStudents.cs" />
     <Compile Include="StudentsOrderedByGPA.cs" />
     <Compile Include="StudentsOrderedByGPATests.cs" />
     <Compile Include="Subject.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="SchoolClassTests.cs" />
     <Compile Include="GradesTests.cs" />
     <Compile Include="OrderAlphabeticallyTests.cs" />
+    <Compile Include="SpecificGPAStudentsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\packages.config" />
