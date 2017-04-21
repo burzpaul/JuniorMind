@@ -15,6 +15,16 @@ namespace SchoolCatalog
             this.grades = grades;
         }
 
+        public double GeneralAverage()
+        {
+            double result = 0;
+            for (int i = 0; i < grades.Length; i++)
+            {
+                result = result + grades[i];
+            }
+            return result / grades.Length;
+        }
+
         public bool AreSameGrades(int[] other)
         {
             return this.grades.SequenceEqual(other);

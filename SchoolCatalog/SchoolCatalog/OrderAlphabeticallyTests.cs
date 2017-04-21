@@ -21,7 +21,6 @@ namespace SchoolCatalog
             Student student;
 
             Assert.IsTrue(sortedAlphabetically.GetNext(out student));
-
             Assert.AreEqual(true, expected[0].IsSameStudent(student));
         }
     }

@@ -14,12 +14,16 @@ namespace SchoolCatalog
         
         public Subject(string name, Grades grades) : this(name)
         {
-           
             this.subjectGrades = grades;
         }
         public Subject(string name)
         {
             this.nameOfSubject = name;
+        }
+
+        public double GeneralAverage()
+        {
+            return subjectGrades.GeneralAverage();
         }
 
         public bool IsSameSubject(string other)

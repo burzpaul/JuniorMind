@@ -11,10 +11,20 @@ namespace SchoolCatalog
         private string nameOfStudent;
         private Subject[] subjects;
 
-        public Student(string name, Subject[] subjects)
+        public Student(string name, Subject[] subjects) 
         {
             this.nameOfStudent = name;
             this.subjects = subjects;
+        }
+
+        public double GeneralAverage()
+        {
+            double gpaTotal = 0;
+            for (int i = 0; i < subjects.Length; i++)
+            {
+                gpaTotal = gpaTotal + subjects[i].GeneralAverage();
+            }
+            return  gpaTotal / subjects.Length;
         }
 
         public bool IsSameStudent(string other)
@@ -25,6 +35,11 @@ namespace SchoolCatalog
         public bool IsSameStudent(Student other)
         {
             return this.nameOfStudent.Equals(other.nameOfStudent);
+        }
+
+        public int GpaCompare(Student other)
+        {
+            return GeneralAverage().CompareTo(other.GeneralAverage());
         }
 
         public int WhoIsFirstAlphabetically(Student otherStudent)
