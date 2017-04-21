@@ -37,6 +37,12 @@ namespace SchoolCatalog
             return this.nameOfStudent.Equals(other.nameOfStudent);
         }
 
+        public void AddSubject(Subject newSubject)
+        {
+            Array.Resize(ref subjects, subjects.Length + 1);
+            subjects[subjects.Length - 1] = newSubject;
+        }
+
         public int GpaCompare(Student other)
         {
             return GeneralAverage().CompareTo(other.GeneralAverage());

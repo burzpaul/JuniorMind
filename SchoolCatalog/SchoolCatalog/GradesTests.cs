@@ -24,7 +24,7 @@ namespace SchoolCatalog
 
             var grades = new Grades(new int[] { 1, 2, 3, 4 });
 
-            grades.NewGrade(newGrade);
+            grades.AddGrade(newGrade);
 
             Assert.AreEqual(3, grades.GeneralAverage(), 1);
         }

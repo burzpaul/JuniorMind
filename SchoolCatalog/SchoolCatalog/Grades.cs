@@ -25,7 +25,7 @@ namespace SchoolCatalog
             return result / grades.Length;
         }    
 
-        public void NewGrade(int newGrade)
+        public void AddGrade(int newGrade)
         {
             Array.Resize(ref grades, grades.Length + 1);
             grades[grades.Length - 1] = newGrade;

@@ -15,5 +15,18 @@ namespace SchoolCatalog
 
             Assert.AreEqual(true, students[1].IsSameStudent("Richard"));
         }
+        [TestMethod]
+        public void Test_Add_Subject_Method()
+        {
+            var student = new Student("Carl", new Subject[] { new Subject("Economics", new Grades(new int[] { 6, 7, 8, 9 })) });
+
+            var newSubject = new Subject("Math", new Grades(new int[] { 12, 2, 3 }));
+
+            student.AddSubject(newSubject);
+
+            var gpaTotal = student.GeneralAverage();
+
+            Assert.AreEqual(13.16, gpaTotal,1);
+        }
     }
 }

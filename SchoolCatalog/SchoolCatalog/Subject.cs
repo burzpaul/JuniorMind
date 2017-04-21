@@ -26,6 +26,11 @@ namespace SchoolCatalog
             return subjectGrades.GeneralAverage();
         }
 
+        public void AddGrade(int newGrade)
+        {
+            subjectGrades.AddGrade(newGrade);
+        }
+
         public bool IsSameSubject(string other)
         {
             return this.nameOfSubject.Equals(other);
