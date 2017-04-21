@@ -4,12 +4,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SchoolCatalog
 {
     [TestClass]
-    public class StudentTest
+    public class SchoolClassTest
     {
         [TestMethod]
         public void TestMethod1()
         {
-            
         }
     }
 }

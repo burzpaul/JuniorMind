@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace SchoolCatalog
 {
-    class Courses
+    class SchoolClass
     {
-
     }
 }
