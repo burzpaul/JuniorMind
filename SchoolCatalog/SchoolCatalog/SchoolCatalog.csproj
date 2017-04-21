@@ -48,13 +48,17 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Courses.cs" />
+    <Compile Include="OrderAlphabetically.cs" />
+    <Compile Include="Subject.cs" />
+    <Compile Include="Grades.cs" />
     <Compile Include="SchoolClass.cs" />
     <Compile Include="Student.cs" />
-    <Compile Include="StudentTest.cs" />
+    <Compile Include="StudentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CoursesTest.cs" />
-    <Compile Include="SchoolClassTest.cs" />
+    <Compile Include="SubjectTests.cs" />
+    <Compile Include="SchoolClassTests.cs" />
+    <Compile Include="GradesTests.cs" />
+    <Compile Include="OrderAlphabeticallyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\packages.config" />

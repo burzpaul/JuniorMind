@@ -6,8 +6,24 @@ using System.Threading.Tasks;
 
 namespace SchoolCatalog
 {
-    class Student
+    public class Student
     {
+        private string nameOfStudent;
+        private Subject[] subjects;
 
+        public Student(string name, Subject[] subjects)
+        {
+            this.nameOfStudent = name;
+            this.subjects = subjects;
+        }
+
+        public bool IsSameStudent(string other)
+        {
+            return this.nameOfStudent.Equals(other);
+        }
+        public bool IsSameStudent(Student other)
+        {
+            return this.nameOfStudent.Equals(other.nameOfStudent);
+        }
     }
 }
