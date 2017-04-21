@@ -53,10 +53,10 @@
     <Compile Include="ElectionTest.cs" />
     <Compile Include="OrderAlphabeticallyTest.cs" />
     <Compile Include="OrderAlphabetically.cs" />
-    <Compile Include="OrderByVotes.cs" />
+    <Compile Include="CandidateOrderedByVote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CandidatesTest.cs" />
-    <Compile Include="OrderByVotesTest.cs" />
+    <Compile Include="CandidatesOrderedByVoteTest.cs" />
     <Compile Include="VotingBallots.cs" />
     <Compile Include="VotingBallotsTest.cs" />
   </ItemGroup>

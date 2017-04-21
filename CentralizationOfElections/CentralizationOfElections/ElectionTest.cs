@@ -23,12 +23,12 @@ namespace CentralizationOfElections
             var expected = new Candidate[] { new Candidate("A", 47), new Candidate("B", 45), new Candidate("C", 43),
                                              new Candidate("D", 41), new Candidate("E", 39) };
 
-            var election = new Election().CentralizeVotes(votingBallots);
+            var centralizeElection = new Election(votingBallots).CentralizeElection();
 
-            Assert.AreEqual(true,expected[0].IsSameCandidate(election[0]));
+            Assert.AreEqual(true,expected[0].IsSameCandidate(centralizeElection[0]));
         }
         [TestMethod]
-        public void Test_Correct_Election_Reusl()
+        public void Test_Correct_Election_Reusults()
         {
             var state1 = new Candidate[] { new Candidate("A", 31), new Candidate("B", 30), new Candidate("C", 29),
                                                      new Candidate("D", 28), new Candidate("E", 27) };
@@ -43,9 +43,9 @@ namespace CentralizationOfElections
             var expected = new Candidate[] { new Candidate("D", 41), new Candidate("B", 39), new Candidate("E", 39),
                                         new Candidate("A", 37), new Candidate("B", 39), new Candidate("C", 33) };
 
-            var election = new Election().CentralizeVotes(votingBallots);
+            var centralizedElection = new Election(votingBallots).CentralizeElection();
 
-            Assert.AreEqual(true, expected[0].IsSameCandidate(election[0]));
+            Assert.AreEqual(true, expected[0].IsSameCandidate(centralizedElection[0]));
         }
     }
 }

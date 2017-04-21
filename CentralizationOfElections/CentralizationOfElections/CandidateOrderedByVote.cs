@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace CentralizationOfElections
 {
-    class OrderByVotes
+    class CandidatesOrderedByVotes
     {
         private Candidate[] candidate;
         private int index = 0;
 
-        public OrderByVotes(Candidate[] candidate)
+        public CandidatesOrderedByVotes(Candidate[] candidate)
         {
             this.candidate = candidate;
             HeapSort();

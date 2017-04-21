@@ -14,7 +14,9 @@ namespace CentralizationOfElections
         public VotingBalot(string name, Candidate[] candidates)
         {
             this.vottingBalletName = name;
+
             new OrderAlphabetically(candidates);
+
             this.candidatesArray = candidates;
         }
 
