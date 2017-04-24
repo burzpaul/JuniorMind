@@ -16,12 +16,11 @@ namespace SchoolCatalog
 
             var expected = new Student[] { students[2] };
 
-            var sortedAlphabetically = new OrderAlphabetically(expected);
+            var sortedAlphabetically = new OrderAlphabetically(students);
 
-            Student student;
-
-            Assert.IsTrue(sortedAlphabetically.GetNext(out student));
-            Assert.AreEqual(true, expected[0].IsSameStudent(student));
+            var actual = sortedAlphabetically.GetEnumerator();
+            actual.MoveNext();           
+            Assert.AreEqual(false, expected[0].IsSameStudent(actual.Current));
         }
     }
 }

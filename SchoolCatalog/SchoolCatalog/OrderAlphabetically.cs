@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,38 +7,26 @@ using System.Threading.Tasks;
 
 namespace SchoolCatalog
 {
-    class OrderAlphabetically
+    class OrderAlphabetically : IEnumerable<Student>
     {
-        private Student[] student;
-        private int index = 0;
+        private Student[] students;
 
         public OrderAlphabetically(Student[] candidate)
         {
-            this.student = candidate;
+            this.students = candidate;
             HeapSort();
-        }
-
-        public bool GetNext(out Student student)
-        {
-            if (index < this.student.Length)
-            {
-                student = this.student[index++];
-                return true;
-            }
-            student = null;
-            return false;
         }
 
         private void HeapSort()
         {
-            int n = student.Length;
+            int n = students.Length;
             for (int i = n / 2 - 1; i >= 0; i--)
             {
                 Heapify(n, i);
             }
             for (int i = n - 1; i >= 0; i--)
             {
-                Swap(ref student[0], ref student[i]);
+                Swap(ref students[0], ref students[i]);
 
                 Heapify(i, 0);
             }
@@ -49,17 +38,17 @@ namespace SchoolCatalog
             int left = 2 * root + 1;
             int right = 2 * root + 2;
 
-            if (left < n && student[left].WhoIsFirstAlphabetically(student[largest]) != -1)
+            if (left < n && students[left].WhoIsFirstAlphabetically(students[largest]) != -1)
             {
                 largest = left;
             }
-            if (right < n && student[right].WhoIsFirstAlphabetically(student[largest]) != -1)
+            if (right < n && students[right].WhoIsFirstAlphabetically(students[largest]) != -1)
             {
                 largest = right;
             }
             if (largest != root)
             {
-                Swap(ref student[root], ref student[largest]);
+                Swap(ref students[root], ref students[largest]);
                 Heapify(n, largest);
             }
         }
@@ -71,5 +60,17 @@ namespace SchoolCatalog
             student2 = temp;
         }
 
+        public IEnumerator<Student> GetEnumerator()
+        {
+            foreach(var student in students)
+            {
+                yield return student;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }
