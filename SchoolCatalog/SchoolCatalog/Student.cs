@@ -17,16 +17,6 @@ namespace SchoolCatalog
             this.subjects = subjects;
         }
 
-        public double GeneralAverage()
-        {
-            double gpaTotal = 0;
-            for (int i = 0; i < subjects.Length; i++)
-            {
-                gpaTotal = gpaTotal + subjects[i].GeneralAverage();
-            }
-            return gpaTotal / subjects.Length;
-        }
-
         public bool IsSameStudent(string other)
         {
             return this.nameOfStudent.Equals(other);
@@ -43,9 +33,29 @@ namespace SchoolCatalog
             subjects[subjects.Length - 1] = newSubject;
         }
 
-        public int GpaCompare(Student other)
+        public double GeneralAverage()
+        {
+            double gpaTotal = 0;
+            for (int i = 0; i < subjects.Length; i++)
+            {
+                gpaTotal = gpaTotal + subjects[i].GeneralAverage();
+            }
+            return gpaTotal / subjects.Length;
+        }
+
+        public double GpaCompare(Student other)
         {
             return GeneralAverage().CompareTo(other.GeneralAverage());
+        }
+
+        public int GradesOfTen()
+        {
+            int gradesOfTen = 0;
+            for (int i = 0; i < subjects.Length; i++)
+            {
+                gradesOfTen = gradesOfTen + subjects[i].GradesOfTen();
+            }
+            return gradesOfTen;
         }
 
         public int WhoIsFirstAlphabetically(Student otherStudent)

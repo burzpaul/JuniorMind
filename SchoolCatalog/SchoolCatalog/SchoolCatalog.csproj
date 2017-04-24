@@ -63,9 +63,11 @@
     <Compile Include="GradesTests.cs" />
     <Compile Include="OrderAlphabeticallyTests.cs" />
     <Compile Include="SpecificGPAStudentsTests.cs" />
+    <Compile Include="StudentsWithMostHighestGrade.cs" />
+    <Compile Include="StudentsWithMostHighestGradeTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\packages.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

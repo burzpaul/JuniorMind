@@ -13,7 +13,7 @@ namespace SchoolCatalog
                                                                                new Subject("Literature",new Grades(new int[] { 6, 6, 6 }))}),
 
                                            new Student("Richard", new Subject[] { new Subject("Economics", new Grades(new int[] { 6, 6, 6 })),
-                                                                               new Subject("Literature",new Grades(new int[] { 6, 6, 6 }))}) };
+                                                                    new Subject("Literature",new Grades(new int[] { 6, 6, 6 }))}) };
 
             var schoolClass = new SchoolClass[] { new SchoolClass("FirstClass", students) };
 

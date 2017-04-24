@@ -15,11 +15,19 @@ namespace SchoolCatalog
                                             new Student("Melania", new Subject[] { new Subject("Economics", new Grades(new int[] { 6, 7, 8, 5 })) }),
                                             new Student("Tuck", new Subject[] { new Subject("Economics", new Grades(new int[] { 10, 10, 8, 7 })) }),
                                             new Student("Tom", new Subject[] { new Subject("Economics", new Grades(new int[] { 6, 7, 8, 10 })) })};
-            var studentWithMostHigherGrade = students[2];
 
-            var actual = new StudentsWithMostHighestGrade(students);
+            var expected = students[2];
 
-            Assert.AreEqual(true, studentWithMostHigherGrade.IsSameStudent(actual));
+            var expected2 = students[0];
+
+            var studentsWithMostHighestGrade = new StudentsWithMostHighestGrade(students);
+
+            Student student;
+
+            Assert.IsTrue(studentsWithMostHighestGrade.GetNext(out student)); 
+            Assert.AreEqual(true, expected.IsSameStudent(student));
+            Assert.IsTrue(studentsWithMostHighestGrade.GetNext(out student));
+            Assert.AreEqual(true, expected2.IsSameStudent(student));
         }
     }
 }

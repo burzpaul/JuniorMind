@@ -30,5 +30,18 @@ namespace SchoolCatalog
             Array.Resize(ref grades, grades.Length + 1);
             grades[grades.Length - 1] = newGrade;
         }
+
+        internal int GradesOfTen()
+        {
+            int gradesOfTen = 0;
+            for (int i = 0; i < grades.Length; i++)
+            {
+                if (grades[i] == 10)
+                {
+                    gradesOfTen++;
+                }
+            }
+            return gradesOfTen;
+        }
     }
 }

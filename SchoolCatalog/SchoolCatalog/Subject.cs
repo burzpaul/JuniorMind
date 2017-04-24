@@ -31,6 +31,11 @@ namespace SchoolCatalog
             subjectGrades.AddGrade(newGrade);
         }
 
+        public int GradesOfTen()
+        {
+            return subjectGrades.GradesOfTen();
+        }
+
         public bool IsSameSubject(string other)
         {
             return this.nameOfSubject.Equals(other);

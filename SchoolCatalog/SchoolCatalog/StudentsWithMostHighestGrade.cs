@@ -9,19 +9,25 @@ namespace SchoolCatalog
     class StudentsWithMostHighestGrade
     {
         private Student[] students;
-        private int[] count;
+        private int index = 0;
 
         public StudentsWithMostHighestGrade(Student[] students)
         {
             this.students = students;
         }
 
-        private void CountGrades()
+        public bool GetNext(out Student student)
         {
-            for (int i = 0; i < students.Length; i++)
+            Array.Sort(students, delegate (Student student1, Student student2) 
+            { return student2.GradesOfTen().CompareTo(student1.GradesOfTen()); });
+
+            if (index < students.Length)
             {
-                if(students[i].)
+                student = students[index++];
+                return true;
             }
+            student = null;
+            return false;
         }
     }
 }
