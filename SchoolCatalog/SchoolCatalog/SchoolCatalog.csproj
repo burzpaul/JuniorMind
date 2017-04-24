@@ -52,6 +52,8 @@
     <Compile Include="SpecificGPAStudents.cs" />
     <Compile Include="StudentsOrderedByGPA.cs" />
     <Compile Include="StudentsOrderedByGPATests.cs" />
+    <Compile Include="StudentsWithLowestGPA.cs" />
+    <Compile Include="StudentsWithLowestGPATests.cs" />
     <Compile Include="Subject.cs" />
     <Compile Include="Grades.cs" />
     <Compile Include="SchoolClass.cs" />
