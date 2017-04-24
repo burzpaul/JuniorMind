@@ -48,7 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OrderAlphabetically.cs" />
+    <Compile Include="StudentsOrderedAlphabetically.cs" />
     <Compile Include="SpecificGPAStudents.cs" />
     <Compile Include="StudentsOrderedByGPA.cs" />
     <Compile Include="StudentsOrderedByGPATests.cs" />
@@ -63,7 +63,7 @@
     <Compile Include="SubjectTests.cs" />
     <Compile Include="SchoolClassTests.cs" />
     <Compile Include="GradesTests.cs" />
-    <Compile Include="OrderAlphabeticallyTests.cs" />
+    <Compile Include="StudentsOrderedAlphabeticallyTests.cs" />
     <Compile Include="SpecificGPAStudentsTests.cs" />
     <Compile Include="StudentsWithMostHighestGrade.cs" />
     <Compile Include="StudentsWithMostHighestGradeTests.cs" />
