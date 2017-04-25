@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="List.cs" />
     <Compile Include="StudentsOrderedAlphabetically.cs" />
     <Compile Include="SpecificGPAStudents.cs" />
     <Compile Include="StudentsOrderedByGPA.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="SpecificGPAStudentsTests.cs" />
     <Compile Include="StudentsWithMostHighestGrade.cs" />
     <Compile Include="StudentsWithMostHighestGradeTests.cs" />
+    <Compile Include="ListsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

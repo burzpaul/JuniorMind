@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SchoolCatalog
 {
-    class StudentsOrderedAlphabetically : IEnumerable<Student>
+    class StudentsOrderedAlphabetically : List<Student>
     {
         private Student[] students;
 
@@ -58,18 +58,6 @@ namespace SchoolCatalog
             var temp = student1;
             student1 = student2;
             student2 = temp;
-        }
-
-        public IEnumerator<Student> GetEnumerator()
-        {
-            foreach(var student in students)
-            {
-                yield return student;
-            }
-        }
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
     }
 }
