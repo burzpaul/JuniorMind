@@ -9,18 +9,18 @@ namespace SchoolCatalog
 {
     public class List<T> : IList<T>
     {
-        private T[] listItems = new T[8];
+        private T[] itemList = new T[8];
         private int count;
 
         public T this[int index]
         {
             get
             {
-                return listItems[index];
+                return itemList[index];
             }
             set
             {
-                listItems[index] = value;
+                itemList[index] = value;
             }
         }
 
@@ -43,21 +43,21 @@ namespace SchoolCatalog
         public void Add(T item)
         {
             EnsureThereIsSpace();
-            listItems[count] = item;
+            itemList[count] = item;
             count++;
         }
 
         private void EnsureThereIsSpace()
         {
-            if (count > listItems.Length)
+            if (count > itemList.Length)
             {
-                Array.Resize(ref listItems, listItems.Length * 2);
+                Array.Resize(ref itemList, itemList.Length * 2);
             }
         }
 
         public void Clear()
         {
-            listItems = null;
+            itemList = null;
             count = 0;
         }
 
@@ -70,13 +70,13 @@ namespace SchoolCatalog
         {
             for (int index = arrayIndex; index < array.Length; index++)
             {
-                array[index] = listItems[index];
+                array[index] = itemList[index];
             }
         }
 
         public int IndexOf(T item)
         {
-            return Array.IndexOf(listItems, item);
+            return Array.IndexOf(itemList, item);
         }
 
         public void Insert(int index, T item)
@@ -86,24 +86,24 @@ namespace SchoolCatalog
                 Add(item);
             }
             ShiftRight(index);
-            listItems[index] = item;
+            itemList[index] = item;
         }
 
         private void ShiftRight(int index)
         {
-            Array.Resize(ref listItems, listItems.Length + 1);
-            for (int i = listItems.Length - 2; i >= index; i--)
+            Array.Resize(ref itemList, itemList.Length + 1);
+            for (int i = itemList.Length - 2; i >= index; i--)
             {
-                listItems[i] = listItems[i + 1];
+                itemList[i] = itemList[i + 1];
             }
             count++;
         }
 
         private void ShiftLeft(int index)
         {
-            for (int i = index; i < listItems.Length - 1; i++)
+            for (int i = index; i < itemList.Length - 1; i++)
             {
-                listItems[i] = listItems[i + 1];
+                itemList[i] = itemList[i + 1];
             }
             count--;
         }
@@ -127,15 +127,15 @@ namespace SchoolCatalog
 
         public IEnumerator<T> GetEnumerator()
         {
-           foreach(var itemT in listItems)
+            foreach (var item in itemList)
             {
-                yield return itemT;
+                yield return item;                
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            throw new NotImplementedException();
         }
     }
 }

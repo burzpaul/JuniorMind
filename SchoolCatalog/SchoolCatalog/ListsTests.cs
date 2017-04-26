@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections;
+using System.Linq;
 
 namespace SchoolCatalog
 {
@@ -9,15 +11,10 @@ namespace SchoolCatalog
         [TestMethod]
         public void Add_Test()
         {
-            var a = new List<string>();
-            a.Add("a");
-            a.Add("b");
-            a.Add("c");
-            var b = a.GetEnumerator();
-            b.MoveNext();
-            Assert.AreEqual("a", b.Current);
-
+            var a = new List<string> { "a", "b", "c" };
+            CollectionAssert.AreEqual(new [] { "a", "b", "c" }, a.ToArray());
         }
+
         [TestMethod]
         public void Insert_Test()
         {
