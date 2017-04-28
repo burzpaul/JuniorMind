@@ -44,25 +44,30 @@ namespace LinkedList
 
         public void AddAfter(Node<T> node, T data)
         {
+            CheckNode(node);
+            Node<T> toInsert = new Node<T>(node, data, node.Next);
+            node.Next.Previous = toInsert;
+            node.Next = toInsert;
+            count++;
+        }
+
+        //public static new bool Equals(object node1, object node2)
+        //{
+        //        return true;
+        //    return false;
+        //}
+
+        private static void CheckNode(Node<T> node)
+        {
             if (node == null)
             {
-                throw new ArgumentNullException();
-            }
-            Node<T> toInsert = new Node<T>(node, data, node.Next);
-            if (Find(toInsert.Previous) != null || Find(toInsert.Next.Value) != null) 
-            {
-                node.Next.Previous = toInsert;
-                node.Next = toInsert;
-                count++;
-            }
-            else
-            {
-                throw new InvalidOperationException();
+                throw new ArgumentNullException("Node cannot be null", "node");
             }
         }
 
         public void AddBefore(Node<T> node, T data)
         {
+            CheckNode(node);
             AddAfter(node.Previous, data);
         }
 
@@ -109,8 +114,9 @@ namespace LinkedList
             return false;
         }
 
-        private void Remove(Node<T> toRemove)
+        public void Remove(Node<T> toRemove)
         {
+            CheckNode(toRemove);
             toRemove.Previous.Next = toRemove.Next;
             toRemove.Next.Previous = toRemove.Previous;
             count--;
@@ -118,18 +124,27 @@ namespace LinkedList
 
         public void RemoveFirst()
         {
-            if (count > 0)
+            IsListEmpty();
+            Remove(head.Next);
+        }
+
+        public bool Equal(Node<T> a, Node<T> b)
+        {
+            return a.GetHashCode().Equals(b.GetHashCode());
+        }
+
+        private void IsListEmpty()
+        {
+            if (count == 0)
             {
-                Remove(head.Next);
+                throw new InvalidOperationException("List is empty");
             }
         }
 
         public void RemoveLast()
         {
-            if (count > 0)
-            {
-                Remove(head.Previous);
-            }
+            IsListEmpty();
+            Remove(head.Previous);
         }
 
         public void Clear()
@@ -137,6 +152,21 @@ namespace LinkedList
             head.Next = head;
             head.Previous = head;
             count = 0;
+        }
+
+        public Node<T> NodeIndex(int index)
+        {
+            if(index > count)
+            {
+                throw new IndexOutOfRangeException("index it to large");
+            }
+            Node<T> node = head.Next;
+            while(index > 0)
+            {
+                node = node.Next;
+                index--;
+            }
+            return node;
         }
 
         public IEnumerator<T> GetEnumerator()

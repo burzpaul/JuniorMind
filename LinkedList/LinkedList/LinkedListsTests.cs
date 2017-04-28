@@ -31,7 +31,8 @@ namespace LinkedList
         {
             var list = new LinkedList<int> { 1, 2, 4 };
 
-            list.AddAfter(list.Find(2), 3);
+
+            list.AddAfter(list.NodeIndex(1), 3);
 
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4 }, list.ToArray());
 
@@ -50,15 +51,6 @@ namespace LinkedList
         {
             var list = new LinkedList<int> { 1, 1, 2, 2, 3, 123, 13 };
             Assert.AreEqual(7, list.Count);
-        }
-        [TestMethod]
-        public void Clear_Test()
-        {
-            var list = new LinkedList<char> { 'a', 'b', 'c', 'd' };
-
-            list.Clear();
-
-            Assert.IsNull(list.First());
         }
         [TestMethod]
         public void Find_Last_Test()
@@ -120,22 +112,88 @@ namespace LinkedList
 
             CollectionAssert.AreEqual(new[] { "a", "b" }, list.ToArray());
         }
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Exception_Test_ArgumentNullException()
+        public void Add_After_Exception_Test_ArgumentNullException()
         {
             var list = new LinkedList<string> { "a", "b", "a" };
 
-            list.AddAfter(null, "c"); //InvalidOperationException
+            list.AddAfter(null, "c"); //ArgumentNullException;
+
         }
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void Exception_Test_InvalidOperationException()
+        public void Add_After_Exception_Test_InvalidOperationException()
         {
             var list = new LinkedList<string> { "a", "b", "a" };
 
-            list.AddAfter(list.Find("d"), "c");
+            list.AddAfter(list.Find("d"), "e"); //InvalidOperationException	
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Add_Before_Exception_Test_ArgumentNullException()
+        {
+            var list = new LinkedList<string> { "a", "b", "a" };
+
+            list.AddBefore(null, "c"); //ArgumentNullException;
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Add_Before_Exception_Test_InvalidOperationException()
+        {
+            var list = new LinkedList<string> { "a", "b", "a" };
+
+            list.AddBefore(list.Find("d"), "c"); //InvalidOperationException	
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Remove_Exception_Test_ArgumentNullException()
+        {
+            var list = new LinkedList<string> { "a", "b", "a" };
+
+            var toRemove = list.Find("d");
+
+            list.Remove(toRemove); //ArgumentNullException	
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Remove_Exception_Test_InvalidOperationException()
+        {
+            var list = new LinkedList<string> { "a", "b", "a" };
+
+            var toRemove = list.Find("d");
+
+            list.Remove(toRemove); //InvalidOperationException		
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Remove_First_Exception_Invalid_Operation_Test()
+        {
+            var list = new LinkedList<string> { };
+
+            list.RemoveFirst(); 
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Remove_Last_Exception_Invalid_Operation_Test()
+        {
+            var list = new LinkedList<string> { };
+
+            list.RemoveLast();
+        }
+
+        [TestMethod]
+        public void Random()
+        {
+            var list = new LinkedList<string> { "a", "b", "a" };
+            var set = new HashSet<string>(list);
+            Assert.AreEqual(true, set.Contains("d"));
+        }
     }
 }

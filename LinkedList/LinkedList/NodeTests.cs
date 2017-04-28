@@ -10,6 +10,7 @@ namespace LinkedList
         public void Node_Test()
         {
             var head = new Node<string>(null, "a", null);
+
             Assert.AreEqual(true, head.Value.Equals("a"));
         }
     }
