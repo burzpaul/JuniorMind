@@ -12,16 +12,17 @@ namespace LinkedList
         private Node<T> previous;
         private Node<T> next;
         private T data;
-        private string nodeId;
+        private Guid nodeId;
 
-        public Node(Node<T> previousNode, T data, Node<T> nextNode,string listId)
+        public Node(Node<T> previousNode, T data, Node<T> nextNode,Guid listId)
         {
             previous = previousNode;
             this.data = data;
             next = nextNode;
             this.nodeId = listId;
         }
-        public string NodeId
+
+        public Guid NodeId
         {
             get
             {

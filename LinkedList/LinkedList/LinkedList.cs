@@ -11,20 +11,20 @@ namespace LinkedList
     {
         private Node<T> head;
         private int count;
-        private string listId;
+        private Guid listId;
 
-        public LinkedList(string listId)
+        public LinkedList()
         {
-            this.listId = listId;
-            head = new Node<T>(null, default(T), null, this.listId);
+
+            listId = Guid.NewGuid();
+            head = new Node<T>(null, default(T), null, listId);
             head.Previous = head;
             head.Next = head;
-
         }
 
-        public bool IsSameList(LinkedList<T> listId)
+        public bool IsSameList(LinkedList<T> otherList)
         {
-            return this.listId.Equals(listId.listId);
+            return listId == otherList.listId;
         }
 
         public int Count
@@ -65,7 +65,7 @@ namespace LinkedList
             {
                 throw new ArgumentNullException("Node cannot be null", "node");
             }
-            if (node.NodeId != listId && node.NodeId != null) 
+            if (node.NodeId != listId && node.NodeId.Equals(Guid.Empty) == false)    
             {
                 throw new InvalidOperationException("Node is not in the current LinkedList<T>");
             }
