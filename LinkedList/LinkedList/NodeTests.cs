@@ -9,7 +9,7 @@ namespace LinkedList
         [TestMethod]
         public void Node_Test()
         {
-            var head = new Node<string>(null, "a", null);
+            var head = new Node<string>(null, "a", null, "123");
 
             Assert.AreEqual(true, head.Value.Equals("a"));
         }

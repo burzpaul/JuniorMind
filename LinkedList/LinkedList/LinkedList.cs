@@ -11,12 +11,20 @@ namespace LinkedList
     {
         private Node<T> head;
         private int count;
+        private string listId;
 
-        public LinkedList()
+        public LinkedList(string listId)
         {
-            head = new Node<T>(null, default(T), null);
+            this.listId = listId;
+            head = new Node<T>(null, default(T), null, this.listId);
             head.Previous = head;
             head.Next = head;
+
+        }
+
+        public bool IsSameList(LinkedList<T> listId)
+        {
+            return this.listId.Equals(listId.listId);
         }
 
         public int Count
@@ -45,23 +53,21 @@ namespace LinkedList
         public void AddAfter(Node<T> node, T data)
         {
             CheckNode(node);
-            Node<T> toInsert = new Node<T>(node, data, node.Next);
+            Node<T> toInsert = new Node<T>(node, data, node.Next, listId);
             node.Next.Previous = toInsert;
             node.Next = toInsert;
             count++;
         }
 
-        //public static new bool Equals(object node1, object node2)
-        //{
-        //        return true;
-        //    return false;
-        //}
-
-        private static void CheckNode(Node<T> node)
+        private void CheckNode(Node<T> node)
         {
             if (node == null)
             {
                 throw new ArgumentNullException("Node cannot be null", "node");
+            }
+            if (node.NodeId != listId && node.NodeId != null) 
+            {
+                throw new InvalidOperationException("Node is not in the current LinkedList<T>");
             }
         }
 
