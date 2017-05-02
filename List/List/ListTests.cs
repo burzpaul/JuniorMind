@@ -12,7 +12,7 @@ namespace List
         {
             var list = new List<string> { "a", "b", "c" };
             list.Add("d");
-            CollectionAssert.AreEqual(new[] { "a", "b", "c","d" }, list.ToArray());
+            CollectionAssert.AreEqual(new[] { "a", "b", "c", "d" }, list.ToArray());
         }
         [TestMethod]
         public void Count_Test()
@@ -22,12 +22,13 @@ namespace List
             Assert.AreEqual(4, list.Count);
         }
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void Clear_Test()
         {
             var list = new List<string> { "a", "b", "c" };
 
             list.Clear();
-            Assert.AreEqual(0, list.Count);
+            Assert.AreEqual(new ArgumentNullException(), list.Count);
         }
         [TestMethod]
         public void Contains_Test()
@@ -87,6 +88,76 @@ namespace List
             list.RemoveAt(2);
 
             CollectionAssert.AreEqual(new[] { 2.21, 5.32, 9.72 }, list.ToArray());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Count_Test_Argument_Null()
+        {
+            var list = new List<string> { };
+
+            list.Count();
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Copy_To_Argument_Null_Exception()
+        {
+            var list = new List<char> { 'p', 'a', 'u', 'l' };
+            var listCopy = new char[] { };
+
+            list.CopyTo(listCopy, 0);
+
+            CollectionAssert.AreEqual(listCopy, list.ToArray());
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Copy_To_Argument_Out_Of_Range_Exception()
+        {
+            var list = new List<char> { 'p', 'a', 'u', 'l' };
+            var listCopy = new char[5];
+
+            list.CopyTo(listCopy, -1);
+
+            CollectionAssert.AreEqual(listCopy, list.ToArray());
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Copy_To_Argument_Exception()
+        {
+            var list = new List<char> { 'p', 'a', 'u', 'l' };
+            var listCopy = new char[3];
+
+            list.CopyTo(listCopy, 0);
+
+            CollectionAssert.AreEqual(listCopy, list.ToArray());
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Insert_Argument_Out_Of_Range_Exception()
+        {
+            var list = new List<string> { "a", "b", "c" };
+            list.Insert(5, "c");
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Insert_Argument_Out_Of_Range_Exception2()
+        {
+            var list = new List<string> { "a", "b", "c" };
+            list.Insert(-1, "c");
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Remove_At_Argument_Out_Of_Range_Exception()
+        {
+            var list = new List<string> { "a", "b", "c" };
+            list.RemoveAt(5);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Remove_At_Argument_Out_Of_Range_Exception2()
+        {
+            var list = new List<string> { "a", "b", "c" };
+            list.RemoveAt(-1);
         }
     }
 }

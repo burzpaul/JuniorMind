@@ -28,6 +28,14 @@ namespace List
         {
             get
             {
+                if (count == 0)
+                {
+                    throw new ArgumentNullException("source is null");
+                }
+                if (count > Int32.MaxValue)
+                {
+                    throw new OverflowException("the number of elements in source is larger than MaxValue");
+                }
                 return count;
             }
         }
@@ -68,6 +76,20 @@ namespace List
 
         public void CopyTo(T[] array, int arrayIndex)
         {
+            if (array.Length == 0)
+            {
+                throw new ArgumentNullException("array is null");
+            }
+            if (arrayIndex < 0)
+            {
+                throw new ArgumentOutOfRangeException("arrayIndex is less than 0");
+            }
+            if (array.Length - arrayIndex < count)
+            {
+                throw new ArgumentException("The number of elements in the source List<T> is " +
+                                                "greater than the available space from arrayIndex " +
+                                                "to the end of the destination array.");
+            }
             for (int index = arrayIndex; index < array.Length; index++)
             {
                 array[index] = itemList[index];
@@ -81,12 +103,21 @@ namespace List
 
         public void Insert(int index, T item)
         {
+            CheckIndex(index);
             if (index == count)
             {
                 Add(item);
             }
             ShiftRight(index);
             itemList[index] = item;
+        }
+
+        private void CheckIndex(int index)
+        {
+            if (index < 0 || index > count)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void ShiftRight(int index)
@@ -122,6 +153,7 @@ namespace List
 
         public void RemoveAt(int index)
         {
+            CheckIndex(index);
             ShiftLeft(index);
         }
 
