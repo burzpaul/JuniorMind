@@ -5,7 +5,7 @@ namespace TodoApi.Models
 {
     public class TodoItem
     {
-        [Key]
+        [Key]   
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Key { get; set; }
         public string Name { get; set; }
