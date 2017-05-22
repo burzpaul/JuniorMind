@@ -1,64 +1,220 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <style>
+        form, label, input {
+            position: center;
+            width: 50%;
+            display: table;
+            margin: 8px auto;
+        }
+
+        fieldset {
+            width: 60%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        
+
+        .passwords {
+            display: inline-table;
+            padding: 10px;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+       @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
     <script type="text/javascript">
-        function passwordInfo() {
-            var data = {
-                number: document.getElementById('number').value,
-                passwordLength: document.getElementById('length').value,
-                upperCase: document.getElementById('uppercase').value,
+        var storedData;
+
+        function updateData() {
+            storedData = {
+                number: document.getElementById('numberOfPasswords').value,
+                passwordLength: document.getElementById('passwordLength').value,
+                upperCase: document.getElementById('upperCase').value,
                 digits: document.getElementById('digits').value,
                 symbols: document.getElementById('symbols').value,
-                excludeSimilar: document.getElementById('yessm').checked,
-                excludeAmbigious: document.getElementById('yesam').checked
-            };
-            return password(data);
+                excludeSimilar: document.getElementById('excludeSimilar').checked,
+                excludeAmbigious: document.getElementById('excludeAmbigious').checked
+            }
         }
-        function password(data) {
+
+        function loadDefaultForm(location) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === XMLHttpRequest.DONE && this.status == 200) {
+                    var form = createForm(JSON.parse(this.responseText)); 
+                    document.getElementById(location).appendChild(form);
+
+                }
+            };
+            xhttp.open("GET", "api/values/defaultvalues", true);
+            xhttp.send();
+        }
+
+        function createForm(data) {
+            var elements = [{
+                id: "numberOfPasswords",
+                label: "Number of passwords :",
+                value: data.number
+            }, {
+                id: "passwordLength",
+                type: "number",
+                label: "Password length :",
+                value: data.passwordLength
+            }, {
+                id: "upperCase",
+                type: "number",
+                label: "Number of upper case letters :",
+                value: data.upperCase
+            }, {
+                id: "digits",
+                type: "number",
+                label: "Number of digits : ",
+                value: data.digits
+            }, {
+                id: "symbols",
+                type: "number",
+                label: "Number of symbols :",
+                value: data.symbols
+            }, {
+                id: "excludeSimilar",
+                type: "checkbox",
+                label: "Exclude similar characters",
+                isChecked: data.excludeSimilar
+            }, {
+                id: "excludeAmbigious",
+                type: "checkbox",
+                label: "Exclude ambigious characters",
+                isChecked: data.excludeAmbigious
+            }, {
+                id: "generateBtn",
+                type: "button",
+                label: "",
+                value: "Generate Password/s",
+                onclick: "loading();updateData();deleteChildren(form);generatePassword(storedData)"
+            }];
+            var form = e("form", { id: "myForm", className: "form" }, [
+                e("div", null, elements.map(formElement))]);
+            return form;
+        }
+
+        function e(element, attrs, childArray) {
+            var result = document.createElement(element);
+            for (var key in attrs) {
+                if (attrs[key] === undefined) {
+                    continue;
+                }
+                if (key === "isChecked") {
+                    result.checked = attrs[key];
+                } else {
+                    result.setAttribute(key, attrs[key]);
+                }
+            }
+            for (var child in childArray) {
+                if (typeof childArray[child] === 'string') {
+                    result.innerHTML = childArray[child];
+                }
+                else {
+                    result.appendChild(childArray[child])
+                }
+            }
+            return result;
+        }
+
+        function formElement(argument) {
+
+            return e("div", null, [e("label", { for: argument.id }, [argument.label]),
+            e("input", {
+                id: argument.id,
+                type: argument.type,
+                value: argument.value,
+                isChecked: argument.isChecked,
+                onclick: argument.onclick
+            })]);
+        }
+
+        function generatePassword(data) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                    alert(xhttp.responseText);
+                    var passwords = JSON.parse(this.responseText);
+                    var passwordsNodes = passwords.map((password) => {
+                        return e("p", { class: "passwords" }, [password]);
+                    });
+                    var form = document.getElementById("myForm");                  
+                    showResults(form, passwordsNodes);
                 }
             };
             xhttp.open("Post", "api/values", true);
             xhttp.setRequestHeader("Content-Type", "application/json");
             xhttp.send(JSON.stringify(data));
+
+        }
+
+        function deleteChildren(element) {
+            while (element.hasChildNodes()) {
+                element.removeChild(element.firstChild);
+            }
+        }
+
+        function showResults(form, nodes) {
+            deleteChildren(document.getElementById('fieldset1'));
+            form.appendChild(e("div", { className: "passwords" }, nodes));
+            form.appendChild(e("input", {
+                type: "button",
+                id: "btn",
+                value: "Back",
+                onclick: "document.getElementById('fieldset1').appendChild(createForm(storedData))"
+            }));
+        }
+        function loading() {
+            var loader = e("div", { class: "loader" }, []);
+            document.getElementById("myForm").appendChild(loader);
         }
     </script>
     <meta charset="utf-8" />
     <title>Password Generator</title>
 </head>
-<body>
-    <div style="text-align:center">
-        <fieldset contextmenu="">
-            <legend>Generate random password</legend>
-            <form action="" id="myForm">
-                Number of passwords:<br>
-                <input type="number" id="number" value=""><br>
-
-                Length of password/s:<br>
-                <input type="number" id="length" value=""><br>
-
-                Number of uppercase letters in password:<br>
-
-                <input type="number" id="uppercase" name="UpperCase"><br>
-
-                Number of digits:<br>
-                <input type="number" id="digits" name="Digits"><br>
-
-                Number of symbols:<br>
-                <input type="number" id="symbols" name="Symbols"><br>
-
-                Exclude similar characters ?<br>
-                <input type="checkbox" id="yessm" value="true" />Yes<br />
-
-                Exclude ambigous characters ? <br>
-                <input type="checkbox" id="yesam" value="true">Yes<br />
-
-                <button type="button" value="Generate" onclick="passwordInfo()">GeneratePasword</button>
-            </form>
-        </fieldset>
-    </div>
+<body style="text-align:center">
+    <header>
+        <h1>Generate Random Password</h1>
+    </header>
+    <fieldset id="fieldset1"></fieldset>
+    <script>
+        loadDefaultForm("fieldset1");
+    </script>
 </body>
 </html>

@@ -11,28 +11,56 @@ namespace WebApi.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private PasswordInfo info = new PasswordInfo();
-    
+        private PasswordInfo info = new PasswordInfo()
+        {
+            Number = 1,
+            PasswordLength = 8,
+            UpperCase = 2,
+            Digits = 2,
+            Symbols = 2,
+            ExcludeSimilar = false,
+            ExcludeAmbigous = false
+        };
+
         [HttpGet]
         public IActionResult Get()
         {
             return Json(new PasswordGenerator(info).GeneratePassword());
         }
 
-        [HttpGet("{id}",Name = "Passwords")]
+        [HttpGet("{id}", Name = "Passwords")]
         public IActionResult Get(int numberOf)
         {
             return Json(new PasswordGenerator(info).GeneratePassword());
         }
+        [HttpGet]
+        [Route("defaultvalues")]
+        public IActionResult GetInfo()
+        {
+            var result = new
+            {
+                Number = info.Number,
+                PasswordLength = info.PasswordLength,
+                UpperCase = info.UpperCase,
+                Digits = info.Digits,
+                Symbols = info.Symbols,
+                ExcludeSimilar = info.ExcludeSimilar,
+                ExcludeAmbigious = info.ExcludeAmbigous
+            };
 
+            return new ObjectResult(result);
+        }
         // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody]PasswordInfo info)
         {
-            if (info.Number <= 0) 
+            if (info.Number <= 0)
             {
-                return BadRequest(new ExceptionClas { NumberOfPasswords = info.Number,
-                                    Message = "number of passwords has to ge greater than 0" });
+                return BadRequest(new ExceptionClas
+                {
+                    NumberOfPasswords = info.Number,
+                    Message = "number of passwords has to ge greater than 0"
+                });
             }
             if (info.PasswordLength < 8)
             {
