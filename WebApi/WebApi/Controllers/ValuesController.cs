@@ -13,7 +13,7 @@ namespace WebApi.Controllers
     {
         private PasswordInfo info = new PasswordInfo()
         {
-            Number = 1,
+            NumberOfPasswords = 1,
             PasswordLength = 8,
             UpperCase = 2,
             Digits = 2,
@@ -33,32 +33,34 @@ namespace WebApi.Controllers
         {
             return Json(new PasswordGenerator(info).GeneratePassword());
         }
+
         [HttpGet]
         [Route("defaultvalues")]
         public IActionResult GetInfo()
         {
             var result = new
             {
-                Number = info.Number,
+                NumberOfPasswords = info.NumberOfPasswords,
                 PasswordLength = info.PasswordLength,
                 UpperCase = info.UpperCase,
                 Digits = info.Digits,
                 Symbols = info.Symbols,
                 ExcludeSimilar = info.ExcludeSimilar,
-                ExcludeAmbigious = info.ExcludeAmbigous
+                ExcludeAmbigous = info.ExcludeAmbigous
             };
 
             return new ObjectResult(result);
         }
+
         // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody]PasswordInfo info)
         {
-            if (info.Number <= 0)
+            if (info.NumberOfPasswords <= 0)
             {
                 return BadRequest(new ExceptionClas
                 {
-                    NumberOfPasswords = info.Number,
+                    NumberOfPasswords = info.NumberOfPasswords,
                     Message = "number of passwords has to ge greater than 0"
                 });
             }
@@ -68,7 +70,6 @@ namespace WebApi.Controllers
             }
             return new ObjectResult(new PasswordGenerator(info).GeneratePassword());
         }
-
 
         // PUT api/values/5
         [HttpPut("{id}")]
