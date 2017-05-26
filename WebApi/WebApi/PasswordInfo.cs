@@ -7,7 +7,7 @@ namespace WebApi
 {
     public class PasswordInfo
     {
-        public int NumberOfPasswords { get; set; }
+        public int Number { get; set; }
         public int PasswordLength { get; set; }
         public int UpperCase { get; set; }
         public int Digits { get; set; }

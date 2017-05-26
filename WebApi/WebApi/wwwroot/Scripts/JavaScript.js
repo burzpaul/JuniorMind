@@ -1,14 +1,35 @@
-﻿$.get("api/values/defaultvalues", function (data) {
-    createForm(data);
-});
+﻿var storedData;
+
+function updateData() {
+    storedData = {
+        number: document.getElementById("numberOfPasswords").value,
+        passwordLength: document.getElementById("passwordLength").value,
+        upperCase: document.getElementById("upperCase").value,
+        digits: document.getElementById("digits").value,
+        symbols: document.getElementById("symbols").value,
+        excludeSimilar: document.getElementById("excludeSimilar").checked,
+        excludeAmbigious: document.getElementById("excludeAmbigious").checked
+    };
+}
+
+function loadDefaultForm() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            var form = createForm(JSON.parse(this.responseText));
+            document.getElementById("fieldset1").appendChild(form);
+        }
+    };
+    xhttp.open("GET", "api/values/defaultvalues", true);
+    xhttp.send();
+}
 
 function createForm(data) {
-    var formElements = [
+    var elements = [
         {
             id: "numberOfPasswords",
-            type: "number",
             label: "Number of passwords :",
-            value: data.numberOfPasswords
+            value: data.number
         },
         {
             id: "passwordLength",
@@ -38,112 +59,109 @@ function createForm(data) {
             id: "excludeSimilar",
             type: "checkbox",
             label: "Exclude similar characters",
-            checked: data.excludeSimilar
+            isChecked: data.excludeSimilar
         },
         {
-            id: "excludeAmbigous",
+            id: "excludeAmbigious",
             type: "checkbox",
             label: "Exclude ambigious characters",
-            oninput: "validate()",
-            checked: data.excludeAmbigous
+            isChecked: data.excludeAmbigious
         },
         {
             id: "generateBtn",
             type: "button",
             label: "",
-            value: "Generate Password/s"
+            value: "Generate Password/s",
+            onclick: "updateData();deleteChildren(form);loading();generatePassword(storedData)"
         }
     ];
-    $("#formField").append(
-        $("<form/>", {
-            id: "myForm",
-            className: "form"
-        }).append(
-            $("<div/>").append(
-                $.map(formElements, function (element) {
-                    return $("<div/>").append(
-                        $("<label/>", {
-                            for: element.id
-                        }).text(element.label),
-                        $("<input/>", element),
-                        $("<label/>", {
-                            id: element.id + "Warning",
-                            style: "display:none;color:red"
-                        }).text(
-                            element.label + " must be greater than " + "(" + element.value + ")"
-                            )
-                    );
-                })
-            )
-            )
-    );
-    $("#generateBtn").click(function () {
-        if (validateForm()) {
-            postRequest();
-            $("#formField").empty();
-            $("#formField").append(
-                $("<div/>", {
-                    class: "loader"
-                })
-            );
-        }
-    });
+    var form = e("form", { id: "myForm", className: "form" }, [
+        e("div", null, elements.map(formElement))
+    ]);
+    return form;
 }
-function validateForm(data) {
-    var ok = true;
-    if ($("#numberOfPasswords").val() < 1) {
-        $("#numberOfPasswordsWarning").show();
-        ok = false;
+
+function e(element, attrs, childArray) {
+    var result = document.createElement(element);
+    for (var key in attrs) {
+        if (attrs[key] === undefined) {
+            continue;
+        }
+        if (key === "isChecked") {
+            result.checked = attrs[key];
+        } else {
+            result.setAttribute(key, attrs[key]);
+        }
     }
-    if ($("#passwordLength").val() < 8) {
-        $("#passwordLengthWarning").show();
-        ok = false;
+    for (var child in childArray) {
+        if (typeof childArray[child] === "string") {
+            result.innerHTML = childArray[child];
+        } else {
+            result.appendChild(childArray[child]);
+        }
     }
-    if ($("#upperCase").val() < 0) {
-        $("#numberOfPasswords").attr("value", 0);
-    }
-    if ($("#digits").val() < 0) {
-        $("#numberOfPasswords").attr("value", 0);
-    }
-    if ($("#symbols").val() < 0) {
-        $("#numberOfPasswords").attr("value", 0);
-    } else {
-        return ok;
+    return result;
+}
+
+function formElement(argument) {
+    return e("div", null, [
+        e("label", { for: argument.id }, [argument.label]),
+        e("input", {
+            id: argument.id,
+            type: argument.type,
+            value: argument.value,
+            isChecked: argument.isChecked,
+            onclick: argument.onclick
+        })
+    ]);
+}
+
+function generatePassword(data) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            var passwords = JSON.parse(this.responseText);
+            var passwordsNodes = passwords.map(password => {
+                return e("p", { class: "passwords" }, [password]);
+            });
+            var form = document.getElementById("myForm");
+            showResults(form, passwordsNodes);
+        }
+    };
+    xhttp.open("Post", "api/values", true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.send(JSON.stringify(data));
+}
+
+function deleteChildren(element) {
+    while (element.hasChildNodes()) {
+        element.removeChild(element.firstChild);
     }
 }
 
-function postRequest() {
-    var storedData = JSON.stringify({
-        numberOfPasswords: $("#numberOfPasswords").val(),
-        passwordLength: $("#passwordLength").val(),
-        upperCase: $("#upperCase").val(),
-        digits: $("#digits").val(),
-        symbols: $("#symbols").val(),
-        excludeSimilar: $("#excludeSimilar").is(":checked"),
-        excludeAmbigous: $("#excludeAmbigous").is(":checked")
-    });
-    $.ajax({
-        url: "api/values",
-        type: "POST",
-        dataType: "json",
-        data: storedData,
-        contentType: "application/json",
-        success: function (result) {
-            $("#formField").empty();
-            $("#formField").append(
-                $.map(result, function (element) {
-                    return $("<p/>").text(element);
-                }),
-                $("<input/>", {
-                    id: "backBtn",
-                    type: "Button",
-                    value: "Back"
-                })
-            );
-            $("#backBtn").click(function () {
-                $("#formField").empty();
-                createForm(JSON.parse(storedData));
-            });
-        }
-    });
+function showResults(form, nodes) {
+    deleteChildren(form);
+    form.appendChild(
+        e(
+            "div",
+            {
+                className: "passwords",
+                onload: "document.getElementByClassName('loader).display.style = none"
+            },
+            nodes
+        )
+    );
+    form.appendChild(
+        e("input", {
+            type: "button",
+            id: "btn",
+            value: "Back",
+            onclick: "deleteChildren(document.getElementById('fieldset1'));document.getElementById('fieldset1').appendChild(createForm(storedData))"
+        })
+    );
+}
+
+function loading() {
+    var loader = e("div", { class: "loader" }, []);
+    document.getElementById("myForm").appendChild(loader);
 }

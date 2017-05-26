@@ -5,12 +5,6 @@
     margin: 8px auto;
 }
 
-    input[type=button] {
-        width: auto;
-        display: table;
-        margin: 8px auto
-    }
-
 fieldset {
     width: 60%;
     padding: 12px 20px;
@@ -21,9 +15,9 @@ fieldset {
     box-sizing: border-box;
 }
 
-p {
+.passwords {
     display: inline-table;
-    padding: 5px;
+    padding: 10px;
 }
 
 .loader {
