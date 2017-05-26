@@ -17,9 +17,8 @@ namespace WebApi
 
         public string[] GeneratePassword()
         {
-
-            string[] passwords = new string[info.Number];
-            passwords = Enumerable.Range(0, info.Number).Select(x => GenerateOnePassword()).ToArray();
+            string[] passwords = new string[info.NumberOfPasswords];
+            passwords = Enumerable.Range(0, info.NumberOfPasswords).Select(x => GenerateOnePassword()).ToArray();
             return passwords;
         }
 
@@ -70,6 +69,7 @@ namespace WebApi
             }
             return result;
         }
+
         private string GetSymbols(int numberOfSymbols, bool var)
         {
             string symbols = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
