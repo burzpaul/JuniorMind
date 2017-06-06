@@ -1,0 +1,16 @@
+﻿<form-elem [(ngModel)]="numberOfPasswords" text="Number Of Passwords" type="number" value={{numberOfPasswords}} ngDefaultControl></form-elem>
+
+<form-elem [(ngModel)]="passwordLength" text="Password/s Length" type="number" value={{passwordLength}} ngDefaultControl></form-elem>
+
+<form-elem [(ngModel)]="upperCase" text="Number of UpperCase characters" type="number" value={{upperCase}} ngDefaultControl></form-elem>
+
+<form-elem [(ngModel)]="digits" text="Number Of Digits" type="number" value={{digits}} ngDefaultControl></form-elem>
+
+<form-elem [(ngModel)]="symbols" text="Number Of Symbols" type="number" value={{symbols}} ngDefaultControl></form-elem>
+
+<form-elem [(ngModel)]="excludeSimilar"
+           text="Exclude Similar characters" type="checkbox" value={{excludeSimilar}} ngDefaultControl></form-elem>
+
+<form-elem [(ngModel)]="excludeAmbigous" 
+           text="Exclude Ambigous characters" type="checkbox" value={{excludeAmbigous}} ngDefaultControl></form-elem>
+<form-elem text="" type="submit" value="Generate" (click)="postValues()"></form-elem>

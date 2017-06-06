@@ -1,0 +1,13 @@
+﻿<div *ngIf="type === 'checkbox'">
+  <label>
+    {{text}}
+    <input type={{type}} [checked]={{value}} (change)="{{value}} = !{{value}}" /> {{value}}
+  </label>
+</div>
+<div *ngIf="type != 'checkbox'">
+  <label>
+    {{text}}
+    <input type={{type}} value={{value}}>
+    {{value}}
+  </label>
+</div>
