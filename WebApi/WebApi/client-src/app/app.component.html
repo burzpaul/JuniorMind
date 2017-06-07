@@ -2,18 +2,15 @@
   <div class="form-group">
     <h1>Generate</h1>
     <form>
-      <form-root numberOfPasswords={{values.numberOfPasswords}}
-                 passwordLength={{values.passwordLength}}
-                 upperCase={{values.upperCase}}
-                 digits={{values.digits}}
-                 symbols={{values.symbols}}
-                 excludeSimilar={{values.excludeSimilar}}
-                 excludeAmbigous={{values.excludeAmbigous}}>
+      <form-root numberOfPasswords={{form.numberOfPasswords}}
+                 passwordLength={{form.passwordLength}}
+                 upperCase={{form.upperCase}}
+                 digits={{form.digits}}
+                 symbols={{form.symbols}}
+                 excludeSimilar={{form.excludeSimilar}}
+                 excludeAmbigous={{form.excludeAmbigous}}>
+        form={{form}};
       </form-root>
     </form>
-  </div>
-  <div class="result-group">
-    <h1>Results</h1>
-    {{responseText}}
   </div>
 </div>

@@ -1,16 +1,36 @@
-﻿<form-elem [(ngModel)]="numberOfPasswords" text="Number Of Passwords" type="number" value={{numberOfPasswords}} ngDefaultControl></form-elem>
+﻿<form-elem [(ngModel)]="numberOfPasswords"
+           (update)="valueChange(numberOfPasswords,$event)"
+           text="Number Of Passwords" type="number" value={{numberOfPasswords}} ngDefaultControl></form-elem>
 
-<form-elem [(ngModel)]="passwordLength" text="Password/s Length" type="number" value={{passwordLength}} ngDefaultControl></form-elem>
+<form-elem [(ngModel)]="passwordLength"
+           (update)="valueChange(passwordLength,$event)"
+           text="Password/s Length" type="number" value={{passwordLength}} ngDefaultControl></form-elem>
 
-<form-elem [(ngModel)]="upperCase" text="Number of UpperCase characters" type="number" value={{upperCase}} ngDefaultControl></form-elem>
+<form-elem [(ngModel)]="upperCase"
+           (update)="valueChange(upperCase,$event)"
+           text="Number of UpperCase characters" type="number" value={{upperCase}} ngDefaultControl></form-elem>
 
-<form-elem [(ngModel)]="digits" text="Number Of Digits" type="number" value={{digits}} ngDefaultControl></form-elem>
+<form-elem [(ngModel)]="digits"
+           (update)="valueChange(digits,$event)"
+           text="Number Of Digits" type="number" value={{digits}} ngDefaultControl></form-elem>
 
-<form-elem [(ngModel)]="symbols" text="Number Of Symbols" type="number" value={{symbols}} ngDefaultControl></form-elem>
+<form-elem [(ngModel)]="symbols"
+           (update)="valueChange(symbols,$event)"
+           text="Number Of Symbols" type="number" value={{symbols}} ngDefaultControl></form-elem>
 
 <form-elem [(ngModel)]="excludeSimilar"
+           (update)="valueChange(excludeSimilar,$event)"
+           (change)="$event.target.checked?(excludeSimilar = true) :(excludeSimilar = false)"
            text="Exclude Similar characters" type="checkbox" value={{excludeSimilar}} ngDefaultControl></form-elem>
 
-<form-elem [(ngModel)]="excludeAmbigous" 
+<form-elem [(ngModel)]="excludeAmbigous"
+           (update)="valueChange(excludeAmbigous,$event)"
+           (change)="$event.target.checked?(excludeAmbigous = true) :(excludeAmbigous = false)"
            text="Exclude Ambigous characters" type="checkbox" value={{excludeAmbigous}} ngDefaultControl></form-elem>
+
 <form-elem text="" type="submit" value="Generate" (click)="postValues()"></form-elem>
+
+<div class="result-group">
+  <h1>Results</h1>
+  {{responseText}}
+</div>
