@@ -9,7 +9,7 @@ export class FormElementComponent {
     @Input() value: number;
     @Input() type: string;
 
-    @Output('update') valueChange: EventEmitter<number> = new EventEmitter <number>();
+    @Output() valueChange: EventEmitter<number> = new EventEmitter <number>();
 
 
     onValueChange(event) {
