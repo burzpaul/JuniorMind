@@ -6,8 +6,10 @@ namespace Proxy
     {
         private static void Main(string[] args)
         {
-            var server = new ProxyServer();
+            var server = new Server();
             server.Start().Wait();
+
+            Console.ReadLine();
         }
     }
 }

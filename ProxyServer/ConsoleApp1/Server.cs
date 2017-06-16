@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Proxy
 {
-    public class ProxyServer
+    public class Server
     {
         private TcpListener listener;
 
@@ -18,7 +18,6 @@ namespace Proxy
             listener = new TcpListener(IPAddress.Any, 5000);
             listener.Start();
 
-            Byte[] bytes = new Byte[256 * 24];
             String data = null;
 
             while (true)
@@ -29,7 +28,7 @@ namespace Proxy
                     using (var client = await listener.AcceptTcpClientAsync())
                     {
                         Console.WriteLine("Connected!");
-
+                        Byte[] bytes = new Byte[1500];
                         var stream = client.GetStream();
 
                         int i;
@@ -38,14 +37,20 @@ namespace Proxy
                         {
                             data = Encoding.UTF8.GetString(bytes, 0, i);
                             Console.WriteLine("Received: {0}", data);
+                            data = "GET / HTTP/1.1\r\nHost: motherfuckingwebsite.com\r\n\r\n";
+                            var changedData = Encoding.UTF8.GetBytes(data);
 
-                            data = "<html><body><h1>Test</h1></body></html>";
-                            byte[] msg = Encoding.UTF8.GetBytes(@"HTTP/1.1 200 OK\r\nContent-Length: "
-                                + data.Length +
-                                "\r\n\r\n" + data);
+                            OriginServerClient originServerClient = new OriginServerClient();
+                            await originServerClient.Connect();
+                            await originServerClient.Send(changedData);
+                            await originServerClient.Receive((buffer, count) =>
+                            {
+                                var content = Encoding.UTF8.GetString(buffer, 0, count);
+                                content = content.Replace("fuck", "****");
+                                var changedContent = Encoding.UTF8.GetBytes(content);
 
-                            await stream.WriteAsync(msg, 0, msg.Length);
-                            Console.WriteLine("Sent: {0}", data);
+                                return stream.WriteAsync(changedContent, 0, changedContent.Length);
+                            });
                         }
                     }
                 }
