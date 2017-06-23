@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Proxy
 {
@@ -13,10 +14,10 @@ namespace Proxy
     {
         private TcpClient client;
 
-        public async Task Connect()
+        public async Task Connect(string host)
         {
             client = new TcpClient();
-            await client.ConnectAsync("motherfuckingwebsite.com", 80);
+            await client.ConnectAsync(host, 80);
         }
 
         public async Task Send(byte[] data)
@@ -30,11 +31,13 @@ namespace Proxy
         {
             try
             {
-                Byte[] buffer = new Byte[16 * 1024];
-
+                Byte[] buffer = new Byte[1500];
                 var stream = client.GetStream();
-                var read = await stream.ReadAsync(buffer, 0, buffer.Length);
-                await onData(buffer, read);
+                var read = 0;
+                while ((read = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                {
+                    await onData(buffer, read);
+                }
             }
             catch (Exception e)
             {

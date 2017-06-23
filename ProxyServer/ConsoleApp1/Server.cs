@@ -5,59 +5,55 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Proxy
 {
-    public class Server
+    public class Server : IDisposable
     {
         private TcpListener listener;
 
-        public async Task Start()
+        public void Dispose()
         {
-            listener = new TcpListener(IPAddress.Any, 5000);
+            listener.Stop();
+        }
+
+        public async Task Start(int port)
+        {
+            listener = new TcpListener(IPAddress.Any, port);
             listener.Start();
+            Console.WriteLine("Server created!!");
 
-            String data = null;
-
+            Console.WriteLine("Waiting for a connection...");
             while (true)
             {
-                Console.Write("Waiting for a connection... ");
-                try
+                var client = await listener.AcceptTcpClientAsync();
+                Console.WriteLine("Connected!!");
+                new Task(async () =>
                 {
-                    using (var client = await listener.AcceptTcpClientAsync())
+                    using (var stream = client.GetStream())
                     {
-                        Console.WriteLine("Connected!");
-                        Byte[] bytes = new Byte[1500];
-                        var stream = client.GetStream();
-
-                        int i;
-
-                        while ((i = await stream.ReadAsync(bytes, 0, bytes.Length)) != 0)
+                        Byte[] bytesReceived = new Byte[1500];
+                        int bytesRead;
+                        while ((bytesRead = await stream.ReadAsync(bytesReceived, 0, bytesReceived.Length)) != 0)
                         {
-                            data = Encoding.UTF8.GetString(bytes, 0, i);
-                            Console.WriteLine("Received: {0}", data);
-                            data = "GET / HTTP/1.1\r\nHost: motherfuckingwebsite.com\r\n\r\n";
-                            var changedData = Encoding.UTF8.GetBytes(data);
-
+                            String data = Encoding.UTF8.GetString(bytesReceived, 0, bytesRead);
+                            Console.WriteLine("Received : {0} ", data);
+                            var sendData = new Headers(data).GetFullHeader();
+                            var host = new Headers(data)["Host"].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries)[1].Replace("\r\n", "");
                             OriginServerClient originServerClient = new OriginServerClient();
-                            await originServerClient.Connect();
-                            await originServerClient.Send(changedData);
+
+                            await originServerClient.Connect(host);
+                            await originServerClient.Send(Encoding.UTF8.GetBytes(sendData));
                             await originServerClient.Receive((buffer, count) =>
                             {
-                                var content = Encoding.UTF8.GetString(buffer, 0, count);
-                                content = content.Replace("fuck", "****");
-                                var changedContent = Encoding.UTF8.GetBytes(content);
-
-                                return stream.WriteAsync(changedContent, 0, changedContent.Length);
+                                return stream.WriteAsync(buffer, 0, count);
                             });
                         }
                     }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+                }).Start();
             }
         }
     }
