@@ -31,7 +31,7 @@ namespace Proxy
         {
             try
             {
-                Byte[] buffer = new Byte[1500];
+                Byte[] buffer = new Byte[4096];
                 var stream = client.GetStream();
                 var read = 0;
                 while ((read = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
