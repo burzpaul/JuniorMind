@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Proxy
+namespace Proxy.UnitTests
 {
     public class Headers
     {
@@ -43,7 +43,7 @@ namespace Proxy
                     headerFields.Add(field.Split(' ')[0].Replace(":", ""), field + "\r\n");
                 }
             }
-            headerFields.Add("EOL", "\r\n\r\n");
+            headerFields.Add("EOL", "\r\n");
         }
 
         private string ProcessString(string field)

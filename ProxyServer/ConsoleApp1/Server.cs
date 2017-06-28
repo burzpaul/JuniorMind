@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 
 namespace Proxy
 {
@@ -19,58 +15,61 @@ namespace Proxy
         public void Dispose()
         {
             listener.Stop();
+            clients.Clear();
         }
 
         public async Task Start(int port)
         {
             listener = new TcpListener(IPAddress.Any, port);
-            listener.Start();
-            Console.WriteLine("Server created!!\n");
-            Console.WriteLine("Waiting for a connection...\n");
+            listener.Start(); Console.WriteLine("Server started!\n");
+            Console.WriteLine($"Waiting for a connection on port: {listener.LocalEndpoint} \n");
             while (true)
             {
                 var client = await listener.AcceptTcpClientAsync();
-                Console.WriteLine("Connected!!\n");
+                Console.WriteLine("Connected !! \n");
 
-                await HendleClient(client);
+                await HandleClient(client);
             }
         }
 
-        private async Task HendleClient(TcpClient client)
+        private async Task HandleClient(TcpClient client)
         {
+            int requests = 0;
             try
             {
                 using (var clientStream = client.GetStream())
                 {
-                    int requests = 0;
-                    Byte[] bytesReceived = new Byte[4096 * 24767];
-                    int bytesRead;
-                    while ((bytesRead = await clientStream.ReadAsync(bytesReceived, 0, bytesReceived.Length)) != 0)
+                    while (client.Connected)
                     {
-                        int sent = 0;
-                        String data = Encoding.UTF8.GetString(bytesReceived, 0, bytesRead);
-                        Console.WriteLine("Request Header : {0}", data);
-                        Headers headers = new Headers(data);
-                        var sendData = headers.GetFullHeader();
-                        var host = headers["Host"].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries)[1].Replace("\r\n", "");
-                        OriginServerClient originServerClient = GetClient(host);
-
-                        Console.WriteLine($"Requests nr:{++requests}\t " + $"Host:{host} \t" + $"Request:{data.Split(new string[] { "\r\n" }, StringSplitOptions.None)[0]} \n");
-
-                        await originServerClient.Connect(host);
-                        await originServerClient.Send(Encoding.UTF8.GetBytes(sendData));
-                        await originServerClient.Receive((buffer, count) =>
+                        Byte[] bytesReceived = new Byte[4096];
+                        int bytesRead;
+                        String data = "";
+                        while ((bytesRead = await clientStream.ReadAsync(bytesReceived, 0, bytesReceived.Length)) != 0)
                         {
-                            Console.WriteLine($"*** Received from origin {count} bytes");
+                            data += Encoding.UTF8.GetString(bytesReceived, 0, bytesRead);
+                            if (data.IndexOf("\r\n\r\n") != -1)
+                            {
+                                new Task(async () =>
+                                {
+                                    var header = new Headers(data);
+                                    Console.WriteLine($"Requests nr:{++requests}\t" + $"Host:{header["Host"]}\t" + $"Request:{header["Request"]}");
 
-                            sent += count;
-                            return clientStream.WriteAsync(buffer, 0, count);
-                        });
-                        Console.WriteLine($"*** Sent to browser {sent} before completion");
-                        ReturnClient(host, originServerClient);
+                                    OriginServerClient originServerClient = new OriginServerClient();
+
+                                    var sent = 0;
+                                    await originServerClient.ConnectToOrigin(header["Host"]);
+                                    await originServerClient.SendRequest(Encoding.UTF8.GetBytes(header.GetFullHeader()));
+                                    await originServerClient.ReceiveContentFromOriginServer((buffer, count) =>
+                                    {
+                                        Console.WriteLine($"*** Received from origin {count} bytes");
+
+                                        sent += count;
+                                        return clientStream.WriteAsync(buffer, 0, count);
+                                    });
+                                }).Start();
+                            }
+                        }
                     }
-                    bytesReceived = new Byte[4096 * 24];
-                    bytesRead = 0;
                 }
             }
             catch (Exception e)
@@ -79,66 +78,5 @@ namespace Proxy
                 throw;
             }
         }
-
-        private void ReturnClient(string host, OriginServerClient originServerClient)
-        {
-            var key = host.ToLowerInvariant();
-            clients[key] = originServerClient;
-        }
-
-        private OriginServerClient GetClient(string host)
-        {
-            var key = host.ToLowerInvariant();
-            if (clients.ContainsKey(key))
-            {
-                Console.WriteLine($"!!!! Re-using a new client to {host}");
-                return clients[key];
-            }
-            Console.WriteLine($"!!! Creating a new client to {host}");
-
-            return new OriginServerClient();
-        }
     }
 }
-
-//listener = new TcpListener(IPAddress.Any, port);
-//listener.Start();
-//            Console.WriteLine("Server created!!\n");
-
-//            while (true)
-//            {
-//                var client = await listener.AcceptTcpClientAsync();
-//                Console.WriteLine("Connected!!\n");
-//                new Task(async () =>
-//                {
-//    using (var stream = client.GetStream())
-//    {
-//        Byte[] bytesReceived = new Byte[4096];
-//        int bytesRead;
-//        while ((bytesRead = await stream.ReadAsync(bytesReceived, 0, bytesReceived.Length)) != 0)
-//        {
-//            try
-//            {
-//                String data = Encoding.UTF8.GetString(bytesReceived, 0, bytesRead);
-//                Console.WriteLine("Request Header : {0}", data);
-//                var sendData = new Headers(data).GetFullHeader();
-//                var host = new Headers(data)["Host"].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries)[1].Replace("\r\n", "");
-//                OriginServerClient originServerClient = new OriginServerClient();
-
-//                Console.WriteLine($"Requests nr:{++requests}\t " + $"Host:{host} \t" + $"Request:{data.Split(new string[] { "\r\n" }, StringSplitOptions.None)[0]} \n");
-
-//                await originServerClient.Connect(host);
-//                await originServerClient.Send(Encoding.UTF8.GetBytes(sendData));
-//                await originServerClient.Receive((buffer, count) =>
-//                                {
-//                                    return stream.WriteAsync(buffer, 0, count);
-//                                });
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e);
-//            }
-//        }
-//    }
-//}).Start();
-//            }
