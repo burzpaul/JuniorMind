@@ -53,7 +53,6 @@ namespace Proxy
                                 {
                                     var header = new Headers(data);
                                     Console.WriteLine($"Requests nr:{++requests}\t" + $"Host:{header["Host"]}\t" + $"Request:{header["Request"]}");
-
                                     OriginServerClient originServerClient = new OriginServerClient();
 
                                     var sent = 0;

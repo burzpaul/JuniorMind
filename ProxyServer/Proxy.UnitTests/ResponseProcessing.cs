@@ -8,9 +8,13 @@ namespace Proxy.UnitTests
     {
         public event EventHandler<HeaderCompleteEventArgs> eventHeaderComplete;
 
+        public event EventHandler<BodyChunksReceivedArgs> eventBodyChunkReceveived;
+
         public void Something(byte[] array)
         {
+            var responseString = Encoding.UTF8.GetString(array);
             eventHeaderComplete(this, new HeaderCompleteEventArgs(Encoding.UTF8.GetString(array)));
+            eventBodyChunkReceveived(this, new BodyChunksReceivedArgs(array));
         }
     }
 
@@ -22,5 +26,12 @@ namespace Proxy.UnitTests
         }
 
         public Headers header { get; set; }
+    }
+
+    public class BodyChunksReceivedArgs : EventArgs
+    {
+        public BodyChunksReceivedArgs(byte[] array)
+        {
+        }
     }
 }

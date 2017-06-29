@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Proxy
 {
-    internal class OriginServerClient
+    public class OriginServerClient
     {
         private TcpClient client;
         private Byte[] buffer;
@@ -28,16 +28,17 @@ namespace Proxy
         {
             try
             {
-                var contentLength = 0;
                 var totalBytesSent = 0;
-                buffer = new Byte[4096];
+                buffer = new Byte[10];
                 var read = 0;
-                while (totalBytesSent < contentLength)
+                while (true)
                 {
                     read = await stream.ReadAsync(buffer, 0, buffer.Length);
+                    var a = Encoding.UTF8.GetString(buffer);
                     await onData(buffer, read);
                     totalBytesSent += read;
                 }
+                await stream.FlushAsync();
             }
             catch (Exception e)
             {
