@@ -34,9 +34,18 @@ namespace Proxy
             var splitRawHeaders = rawHeader.Replace("\r\n", "\n").Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var field in splitRawHeaders)
             {
-                if (field.Contains("GET") || field.Contains("POST"))
+                if (field.Contains("HTTP/1.1"))
                 {
-                    headerFields.Add("Request", ProcessString(field) + "\r\n");
+                    int number;
+                    if (Int32.TryParse(field.Split(' ')[1], out number))
+                    {
+                        headerFields.Add("Method", field.Split(' ')[0] + "\r\n");
+                        headerFields.Add("Status Code", field.Split(' ')[1][2] + "\r\n");
+                    }
+                    else
+                    {
+                        headerFields.Add("Method", ProcessString(field) + "\r\n");
+                    }
                 }
                 else
                 {

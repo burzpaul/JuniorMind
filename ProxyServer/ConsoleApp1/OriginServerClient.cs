@@ -8,8 +8,8 @@ namespace Proxy
     public class OriginServerClient
     {
         private TcpClient client;
-        private Byte[] buffer;
         private NetworkStream stream;
+        private Byte[] buffer;
 
         public async Task ConnectToOrigin(string host)
         {
@@ -26,17 +26,31 @@ namespace Proxy
 
         public async Task ReceiveContentFromOriginServer(Func<byte[], int, Task> onData)
         {
+            var responseHandler = new ResponseHandler();
+
+            var headerService = new HeaderService();
+
+            var bodyService = new BodyService();
+
             try
             {
                 var totalBytesSent = 0;
-                buffer = new Byte[10];
-                var read = 0;
-                while (true)
+                int contentLength;
+                buffer = new Byte[4096];
+                responseHandler.Something += headerService.OnHeadersCompleted;
+                responseHandler.Something += bodyService.OnBodyChunkReceived;
+                var a = Int32.TryParse(headerService.header["Content-Length"].Split(' ')[2].Replace("\r\n", ""), out contentLength);
+                while (a == false)
                 {
-                    read = await stream.ReadAsync(buffer, 0, buffer.Length);
-                    var a = Encoding.UTF8.GetString(buffer);
-                    await onData(buffer, read);
-                    totalBytesSent += read;
+                    await stream.ReadAsync(buffer, 0, buffer.Length);
+                    responseHandler.HandleResponse(buffer);
+                }
+                while (totalBytesSent < contentLength)
+                {
+                    var readBytes = await stream.ReadAsync(buffer, 0, buffer.Length);
+                    await onData(bodyService.body, readBytes);
+                    responseHandler.HandleResponse(buffer);
+                    totalBytesSent += readBytes;
                 }
                 await stream.FlushAsync();
             }
