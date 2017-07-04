@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proxy
 {
-    public class ResponseHandler
+    public class ProcessHeaders
     {
-        
     }
 }
