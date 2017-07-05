@@ -13,8 +13,7 @@ namespace Proxy
         public ServerListener(int port)
         {
             listenPort = port;
-            listener = new TcpListener(IPAddress.Any, listenPort);
-            TcpClient client = new TcpClient();
+            listener = new TcpListener(IPAddress.Parse("127.0.0.1"), listenPort);
         }
 
         public void StartServer()

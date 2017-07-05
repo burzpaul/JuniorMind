@@ -12,10 +12,15 @@ namespace Proxy
             var proxyServer = new ServerListener(5000);
             proxyServer.StartServer();
             Console.WriteLine("Proxy server started. \n");
+            Console.WriteLine("Waiting connections!! \n");
             while (true)
             {
-                Console.WriteLine("Waiting connections!! \n");
-                proxyServer.AcceptConnectionAsync().Wait();
+                proxyServer.AcceptConnection().Wait();
+                proxyServer.AcceptConnection().Wait();
+                proxyServer.AcceptConnection().Wait();
+                proxyServer.AcceptConnection().Wait(); proxyServer.AcceptConnection().Wait();
+
+                proxyServer.AcceptConnection().Wait();
             }
         }
     }
