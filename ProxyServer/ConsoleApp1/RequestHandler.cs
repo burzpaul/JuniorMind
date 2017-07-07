@@ -1,61 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Proxy
 {
     public class RequestHandler
     {
-        private TcpClient client;
+        private List<string> requestLines = new List<string>();
 
-        public RequestHandler(TcpClient newClinet)
+        internal async Task HandleClient(TcpClient tcpClient)
         {
-            client = newClinet;
-        }
+            int requestNr = 0;
+            var clientStream = tcpClient.GetStream();
+            var clientStreamReader = new StreamReader(clientStream);
+            Uri remoteUri;
 
-        public async Task StartHandling()
-        {
-            Console.WriteLine("Handling Request");
-            await Handler();
-        }
-
-        private async Task Handler()
-        {
-            int requestsNr = 0;
-            bool requestReceived = false;
-            string request = string.Empty;
-            byte[] clientBuffer = new byte[4096];
-            string EOL = "\r\n";
-            using (var stream = client.GetStream())
+            try
             {
-                while (!requestReceived)
+                string data;
+                while (!string.IsNullOrEmpty((data = await clientStreamReader.ReadLineAsync())))
                 {
-                    var readBytes = await stream.ReadAsync(clientBuffer, 0, clientBuffer.Length);
-                    request += Encoding.UTF8.GetString(clientBuffer, 0, readBytes);
-                    if (request.EndsWith(EOL + EOL))
-                    {
-                        Console.WriteLine(request);
-                        requestReceived = true;
-                    }
+                    requestLines.Add(data + "\r\n");
                 }
+                Console.WriteLine($"Requests nr: {++requestNr}\t" + $"Request: {requestLines[0]}\n");
+                remoteUri = new Uri(requestLines[0].Split(' ')[1]);
+                requestLines[0] = requestLines[0].Replace("http://", "").Replace(remoteUri.Host, "");
+                var requestHeader = Encoding.UTF8.GetBytes(string.Concat(requestLines.ToArray()) + "\r\n");
 
-                var requestHeader = new ProcessHeaders(request);
-                request = request.Replace("http://" + requestHeader["Host"], "");
-                Console.WriteLine($"Requests nr: {++requestsNr}\t" + $"Host: {requestHeader["Host"]}\t" + $"Request: {requestHeader["Absolut Uri"]} \n");
-
-                ResponseHandler responseHandler = new ResponseHandler(requestHeader["Host"], Encoding.UTF8.GetBytes(request));
-
+                ResponseHandler responseHandler = new ResponseHandler();
                 var sentBytes = 0;
+                await responseHandler.HandleClient(remoteUri.Host, requestHeader);
                 await responseHandler.ReceiveResponse((responseBuffer, responseBytesReceived) =>
                 {
                     Console.WriteLine($"*** Received from origin {responseBytesReceived} bytes \n");
                     sentBytes += responseBytesReceived;
-                    return stream.WriteAsync(responseBuffer, 0, responseBytesReceived);
+                    return clientStream.WriteAsync(responseBuffer, 0, responseBytesReceived);
                 });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
     }

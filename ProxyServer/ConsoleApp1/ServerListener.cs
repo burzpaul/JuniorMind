@@ -7,28 +7,61 @@ namespace Proxy
 {
     public class ServerListener
     {
-        private int listenPort;
+        private SocketException Error { get; set; }
         private TcpListener listener;
 
-        public ServerListener(int port)
+        public void Start()
         {
-            listenPort = port;
-            listener = new TcpListener(IPAddress.Parse("127.0.0.1"), listenPort);
+            Console.WriteLine("Proxy started.Awaiting Connections. \n");
+            Listen();
         }
 
-        public void StartServer()
+        private async void Listen()
         {
+            listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 5000);
             listener.Start();
+            Console.WriteLine("Listener started. \n");
+
+            while (true)
+            {
+                var tcpClient = await listener.AcceptTcpClientAsync();
+                if (tcpClient != null)
+                {
+                    Console.WriteLine($"Conencted to: {tcpClient.Client.RemoteEndPoint} ");
+                    Task.Run(async () =>
+                   {
+                       await HandleClient(tcpClient);
+                   });
+                }
+            }
         }
 
-        public async Task AcceptConnection()
+        private async Task HandleClient(TcpClient tcpClient)
         {
-            using (var newClient = await listener.AcceptTcpClientAsync())
+            tcpClient.ReceiveTimeout = 5000;
+            RequestHandler requestHandler = new RequestHandler();
+            try
             {
-                Console.WriteLine($"Connected!! {newClient.Client.RemoteEndPoint}\n");
-
-                RequestHandler client = new RequestHandler(newClient);
-                client.StartHandling().Wait();
+                await requestHandler.HandleClient(tcpClient);
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                try
+                {
+                    if (tcpClient != null)
+                    {
+                        tcpClient.LingerState = new LingerOption(true, 0);
+                        tcpClient.Dispose();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
         }
     }
