@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace Proxy
     {
         private List<string> requestLines = new List<string>();
 
-        internal async Task HandleClient(TcpClient tcpClient)
+        public async Task HandleClient(TcpClient tcpClient)
         {
             int requestNr = 0;
             var clientStream = tcpClient.GetStream();

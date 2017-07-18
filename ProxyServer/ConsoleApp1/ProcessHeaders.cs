@@ -37,8 +37,9 @@ namespace Proxy
 
             if (listHeaderFields[0].Contains("GET") || listHeaderFields[0].Contains("POST"))
             {
-                headerFields.Add("Request Method", listHeaderFields[0].Split(' ')[0]);
-                headerFields.Add("Absolut Uri", listHeaderFields[0]);
+                var split = listHeaderFields[0].Split(' ');
+                headerFields.Add("Request Method", split[0]);
+                headerFields.Add("Absolut Uri", split[1]);
             }
             else
             {

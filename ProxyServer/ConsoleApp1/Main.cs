@@ -6,9 +6,9 @@ namespace Proxy
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Proxy Server\n");
-            var proxyServer = new ServerListener();
-            proxyServer.Start();
+            var proxy = new ProxyServer();
+
+            proxy.Start();
 
             Console.ReadLine();
         }
