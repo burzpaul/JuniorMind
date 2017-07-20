@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Proxy.UnitTests
 {
-    internal class ChunkTests
+    public class ChunkTests
     {
         [Fact]
         public void Something()
@@ -13,8 +13,9 @@ namespace Proxy.UnitTests
             ChunkCompleteEventArgs a = new ChunkCompleteEventArgs();
             Chunk chunk = new Chunk();
             chunk.ChunkComplete += (object sender, ChunkCompleteEventArgs e) => a = e;
+            chunk.Something("a");
 
-            Assert.Equal(a.Chunk, "YESSS");
+            Assert.Equal("YESSS", a.Chunk);
         }
     }
 }
