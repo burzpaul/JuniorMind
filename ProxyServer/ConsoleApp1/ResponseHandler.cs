@@ -53,7 +53,18 @@ namespace Proxy
                 var header = new ProcessHeaders(responseHeader);
                 if (header["Transfer-Encoding"] == "chunked")
                 {
-                    await onDataReceived(Encoding.UTF8.GetBytes(body), Encoding.UTF8.GetByteCount(body));
+                    var a = Encoding.UTF8.GetBytes(body);
+                    bool result = false;
+                    Chunk chunk = new Chunk();
+                    chunk.ChunkCompleted += (sender, e) => result = e.IsComplete;
+                    chunk.ProcessChunk(a);
+                    await onDataReceived(a, a.Length);
+                    while (!result)
+                    {
+                        var readBytes = await clientStream.ReadAsync(buffer, 0, buffer.Length);
+                        chunk.ProcessChunk(buffer);
+                        await onDataReceived(buffer, readBytes);
+                    }
                 }
                 else
                 {
