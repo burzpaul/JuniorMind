@@ -38,13 +38,13 @@ namespace Proxy.UnitTests
                 }
                 else
                 {
-                    chunk.OnChunkCompleted(false, new byte[] { });
+                    chunk.OnChunkComplete(false);
                     //throw new Exception("New line did not respect the protocol. Invalid length, smaller.");
                 }
             }
             else
             {
-                chunk.OnChunkCompleted(false, new byte[] { });
+                chunk.OnChunkComplete(false);
                 throw new Exception("This cannot be. Invalid Chunk length.");
             }
         }

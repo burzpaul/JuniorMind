@@ -19,7 +19,7 @@ namespace Proxy
             }
             else
             {
-                chunk.OnChunkCompleted(false, new byte[] { });
+                chunk.OnChunkComplete(false);
                 throw new Exception("Protocol violation, Line Feed expected.");
             }
         }

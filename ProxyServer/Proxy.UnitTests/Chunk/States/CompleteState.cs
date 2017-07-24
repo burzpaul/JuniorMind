@@ -9,7 +9,7 @@ namespace Proxy.UnitTests
         public CompleteState(Chunk chunk)
         {
             this.chunk = chunk;
-            this.chunk.OnChunkCompleted(true, new byte[] { });
+            this.chunk.OnChunkComplete(true);
         }
 
         internal override void Handle(byte bite, Action<ChunkState> state)

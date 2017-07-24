@@ -47,9 +47,9 @@ namespace Proxy
             length += (char)data;
         }
 
-        public void OnChunkCompleted(bool isComplete, byte[] data)
+        public void OnChunkComplete(bool isComplete)
         {
-            ChunkCompleted?.Invoke(this, new ChunkCompleteEventArgs() { IsComplete = isComplete, Chunk = data });
+            ChunkCompleted?.Invoke(this, new ChunkCompleteEventArgs() { IsComplete = isComplete });
         }
     }
 }

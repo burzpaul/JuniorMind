@@ -8,6 +8,6 @@ namespace Proxy.UnitTests
 {
     public abstract class ChunkState
     {
-        internal abstract void Handle(byte bite, Action<ChunkState> state);
+        internal abstract void Handle(byte data, Action<ChunkState> state);
     }
 }

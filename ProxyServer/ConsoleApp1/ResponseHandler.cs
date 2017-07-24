@@ -57,8 +57,7 @@ namespace Proxy
                     bool result = false;
                     Chunk chunk = new Chunk();
                     chunk.ChunkCompleted += (sender, e) => result = e.IsComplete;
-                    chunk.ProcessChunk(a);
-                    await onDataReceived(a, a.Length);
+                    //buffer = buffer.Concat(a);
                     while (!result)
                     {
                         var readBytes = await clientStream.ReadAsync(buffer, 0, buffer.Length);
