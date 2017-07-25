@@ -2,16 +2,16 @@
 
 namespace Proxy.UnitTests
 {
-    internal class NumberOrCrState : ChunkState
+    internal class ChunkNumberOrCrState : State
     {
         private Chunk chunk;
 
-        public NumberOrCrState(Chunk chunk)
+        public ChunkNumberOrCrState(Chunk chunk)
         {
             this.chunk = chunk;
         }
 
-        internal override void Handle(byte data, Action<ChunkState> state)
+        internal override void Handle(byte data, Action<State> state)
         {
             if (('0' <= data && data <= '9')
                 || ((byte)'A' <= data && (byte)'E' <= data)
@@ -21,11 +21,10 @@ namespace Proxy.UnitTests
             }
             else if (data == '\r')
             {
-                chunk.ChangeState(new NewLineState(chunk));
+                chunk.ChangeState(new ChunkNewLineState(chunk));
             }
             else
             {
-                chunk.OnChunkComplete(false);
                 throw new Exception("Protocol violation, Carriage Return expected.");
             }
         }

@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Proxy.UnitTests.Headers
+namespace Proxy.UnitTests
 {
-    internal class IsCompleteState : HeaderState
+    internal class HeaderIsCompleteState : State
     {
         private Header header;
 
-        public IsCompleteState(Header header)
+        public HeaderIsCompleteState(Header header)
         {
             this.header = header;
         }
 
-        public override void Handle(byte data, Action<HeaderState> changeState)
+        internal override void Handle(byte data, Action<State> changeState)
         {
             if (data == '\r')
             {
-                header.HeaderChar(data);
+                header.OnHeaderChar(data);
                 header.ChangeState(new HeaderCompleteState(header));
             }
             else
@@ -28,8 +28,8 @@ namespace Proxy.UnitTests.Headers
                 }
                 else
                 {
-                    header.HeaderChar(data);
-                    header.ChangeState(new FieldState(header));
+                    header.OnHeaderChar(data);
+                    header.ChangeState(new HeaderFieldState(header));
                     return;
                 }
             }

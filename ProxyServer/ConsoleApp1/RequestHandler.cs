@@ -10,36 +10,38 @@ namespace Proxy
 {
     public class RequestHandler
     {
-        private List<string> requestLines = new List<string>();
+        private NetworkStream clientStream;
+        private byte[] buffer = new byte[4096];
+        private string host;
+        private string requestHeader;
 
         public async Task HandleClient(TcpClient tcpClient)
         {
-            int requestNr = 0;
-            var clientStream = tcpClient.GetStream();
-            var clientStreamReader = new StreamReader(clientStream);
-            Uri remoteUri;
-
             try
             {
-                string data;
-                while (!string.IsNullOrEmpty((data = await clientStreamReader.ReadLineAsync())))
+                bool complete = false;
+                clientStream = tcpClient.GetStream();
+
+                Header header = new Header();
+
+                header.HeaderCompleted += (sender, e) =>
                 {
-                    requestLines.Add(data + "\r\n");
+                    host = e.HeaderFields.Get("Host");
+                    requestHeader = e.HeaderFields.GetModifiedHeader;
+                    complete = e.IsComplete;
+                };
+
+                while (!complete)
+                {
+                    var readBytes = await clientStream.ReadAsync(buffer, 0, buffer.Length);
+                    header.ProcessHeader(buffer, readBytes);
                 }
-                Console.WriteLine($"Requests nr: {++requestNr}\t" + $"Request: {requestLines[0]}\n");
-                remoteUri = new Uri(requestLines[0].Split(' ')[1]);
-                requestLines[0] = requestLines[0].Replace("http://", "").Replace(remoteUri.Host, "");
-                var requestHeader = Encoding.UTF8.GetBytes(string.Concat(requestLines.ToArray()) + "\r\n");
+
+                Console.WriteLine(requestHeader.Split(' ')[0]);
 
                 ResponseHandler responseHandler = new ResponseHandler();
-                var sentBytes = 0;
-                await responseHandler.HandleClient(remoteUri.Host, requestHeader);
-                await responseHandler.ReceiveResponse((responseBuffer, responseBytesReceived) =>
-                {
-                    Console.WriteLine($"*** Received from origin {responseBytesReceived} bytes \n");
-                    sentBytes += responseBytesReceived;
-                    return clientStream.WriteAsync(responseBuffer, 0, responseBytesReceived);
-                });
+
+                responseHandler.HandleClient(host, Encoding.UTF8.GetBytes(requestHeader)).Wait();
             }
             catch (Exception e)
             {

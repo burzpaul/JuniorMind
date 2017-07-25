@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Proxy.UnitTests.Headers
+namespace Proxy
 {
     public abstract class HeaderState
     {

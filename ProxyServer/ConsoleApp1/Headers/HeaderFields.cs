@@ -2,41 +2,20 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Proxy.UnitTests.Headers
+namespace Proxy
 {
     public class HeaderFields
     {
         private Dictionary<string, string> headerFields = new Dictionary<string, string>();
         private string rawData;
 
-        public void AddField(char data)
-        {
-            rawData += data;
-        }
+        public void AddField(char data) => rawData += data;
 
-        public void Something(string a)
-        {
-            headerFields["Host"] = "asa";
-        }
+        public string Get(string name) => headerFields[name] ?? null;
 
-        private String this[string key]
-        {
-            get
-            {
-                if (headerFields.ContainsKey(key))
-                {
-                    return headerFields[key];
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            set
-            {
-                headerFields[key] = value;
-            }
-        }
+        public void Set(string name, string value) => headerFields[name] = value;
+
+        public string GetModifiedHeader => rawData.Replace("http://" + headerFields["Host"], "");
 
         public void ProcessRawData()
         {

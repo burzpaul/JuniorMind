@@ -31,7 +31,7 @@ namespace Proxy
                 {
                     return;
                 }
-                if (data == '\n')
+                else if (data == '\n')
                 {
                     chunk.ResetLength();
                     chunk.ChangeState(new NumberOrCrState(chunk));

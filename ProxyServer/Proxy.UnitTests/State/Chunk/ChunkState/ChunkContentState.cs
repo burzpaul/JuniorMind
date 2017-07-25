@@ -3,29 +3,29 @@ using System.Text;
 
 namespace Proxy.UnitTests
 {
-    internal class ContentState : ChunkState
+    internal class ChunkContentState : State
     {
         private Chunk chunk;
         private int size;
 
-        public ContentState(Chunk chunk)
+        public ChunkContentState(Chunk chunk)
         {
             this.chunk = chunk;
         }
 
-        internal override void Handle(byte data, Action<ChunkState> state)
+        internal override void Handle(byte data, Action<State> state)
         {
-            if (chunk.GetExpectedLength == 0)
+            if (chunk.GetGetExpectedLength == 0)
             {
-                chunk.ChangeState(new CompleteState(chunk));
+                chunk.ChangeState(new ChunkCompleteState(chunk));
                 return;
             }
-            else if (chunk.GetExpectedLength > size)
+            else if (chunk.GetGetExpectedLength > size)
             {
                 size++;
                 return;
             }
-            else if (chunk.GetExpectedLength == size)
+            else if (chunk.GetGetExpectedLength == size)
             {
                 if (data == '\r')
                 {
@@ -34,17 +34,15 @@ namespace Proxy.UnitTests
                 if (data == '\n')
                 {
                     chunk.ResetLength();
-                    chunk.ChangeState(new NumberOrCrState(chunk));
+                    chunk.ChangeState(new ChunkNumberOrCrState(chunk));
                 }
                 else
                 {
-                    chunk.OnChunkComplete(false);
-                    //throw new Exception("New line did not respect the protocol. Invalid length, smaller.");
+                    throw new Exception("New line did not respect the protocol. Invalid length, smaller.");
                 }
             }
             else
             {
-                chunk.OnChunkComplete(false);
                 throw new Exception("This cannot be. Invalid Chunk length.");
             }
         }

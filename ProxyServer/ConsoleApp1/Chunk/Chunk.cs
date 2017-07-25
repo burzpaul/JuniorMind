@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Proxy
 {
-    internal class Chunk
+    public class Chunk
     {
         private string length;
         private ChunkState state;

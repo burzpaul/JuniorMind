@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Proxy.UnitTests.Headers
+namespace Proxy.UnitTests
 {
-    internal class HeaderCompleteState : HeaderState
+    internal class HeaderCompleteState : State
     {
         private Header header;
 
@@ -11,11 +11,11 @@ namespace Proxy.UnitTests.Headers
             this.header = header;
         }
 
-        public override void Handle(byte data, Action<HeaderState> changeState)
+        internal override void Handle(byte data, Action<State> changeState)
         {
             if (data == '\n')
             {
-                header.HeaderChar(data);
+                header.OnHeaderChar(data);
                 header.OnHeaderComplete();
                 header.ChangeState(null);
             }

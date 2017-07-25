@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Proxy.UnitTests.Headers
+namespace Proxy
 {
     public class Header
     {
@@ -18,11 +18,11 @@ namespace Proxy.UnitTests.Headers
             state = new FieldState(this);
         }
 
-        public void ProcessHeader(byte[] data)
+        public void ProcessHeader(byte[] data, int size)
         {
-            foreach (var item in data)
+            for (int i = 0; i < size; i++)
             {
-                state.Handle(item, ChangeState);
+                state.Handle(data[i], ChangeState);
             }
         }
 

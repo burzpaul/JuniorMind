@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Proxy.UnitTests.Headers
+namespace Proxy
 {
-    internal class NewLineState : HeaderState
+    public class NewLineStateHeader : HeaderState
     {
         private Header header;
 
-        public NewLineState(Header header)
+        public NewLineStateHeader(Header header)
         {
             this.header = header;
         }
