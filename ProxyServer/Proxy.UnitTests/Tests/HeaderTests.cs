@@ -98,14 +98,15 @@ namespace Proxy.UnitTests
         {
             var result = string.Empty;
             var testData = "GET http://juniormind.com HTTP/1.1\r\nHost: juniormind.com\r\nProxy-Connection: keep-alive\r\nPragma: no-cache\r\nCache-Control: no-cache\r\nUpgrade-Insecure-Requests: 1\r\nUser-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8\r\nDNT: 1\r\nAccept-Encoding: gzip, deflate\r\nAccept-Language: en-GB,en-US;q=0.8,en;q=0.6\r\nCookie: MSID=ce9be95e-f8b6-42ad-bd9e-7148ee830ec5; _ga=GA1.2.1485718505.1498636596; _gid=GA1.2.927427221.1500888954\r\n\r\n";
-            var expected = "GET / HTTP/1.1\r\nHost: juniormind.com";
+            var expected = "GET http://juniormind.com HTTP/1.1\r\nHost: juniormind.com\r\n";
             byte[] byteTestData = Encoding.UTF8.GetBytes(testData);
 
             Controller controller = new Controller();
             controller.HeaderCompleted += (sender, e) => result = e.HeaderFields.GetRequest;
 
-            Assert.Equal(expected, result);
             controller.Feed(byteTestData);
+
+            Assert.Equal(expected, result);
         }
     }
 }

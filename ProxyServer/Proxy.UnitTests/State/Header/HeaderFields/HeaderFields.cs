@@ -8,6 +8,7 @@ namespace Proxy.UnitTests
     {
         private Dictionary<string, string> headerFields = new Dictionary<string, string>();
         private string rawData;
+        private string request;
 
         public void AddChar(char data)
         {
@@ -16,7 +17,7 @@ namespace Proxy.UnitTests
 
         public string Get(string name)
         {
-            return headerFields[name] ?? "No";
+            return headerFields.ContainsKey(name) == true ? headerFields[name] : string.Empty;
         }
 
         public void Set(string name, string value)
@@ -26,11 +27,13 @@ namespace Proxy.UnitTests
 
         public byte[] GetModifiedHeader => Encoding.UTF8.GetBytes(rawData.Replace("http://" + headerFields["Host"], "/"));
 
-        public string GetRequest => rawData.Split(' ')[0];
+        public string GetRequest => request;
 
         public void ProcessRawData()
         {
             var fields = rawData.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            request = fields[0] + "\r\n" + fields[1] + "\r\n";
 
             foreach (var field in fields)
             {

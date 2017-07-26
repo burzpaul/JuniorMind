@@ -37,6 +37,14 @@ namespace Proxy.UnitTests
         public void OnHeaderComplete()
         {
             header.ProcessRawData();
+            if (header.Get("Transfer-Encoding") != string.Empty && header.Get("Transfer-Encoding") == "chuncked")
+            {
+                controller.ChangeState(new Chunk(controller));
+            }
+            else
+            {
+                controller.ChangeState(new Body(controller));
+            }
             controller.OnHeaderComplete(true, header);
         }
     }
