@@ -7,56 +7,68 @@ namespace Proxy.UnitTests
 {
     public class ChunkTests
     {
-        //[Fact]
-        //public void Should_Return_True_For_Chunk_With_LowerCase_Hexa()
-        //{
-        //    bool result = false;
-        //    byte[] testData = Encoding.UTF8.GetBytes("4\r\nWiki\r\n5\r\npedia\r\ne\r\n in\r\n\r\nchunks.\r\n0\r\n\r\n");
+        [Fact]
+        public void Should_Return_True_For_Chunk_With_LowerCase_Hexa()
+        {
+            bool complete = false;
 
-        //    Chunk chunk = new Chunk();
-        //    chunk.ChunkCompleted += (sender, e) => result = e.IsComplete;
-        //    chunk.Feed(testData);
+            byte[] testData = Encoding.UTF8.GetBytes("HTTP/1.1 200 OK\r\n" +
+                "Transfer-Encoding: chunked\r\n\r\n" +
+                "4\r\nWiki\r\n5\r\npedia\r\ne\r\n in\r\n\r\nchunks.\r\n0\r\n\r\n");
 
-        //    Assert.Equal(true, result);
-        //}
+            Controller controller = new Controller();
+            controller.ChunkCompleted += (sender, e) => complete = e.IsComplete;
+            controller.Feed(testData);
 
-        //[Fact]
-        //public void Should_Return_True_For_Chunk_With_UpperCase_Hexa()
-        //{
-        //    bool result = false;
-        //    byte[] testData = Encoding.UTF8.GetBytes("4\r\nWiki\r\n5\r\npedia\r\nE\r\n in\r\n\r\nchunks.\r\n0\r\n\r\n");
+            Assert.Equal(true, complete);
+        }
 
-        //    Chunk chunk = new Chunk();
-        //    chunk.ChunkCompleted += (sender, e) => result = e.IsComplete;
-        //    chunk.Feed(testData);
+        [Fact]
+        public void Should_Return_True_For_Chunk_With_UpperCase_Hexa()
+        {
+            bool complete = false;
 
-        //    Assert.Equal(true, result);
-        //}
+            byte[] testData = Encoding.UTF8.GetBytes("HTTP/1.1 200 OK\r\n" +
+                "Transfer-Encoding: chunked\r\n\r\n" +
+                "4\r\nWiki\r\n5\r\npedia\r\nE\r\n in\r\n\r\nchunks.\r\n0\r\n\r\n");
 
-        //[Fact]
-        //public void Should_Return_True_For_Empty_Chunk()
-        //{
-        //    bool result = false;
-        //    byte[] testData = Encoding.UTF8.GetBytes("0\r\n\r\n");
+            Controller controller = new Controller();
+            controller.ChunkCompleted += (sender, e) => complete = e.IsComplete;
+            controller.Feed(testData);
 
-        //    Chunk chunk = new Chunk();
-        //    chunk.ChunkCompleted += (sender, e) => result = e.IsComplete;
-        //    chunk.Feed(testData);
+            Assert.Equal(true, complete);
+        }
 
-        //    Assert.Equal(true, result);
-        //}
+        [Fact]
+        public void Should_Return_True_For_Empty_Chunk()
+        {
+            bool complete = false;
 
-        //[Fact]
-        //public void Should_Return_False()
-        //{
-        //    bool result = true;
-        //    byte[] testData = Encoding.UTF8.GetBytes("1\r\nAA\r\n");
+            byte[] testData = Encoding.UTF8.GetBytes("HTTP/1.1 200 OK\r\n" +
+                "Transfer-Encoding: chunked\r\n\r\n" +
+                "0\r\n\r\n");
 
-        //    Chunk chunk = new Chunk();
-        //    chunk.ChunkCompleted += (sender, e) => result = e.IsComplete;
-        //    chunk.Feed(testData);
+            Controller controller = new Controller();
+            controller.ChunkCompleted += (sender, e) => complete = e.IsComplete;
+            controller.Feed(testData);
 
-        //    Assert.Equal(false, result);
-        //}
+            Assert.Equal(true, complete);
+        }
+
+        [Fact]
+        public void Should_Return_False()
+        {
+            bool complete = false;
+
+            byte[] testData = Encoding.UTF8.GetBytes("HTTP/1.1 200 OK\r\n" +
+                "Transfer-Encoding: chunked\r\n\r\n" +
+                "1\r\nAA\r\n");
+
+            Controller controller = new Controller();
+            controller.ChunkCompleted += (sender, e) => complete = e.IsComplete;
+            controller.Feed(testData);
+
+            Assert.Equal("New line did not respect the protocol.Invalid length, smaller.", "true");
+        }
     }
 }
