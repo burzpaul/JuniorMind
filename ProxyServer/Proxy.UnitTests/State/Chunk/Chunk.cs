@@ -21,13 +21,7 @@ namespace Proxy.UnitTests
             this.state.Handle(data, ChangeState);
         }
 
-        public int GetGetExpectedLength
-        {
-            get
-            {
-                return int.Parse(length, System.Globalization.NumberStyles.HexNumber);
-            }
-        }
+        public int GetGetExpectedLength => int.Parse(length, System.Globalization.NumberStyles.HexNumber);
 
         public void ResetLength()
         {

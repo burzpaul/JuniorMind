@@ -16,6 +16,8 @@ namespace Proxy.UnitTests
 
         public event EventHandler<ChunkCompleteEventArgs> ChunkCompleted;
 
+        public event EventHandler<BodyCompleteEventArgs> BodyCompleted;
+
         public Controller()
         {
             state = new Header(this);
@@ -42,6 +44,11 @@ namespace Proxy.UnitTests
         public void OnChunkComplete()
         {
             ChunkCompleted?.Invoke(this, new ChunkCompleteEventArgs() { IsComplete = true });
+        }
+
+        public void OnBodyComplete()
+        {
+            BodyCompleted?.Invoke(this, new BodyCompleteEventArgs() { IsComplete = true });
         }
     }
 }

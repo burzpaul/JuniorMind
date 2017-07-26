@@ -43,7 +43,7 @@ namespace Proxy.UnitTests
             }
             else
             {
-                controller.ChangeState(new Body(controller));
+                controller.ChangeState(new Body(controller, header.Get("Content-Length")));
             }
             controller.OnHeaderComplete(true, header);
         }
