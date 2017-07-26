@@ -6,7 +6,7 @@ namespace Proxy
     {
         private static void Main(string[] args)
         {
-            var proxy = new ProxyServer();
+            var proxy = new Proxy();
 
             proxy.Start();
 

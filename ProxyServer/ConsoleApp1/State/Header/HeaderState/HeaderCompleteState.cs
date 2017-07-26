@@ -2,7 +2,7 @@
 
 namespace Proxy
 {
-    internal class HeaderCompleteState : HeaderState
+    internal class HeaderCompleteState : State
     {
         private Header header;
 
@@ -11,13 +11,13 @@ namespace Proxy
             this.header = header;
         }
 
-        public override void Handle(byte data, Action<HeaderState> changeState)
+        internal override void Handle(byte data, Action<State> changeState)
         {
             if (data == '\n')
             {
-                header.HeaderChar(data);
-                header.OnHeaderComplete();
+                header.OnHeaderChar(data);
                 header.ChangeState(null);
+                header.OnHeaderComplete();
             }
             else
             {

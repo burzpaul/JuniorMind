@@ -2,24 +2,23 @@
 
 namespace Proxy
 {
-    internal class NewLineState : ChunkState
+    internal class ChunkNewLineState : State
     {
         private Chunk chunk;
 
-        public NewLineState(Chunk chunk)
+        public ChunkNewLineState(Chunk chunk)
         {
             this.chunk = chunk;
         }
 
-        internal override void Handle(byte data, Action<ChunkState> state)
+        internal override void Handle(byte data, Action<State> state)
         {
             if (data == '\n')
             {
-                chunk.ChangeState(new ContentState(chunk));
+                chunk.ChangeState(new ChunkContentState(chunk));
             }
             else
             {
-                chunk.OnChunkComplete(false);
                 throw new Exception("Protocol violation, Line Feed expected.");
             }
         }

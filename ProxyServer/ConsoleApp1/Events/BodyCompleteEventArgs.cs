@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Proxy.UnitTests
+namespace Proxy
 {
     public class BodyCompleteEventArgs : EventArgs
     {

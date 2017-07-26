@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Proxy.UnitTests
+namespace Proxy
 {
     public class Body : State
     {
@@ -28,7 +28,7 @@ namespace Proxy.UnitTests
             }
             else
             {
-                throw new Exception("Invalid Content-Length or Body");
+                throw new Exception("Invalid Content-Length.");
             }
         }
     }

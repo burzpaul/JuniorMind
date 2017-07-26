@@ -4,22 +4,21 @@ using System.Text;
 
 namespace Proxy
 {
-    public class NewLineStateHeader : HeaderState
+    internal class HeaderNewLineState : State
     {
         private Header header;
 
-        public NewLineStateHeader(Header header)
+        public HeaderNewLineState(Header header)
         {
             this.header = header;
         }
 
-        public override void Handle(byte data, Action<HeaderState> changeState)
+        internal override void Handle(byte data, Action<State> changeState)
         {
             if (data == '\n')
             {
-                header.HeaderChar(data);
-                header.ChangeState(new IsCompleteState(header));
-                return;
+                header.OnHeaderChar(data);
+                header.ChangeState(new HeaderIsCompleteState(header));
             }
             else
             {

@@ -2,21 +2,21 @@
 
 namespace Proxy
 {
-    internal class FieldState : HeaderState
+    internal class HeaderFieldState : State
     {
         private Header header;
 
-        public FieldState(Header header)
+        public HeaderFieldState(Header header)
         {
             this.header = header;
         }
 
-        public override void Handle(byte data, Action<HeaderState> changeState)
+        internal override void Handle(byte data, Action<State> changeState)
         {
             if (data == '\r')
             {
-                header.HeaderChar(data);
-                header.ChangeState(new NewLineStateHeader(header));
+                header.OnHeaderChar(data);
+                header.ChangeState(new HeaderNewLineState(header));
                 return;
             }
             else if (data == '\n')
@@ -25,8 +25,7 @@ namespace Proxy
             }
             else
             {
-                header.HeaderChar(data);
-                return;
+                header.OnHeaderChar(data);
             }
         }
     }
