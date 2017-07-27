@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Proxy
@@ -11,8 +8,8 @@ namespace Proxy
     public class ResponseHandler
     {
         private TcpClient client;
-        private NetworkStream clientStream;
         private Controller controller = new Controller();
+        private NetworkStream clientStream;
         private byte[] buffer = new byte[4096];
 
         private List<string> responseLines = new List<string>();
