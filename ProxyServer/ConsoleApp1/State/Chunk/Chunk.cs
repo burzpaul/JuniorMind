@@ -6,9 +6,9 @@ namespace Proxy
     {
         private string length;
         private State state;
-        private Controller controller;
+        private ProxyState controller;
 
-        public Chunk(Controller controller)
+        public Chunk(ProxyState controller)
         {
             this.controller = controller;
             state = new ChunkNumberOrCrState(this);

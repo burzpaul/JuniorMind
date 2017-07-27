@@ -4,11 +4,11 @@ namespace Proxy
 {
     public class Body : State
     {
-        private Controller controller;
+        private ProxyState controller;
         private int length;
         private int counter;
 
-        public Body(Controller controller, string contentLength)
+        public Body(ProxyState controller, string contentLength)
         {
             this.controller = controller;
             length = int.Parse(contentLength);

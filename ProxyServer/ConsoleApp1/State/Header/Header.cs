@@ -6,10 +6,10 @@ namespace Proxy
     public class Header : State
     {
         private State state;
-        private Controller controller;
+        private ProxyState controller;
         private HeaderFields header;
 
-        public Header(Controller controller)
+        public Header(ProxyState controller)
         {
             this.controller = controller;
             header = new HeaderFields();

@@ -8,7 +8,7 @@ namespace Proxy
     public class ResponseHandler
     {
         private TcpClient client;
-        private Controller controller = new Controller();
+        private ProxyState controller = new ProxyState();
         private NetworkStream clientStream;
         private byte[] buffer = new byte[4096];
 

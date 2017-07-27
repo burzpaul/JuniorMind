@@ -7,7 +7,7 @@ namespace Proxy
     public class RequestHandler
     {
         private NetworkStream clientStream;
-        private Controller controller = new Controller();
+        private ProxyState controller = new ProxyState();
         private byte[] buffer = new byte[4096];
         private string host;
         private string request;

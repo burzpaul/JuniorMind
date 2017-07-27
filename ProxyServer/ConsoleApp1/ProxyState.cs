@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Proxy
 {
-    public class Controller
+    public class ProxyState
     {
         private State state;
 
@@ -14,7 +18,7 @@ namespace Proxy
 
         public event EventHandler<BodyCompleteEventArgs> BodyCompleted;
 
-        public Controller()
+        public ProxyState()
         {
             state = new Header(this);
         }
