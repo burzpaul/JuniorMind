@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Xunit;
 
-namespace Proxy.UnitTests
+namespace Proxy.UnitTests.Tests
 {
-    internal class ProxyServerTestscs
+    public class HeaderTests
     {
     }
 }
