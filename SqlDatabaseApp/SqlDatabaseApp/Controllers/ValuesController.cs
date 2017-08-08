@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace SqlDatabaseApp.Controllers
 {
@@ -13,7 +14,13 @@ namespace SqlDatabaseApp.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            using (var context = new ChinookContext())
+            {
+                return context.Artist
+                    .Include(a => a.Album)
+                    .Where(a => a.Album.Count > 10)
+                    .Select(a => a.Name).ToArray();
+            }
         }
 
         // GET api/values/5
