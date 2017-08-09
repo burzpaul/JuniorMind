@@ -1,0 +1,24 @@
+@model IEnumerable<SqlDatabaseApp.Artist>
+<html>
+<head>
+</head>
+<body>
+    <h1>Customers</h1>
+    <div>
+        <table border="1">
+
+            @foreach (var artist in Model)
+            {
+                <tr>
+                    <td>
+                        @artist.Name <br />
+                    </td>
+                    <td>
+                        @string.Join(",", artist.Album.Take(3).Select(a => a.Title))                        
+                   </td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
