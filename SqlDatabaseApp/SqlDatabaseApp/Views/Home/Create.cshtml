@@ -1,0 +1,21 @@
+﻿@model SqlDatabaseApp.Artist
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <h1>Create Note</h1>
+    <form asp-action="create" class="createArtist">
+        <div class="createNote__pair">
+            <label>Artist Id:</label>
+            <input asp-for="ArtistId" />
+        </div>
+        <div class=" createNote__pair">
+            <label>Text:</label>
+            <textarea asp-for="Name" cols=" 50" rows="3">
+            </textarea>
+        </div>
+        <input class="createNote__submit" type="submit" value="Create" />
+    </form>
+</body>
+</html>

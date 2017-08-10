@@ -5,17 +5,26 @@
 <body>
     <h1>Customers</h1>
     <div>
+        <a asp-action="Create">Create New</a>
         <table border="1">
-
             @foreach (var artist in Model)
             {
                 <tr>
                     <td>
+                        @artist.ArtistId <br />
+                    </td>
+                    <td>
                         @artist.Name <br />
                     </td>
                     <td>
-                        @string.Join(",", artist.Album.Take(3).Select(a => a.Title))                        
-                   </td>
+                        <a asp-action="Delete" asp-route-id="@artist.ArtistId">Delete Artist</a>
+                    </td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@artist.ArtistId">Update Artist</a>
+                    </td>
+                    <td>
+                        @string.Join(",", artist.Album.Take(3).Select(a => a.Title))
+                    </td>
                 </tr>
             }
         </table>

@@ -1,0 +1,16 @@
+﻿@model SqlDatabaseApp.Artist
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <h1>Create Note</h1>
+    <form asp-action="delete" class="createArtist">
+        <div class="createNote__pair">
+            <label>Artist Id:</label>
+            <input asp-for="ArtistId" /> />
+        </div>
+        <input class="createNote__submit" type="submit" value="Delete" />
+    </form>
+</body>
+</html>

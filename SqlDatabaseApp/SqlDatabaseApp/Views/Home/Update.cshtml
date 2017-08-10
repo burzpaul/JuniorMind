@@ -1,0 +1,21 @@
+@model SqlDatabaseApp.Artist
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>vire2</title>
+</head>
+<body>
+    <form asp-action="update" class="updatArtist">
+        <div class="updatArtist_Name">
+            <label>Artist Name: </label>
+            <input asp-for="Name" />
+        </div>
+        <div class=" updateAlbums__pair">
+            <label>Artist Id:</label>
+            <input asp-for="ArtistId" cols=" 50" rows="3" />
+        </div>
+        <input class="updatArtist_submit" type="submit" value="Update" />
+    </form>
+</body>
+</html>
