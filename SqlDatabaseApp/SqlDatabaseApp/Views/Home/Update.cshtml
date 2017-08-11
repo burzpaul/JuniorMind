@@ -1,4 +1,5 @@
 @model SqlDatabaseApp.Artist
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,16 +7,15 @@
     <title>vire2</title>
 </head>
 <body>
-    <form asp-action="update" class="updatArtist">
+    <form asp-action="update" class="updatArtist" method="put">
+        <label>Artist Id: @Model.ArtistId </label>
         <div class="updatArtist_Name">
             <label>Artist Name: </label>
             <input asp-for="Name" />
+            @Html.HiddenFor(ArtistId => Model.ArtistId)
+            <span asp></span>
         </div>
-        <div class=" updateAlbums__pair">
-            <label>Artist Id:</label>
-            <input asp-for="ArtistId" cols=" 50" rows="3" />
-        </div>
-        <input class="updatArtist_submit" type="submit" value="Update" />
+        <input class="updatArtist_submit" type="a" value="Update" />
     </form>
 </body>
 </html>
