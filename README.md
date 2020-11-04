@@ -1,3 +1,3 @@
 # JuniorMind
 
-## Repo used when at the Trading at https://juniormind.com/
+## Repo used as a trainee at https://juniormind.com/
